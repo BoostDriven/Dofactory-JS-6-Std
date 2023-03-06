@@ -1,0 +1,885 @@
+﻿@{
+    ViewBag.Title = "Coding Standards";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/codingstandards">Coding Standards</a></li>
+</ol>
+
+<style>
+    b[class="open-sans font-18"] { display:inline-block; margin-top:10px; margin-bottom:6px; }
+</style>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Coding Standards</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A Coding Standards and Style Guide for professional JavaScript development.
+            </p>
+            <p>
+                Following coding standards and naming conventions is an important part of developing high quality
+                JavaScript applications. It makes the code more understandable and easy-to-maintain.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials</h3>
+        <br />
+        <div class="pl-md-40">
+
+            <p>
+                Having coding standards and naming conventions is important.
+                It does not matter <i>which</i> standard you choose, as long as there <i>is a</i> standard.
+                Ideally, the source code for the entire project should look as if it was written by a single developer.
+            </p>
+            <p>
+                Coming up with a generally agreed upon set of coding conventions and naming standards frequently leads to heated discussions.
+                It takes good leadership to get a team to agree on a set of rules that all developers will follow.
+            </p>
+            <p>
+                To help you with this process we present a style guide that shouldn’t ruffle too many feathers.
+                It is based on general coding conventions that are  used throughout the JavaScript community, including open source projects,
+                source code libraries, programming books, and blogs.  There are a couple instances where we allow for a little more flexibility and we will explain why.
+                You can choose to ignore these.
+            </p>
+            <p>
+                <b class="open-sans font-18">Indentation</b> <br />
+                JavaScript code with inconsistent indentation is impossible to read.
+                The indentation rule is very easy to remember; anything within curly braces is indented.
+                This includes function bodies, bodies of loops (including for, do, while, for-in), as well as ifs, switches, and also object literal notation.
+                <br /><br />
+                Each indentations level is 4 space characters deep. Do not use tabs for indentation.
+<pre class="prettyprint">
+function show(input) {
+
+....var temp = 10;
+
+....if (input === "winter" && temp < 32) {
+........alert('cold');
+....}
+
+}
+</pre>
+            </p>
+
+            <p>
+                <b class="open-sans font-18">Line length</b> <br />
+                The maximum line length is 80 characters.
+                If the line goes beyond that you wrap the line immediately after an operator, such as a comma, +, -, &&, ||, etc.
+                Vertically align the next line with the items that were interrupted.
+<pre class="prettyprint">
+function processRequest( argument1, argument2, argument3, argument4, 
+                         argument5, argument6) {
+    var x = 3;
+    if (argument1 > 0 && argument2 > 0 && argument3 > 0 && 
+        argument4 > 0 && argument5 > 0 && argument6 > 0) {
+        alert("all args are greater than zero");
+    }
+}
+</pre>
+            </p>
+
+            <p>
+                <b class="open-sans font-18">Curly braces</b> <br />
+                Curly braces are used to group a number of statements.
+                Curly braces should always be used, even when they are optional, because it makes the code easier to update and
+                less error prone; especially when adding a new statement.
+                In the example below it is clear that when adding a new line to the if statement you insert it between the braces, and it will work as expected.
+<pre class="prettyprint">
+if (true) {
+    alert("yes, true");
+}
+</pre>
+            </p>
+            <p>
+                Without curly braces, it would be easy to add the new line and not realize it would be outside the if statement block.
+<pre class="prettyprint">
+if (true) 
+   alert("yes, true");
+   alert("really, very true");  // outside the if body
+
+</pre>
+            </p>
+            <p>
+                The one exception we make to adding curly braces is when the single statement is on the same line.
+                Usually these are very short statements.
+                However, once you place it on the next line, braces are required. Here are two examples: an if statement and a for loop.
+<pre class="prettyprint">
+if (obj === null) obj = [];
+
+for (var i = 0; i < 10; i++) increment(value, i);
+</pre>
+            </p>
+
+            <p>
+                The above code is clear and concise. There is no risk of accidentally adding a new statement that is not part of the body of the if or the for statement.
+                Function bodies normally make up many statements, but sometimes they are extremely brief and in those cases you are allowed to place the braces and the body on a single line.
+<pre class="prettyprint">
+var Calc = function () {
+    this.add = function (x,y) { return x + y; };   // single line function
+    this.sub = function (x,y) { return x - y; };
+    this.mul = function (x,y) { return x * y; };
+    this.div = function (x,y) { return x / y; };
+};
+
+var calc = new Calc();
+alert(calc.add(3,4));      // => 7
+</pre>
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+                <script type="text/javascript">
+                    function run() {
+                        var Calc = function () {
+                            this.add = function (x, y) { return x + y; };   // single line function
+                            this.sub = function (x, y) { return x - y; };
+                            this.mul = function (x, y) { return x * y; };
+                            this.div = function (x, y) { return x / y; };
+                        };
+
+                        var calc = new Calc();
+                        alert(calc.add(3, 4));      // => 7
+                    }
+                </script>
+            </p>
+
+            <p>
+                <b class="open-sans font-18">Opening braces</b> <br />
+                In some languages the question of where to place the opening brace (i.e. on the same line or on the next line) is a continuous point of contention.
+                However, for JavaScript the convention is unambiguous:  you always place it on the same line.
+<pre class="prettyprint">
+function process() {   // opening brace on same line
+    return {
+        temp: 100
+    };
+}
+</pre>
+            </p>
+
+
+            <p>
+                The main reason for this rule is that JavaScript automatically adds closing semicolons (;) at the end of each statement that it thinks is missing.
+                There are cases where it inserts a semicolon and by doing this it excludes the following code block if the braces are on the next line. Here is an example:
+<pre class="prettyprint">
+function process() {
+    return
+    {
+        temp: 100
+    };
+}
+</pre>
+            </p>
+
+
+            <p>
+                The JavaScript engine changes the above code to the code below and now suddenly your process function behaves differently.  This is easily avoided by moving the opening brace one line up.
+<pre class="prettyprint">
+function process() {
+    return;                 // <= JavaScript added semicolon
+    {
+        temp: 100
+    };
+}
+
+
+</pre>
+            </p>
+
+
+            <p>
+                Object literals generally follow the same curly brace formatting:
+<pre class="prettyprint">
+var person = {
+    first: "John",
+    last: "Watson",
+
+    fullName: function () {
+        return first + " " + last;
+    }
+}
+</pre>
+            </p>
+
+
+
+            <p>
+                Similar to small function bodies, in the case of small object and array literals you are allowed to place these on a single line:
+<pre class="prettyprint">
+var obj = {};
+var array = [];
+
+var person = {first: "John", age: 25};
+var values = [1, 4, 6, 8, 2, 2];
+
+</pre>
+            </p>
+
+            <p>
+                Similar to argument parenthesis (discussed below), when curly braces {} and square brackets [] are used on a single line then there is no space between the opening brace and the first element and the closing brace and the last element.  For example, in the person assignment statement there are no spaces between '{first' and between '25}'.
+            </p>
+
+
+            <p>
+                <b class="open-sans font-18">White space</b> <br />
+                Consistent use of white space (the spacing used between the coding elements) adds to readability and maintainability.  <br /><br />
+                Operators such as +, -, =, ==, ===, &&, || should be surrounded by a space before and a space after to make their expressions easier to read.  Below are a few examples:
+<pre class="prettyprint">
+var customer = (person.type === "client");
+
+var odd = number % 2 !== 0;
+
+if (income > 12000 && status === "gold")
+
+var found = (hasText && (length > 80));
+
+</pre>
+            </p>
+
+            <p>
+                Next, we will look at white space and parentheses.
+                There should be no space on the inside of parentheses, that is, the opening parenthesis has no white space on the right-hand side and the closing parenthesis no space on the left hand side.  Here are some examples:
+<pre class="prettyprint">
+var hero = (person.type === "superman");
+
+if (income > 10000 && age === 65) {};
+
+for (var j = 0; j < length; j++) {};
+
+return (profits - losses + (assets * 2));
+
+</pre>
+            </p>
+
+            <p>
+                The same rule applies when invoking a function: no spaces on either side:
+<pre class="prettyprint">
+go();
+
+var sum = add(3, 4, 5, 6);
+
+var josh = new Person("Josh", "Healey");
+
+</pre>
+            </p>
+
+            <p>
+                Named functions have no space between the name and the opening parenthesis and the argument list.
+                However, anonymous functions have a space between the keyword function and the argument list.
+                The reason for this is that without a space it may appear that the function name is 'function' which is incorrect.
+<pre class="prettyprint">
+function go(now) {
+    // ...
+}
+
+var go = function (now) {
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                Opening curly braces are always preceded with a space.  If code follows a closing brace, then add a space as well.
+<pre class="prettyprint">
+function go(options) {
+   // ...
+}
+
+if (income > 10000) {
+    //...
+} else {
+    //...
+}
+
+do {
+    //...
+} while (counter < 10);
+
+try {
+   //...
+} catch(ex) {
+   //...
+} finally {
+   //...
+}
+
+</pre>
+            </p>
+
+            <p>
+                White space must also be used in the places listed below.<br /><br />
+                After the commas in a function argument list:
+<pre class="prettyprint">
+function (arg1, arg2, arg3, arg4) {
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                After the commas in an array literal:
+<pre class="prettyprint">
+var array = [23, 48, 2, 0];
+</pre>
+            </p>
+
+            <p>
+                After the commas and semicolons in a for loop:
+<pre class="prettyprint">
+for (var int i = 0, len = array.length; i < len; i++) {
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                After the commas and colons in an object literal:
+<pre class="prettyprint">
+var obj = {name: "Joe", age: 29};
+</pre>
+            </p>
+
+            <p>
+                <b class="open-sans font-18">Naming conventions</b><br />
+                Choosing proper variable and function names is important for readability and general understanding of the code.  Do not include $ or _ in names, except 1) when denoting a 'private' member (variable or function) by prefixing it with an _, or 2) to denote a jQuery variable by a $ prefix.<br /><br />
+                Variable names are written in camelCase in which the first letter is lowercase, and the first letters of any subsequent word is uppercase. Try to make the first part of the name a noun (not a verb) which will make it easier to separate it from function names.  Here are some examples:
+<pre class="prettyprint">
+var account;
+var templateHolder = {};
+var person = new Person("Joe");
+
+</pre>
+            </p>
+
+            <p>
+                Make your names as succinct and descriptive as possible.
+                Ambiguity will confuse those that follow you working with the code.
+                Single character names are not very descriptive, but they are allowed for iterators and in situations where they hold a temporary value in a lengthy computation.
+<pre class="prettyprint">
+for (var i = 0; i < 100; i++) {       // iterator variables
+    for (var j = 0; j < 100; j++) {
+        sum += i * j;
+    }
+}
+
+var t = (x + y) * fudgeFactor;        // temporary variable
+var rate = t * 3.14 + (t * t);
+
+</pre>
+            </p>
+
+            <p>
+                In general, the use of abbreviated variable names is discouraged.
+                However, some commonly used and widely understood abbreviations are acceptable. Here is a list of those: <br /><br />
+            </p>
+            <div style="padding-left:30px;">
+                <table class="table table-condensed table-bordered open-sans font-16" style="width:380px;">
+                    <tr style="background:#f6f6f9;">
+                        <td style="width:140px;"><strong>Abbreviation</strong></td>
+                        <td style="width:340px;"><strong>Meaning</strong></td>
+                    </tr>
+                    <tr><td>f or fn</td><td>function</td></tr>
+                    <tr><td>cd</td><td>code</td></tr>
+                    <tr><td>l or len</td><td>length</td></tr>
+                    <tr><td>ctx</td><td>context</td></tr>
+                    <tr><td>arg</td><td>argument</td></tr>
+                    <tr><td>obj</td><td>object</td></tr>
+                    <tr><td>el or elem</td><td>element</td></tr>
+                    <tr><td>val</td><td>value</td></tr>
+                    <tr><td>id</td><td>identifier</td></tr>
+                    <tr><td>idx</td><td>index</td></tr>
+                    <tr><td>n or num</td><td>number</td></tr>
+                    <tr><td>ret</td><td>return value</td></tr>
+                    <tr><td>prop</td><td>property</td></tr>
+                    <tr><td>attr</td><td>attribute</td></tr>
+                    <tr><td>prev</td><td>previous</td></tr>
+                    <tr><td>err</td><td>error</td></tr>
+                    <tr><td>dup</td><td>duplicate</td></tr>
+                    <tr><td>doc</td><td>document</td></tr>
+                    <tr><td>win</td><td>window</td></tr>
+                    <tr><td>src</td><td>source</td></tr>
+                    <tr><td>dest</td><td>destination</td></tr>
+                    <tr><td>temp</td><td>temporary value</td></tr>
+                    <tr><td>regex</td><td>regular expression</td></tr>
+                </table>
+            </div>
+
+
+            <p>
+                JavaScript does not have the notion of an access level for variables, such as, private, protected, and public.
+                To indicate that a member (variable or method) is private, JavaScript developers often prefix the name with an underscore _.
+                This indicates to clients that it is not meant to be accessed directly.  Here are a couple examples.
+<pre class="prettyprint">
+var _self; 
+
+function _locate(customer) {
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                Function names are written in camelCase.  Frequently they start with a verb, which separates them from variables as these mostly start with nouns.  Here are some function examples:
+<pre class="prettyprint">
+function processCustomer(customer) {
+    // ...
+}
+
+function calculateRate(amount) {
+    // ...
+}
+
+function add(array) {
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                An important convention in JavaScript is that all constructor functions start with an upper-case character.
+                This is to distinguish them from regular functions and prevents developers from forgetting to add the <span class="cd">new</span> keyword before calling the constructor.
+                The problem with forgetting <span class="cd">new</span> is that the JavaScript does not flag the error and it causes very hard to detect
+                bugs that may only be found by visually inspecting the code. The upper-case name is an important visual cue that the keyword <span class="cd">new</span> is required.
+<pre class="prettyprint">
+function Person(name) {
+    this.name = name;
+}
+
+var arthur = new Person("Arthur");
+
+</pre>
+            </p>
+
+            <p>
+                Abbreviations in function names are discouraged although some common ones are allowed.
+                The list of acceptable abbreviations is the same as the variable names listed before.
+                Function abbreviations you may see are:
+            </p>
+            <div style="padding-left:30px;">
+                <table class="table table-condensed table-bordered open-sans font-16" style="width:380px;">
+                    <tr style="background:#f6f6f9;">
+                        <td style="width:140px;"><strong>Abbreviation</strong></td>
+                        <td style="width:240px;"><strong>Meaning</strong></td>
+                    </tr>
+                    <tr><td>init</td><td>initialize</td></tr>
+                    <tr><td>ctor</td><td>constructor</td></tr>
+                    <tr><td>cb</td><td>callback</td></tr>
+                </table>
+            </div>
+
+
+            <p>
+                <b class="open-sans font-18">Comments</b> <br />
+                There are two types of comments: single line and multi-line. Single line comments are written with double slashes // and are mostly used as brief hints as to the purpose or inner workings on the code.
+                They can be placed immediately above or after the line of code:
+<pre class="prettyprint">
+// Ensure membership dues are current and
+// confirm retiree eligibility (age > 60) 
+for (var i = 0; len = members.length; i < len; i++) {
+    member = members[i];
+    due = dues[member.payment.id];  // Note: dues are indexed by payment Id
+    // ...
+}
+
+</pre>
+            </p>
+
+            <p>
+                It is usually best to limit single line comments to 2 or 3 lines at most.
+                If you need more lines, for example explaining a complicated algorithm or piece of logic, then use multiline comments.
+                The preferred format is as follows:
+<pre class="prettyprint">
+/*
+ * Ensure membership dues are current and 
+ * confirm retiree eligibility (age > 60).
+ * Also, the difference between eligible and 
+ * ineligibility is determined by their age, 
+ * their years of service, their net-worth,  
+ * and their marital status.
+ */ 
+function isEligible(person) {
+    // ...
+}
+</pre>
+            </p>
+
+            <p>
+                This format includes asterisks * on each line, vertically aligned to create a clear demarcation of the comment block.
+            </p>
+            <p>
+                Well written comments will significantly add to the readability and maintainability of the code.  So what do we mean with 'well written'?
+                It certainly does not mean extensive or lengthy; in fact, programs that require lengthy comments are probably not written very clearly.
+                You should try to write your code so that it self-documents and that 'reads like a story'.
+            </p>
+            <p>
+                You accomplish this with the organization and structure of your files and also with the naming of your objects, functions, properties, variables, and namespaces.
+                Even when your code has been optimized for readability, there are still instances where you need to explain the purpose and/or the inner workings of your algorithms and other code sections.
+            </p>
+            <p>
+                Comments you write are intended for 2 audiences: 1) for yourself, for when you come back 3 months after writing it, and 2) for your teammates who have never
+                seen your code before and who will need to quickly locate and correct a problem (bug) in your program.
+            </p>
+            <p>
+                Here are some guidelines for good comments.  First: avoid the obvious.
+            </p>
+<pre class="prettyprint">
+// iterate over each person
+for (var i = 0, len = persons.length; i < len; i++) {
+    person = persons[i];
+    // ...
+}
+</pre>
+            <p>
+                As a programmer you know that a for-statement does looping.  You see a persons array so that is what you are iterating over.  This comment does not add any value; in fact it distracts the reader.
+            </p>
+            <p>
+                It is very important to update your comments when the code changes. There is nothing worse than comments that are outdated, incorrect, or invalid.  Better to have no comments at all.
+            </p>
+            <p>
+                When a program is well structured and well written (i.e. it flows like a story), most developers will be able to relatively quickly see what is happening at a particular location in the code.
+                After studying it for a while it may be clear what is happening, but what may not be obvious is why it is done; essentially what is the purpose.
+            </p>
+            <p>
+                Suppose you have an array of customers.  You see that the program checks for each customer how long they have been doing business with your company and then some begin and end dates that are
+                compared against the current date.  Based on this evaluation some customer's creditworthiness is upgraded. You see what is does, but you wonder what it means. It turns out that the
+                company is running a special during a limited period in which certain customers are given special rates.  It is important that this is explained in the comments because by just
+                looking at the code it is not obvious this is a temporary sales offer.
+            </p>
+            <p>
+                Furthermore, the explanation that this is a sales special is not really sufficient.
+                The rules of the offer (i.e. the algorithm used) also need clarification. The above example is not very complex, but sometimes the rules for sales offers can get very complicated,
+                so the logic needs to be documented.
+            </p>
+            <p>
+                Finally, if you need API documentation of your programs (for internal or external users) then use a tool that auto generates it from specially formatted comments in your code.
+                The two most popular tools are YUIDoc and JSDoc-Toolkit. Both are open source and can be downloaded for free.
+            </p>
+            <p>
+                Before running the documentation tool you decorate all (public) functions with a multi-line comment box which follows a special syntax which including special tags that are prefixed with a @@.
+                The output is nicely formatted documentation in the form of a series of HTML pages that you then can publish. Here is an example of the comment syntax:
+            </p>
+<pre class="prettyprint">
+/**
+ * Invoke a method on each item in the array
+ * 
+ * @@param  {Array} array The array to iterate over.
+ * @@param  {Function} method The method to invoke.
+ */ 
+function invoke(array, method) {
+}
+</pre>
+
+<p>
+    <b class="open-sans font-18">Variable declarations</b> <br />
+    All variables should be declared before being used or else they end up in the global namespace.
+    The JavaScript engine hoists (raises) all variable declarations to the top of the function in which they are declared.
+    This can lead to hard-to-detect problems where variables are being used before they are initialized.
+    Here is a simple example. As expected, the code below displays 10 (two times);
+<pre class="prettyprint">
+function doSomething() {
+    var index = 10;
+    alert(index);  // => 10
+    alert(index);  // => 10
+}
+
+doSomething();
+</pre>
+    <a class="btn btn-green" href="javascript:void(0);" onclick="run5();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+    <script type="text/javascript">
+        function run5() {
+            function doSomething() {
+                var index = 10;
+                alert(index);  // => 10
+                alert(index);  // => 10
+            }
+
+            doSomething();
+        }
+    </script>
+</p>
+            <br />
+            <p>
+                Next we move the variable declaration and initialization one line lower. This results in the index being undefined and later it is 10.
+<pre class="prettyprint">
+function doSomething() {
+    alert(index);  // => undefined
+    var index = 10;
+    alert(index);  // => 10
+}
+
+doSomething();
+
+</pre>
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run6();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+                <script type="text/javascript">
+                    function run6() {
+                        function doSomething() {
+                            alert(index);  // => undefined
+                            var index = 10;
+                            alert(index);  // => 10
+                        }
+
+                        doSomething();
+                    }
+                </script>
+            </p>
+            <br />
+            <p>
+                What JavaScript does is this: it hoists the variable declaration to the top, but <i>not</i> the initialization.  The code that actually executes looks like this:
+<pre class="prettyprint">
+function doSomething() {
+    var index;
+    alert(index);  // => undefined
+    index = 10;
+    alert(index);  // => 10
+}
+
+</pre>
+            </p>
+
+            <p>
+                It gets even weirder when you also have a global variable named index:
+<pre class="prettyprint">
+var index = 9;
+
+function doSomething() {
+    alert(index);  // => undefined
+    var index = 10;
+    alert(index);  // => 10
+}
+
+doSomething();
+
+</pre>
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run7();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+                <script type="text/javascript">
+                    function run7() {
+                        var index = 9;
+
+                        function doSomething() {
+                            alert(index);  // => undefined
+                            var index = 10;
+                            alert(index);  // => 10
+                        }
+
+                        doSomething();
+                    }
+                </script>
+            </p>
+
+            <p>
+                You would expect that the first alert would print 9 because index gets only shadowed by the local index variable in the next line.  But this is not the case, again due to the hoisting that takes place the code that executes looks like this:
+<pre class="prettyprint">
+var index = 9;
+
+function doSomething() {
+    var index; 
+    alert(index);  // => undefined
+    index = 10;
+    alert(index);  // => 10
+}
+
+</pre>
+            </p>
+
+            <p>
+                What gets displayed in the first alert is the local index variable, not the global version.
+            </p>
+            <p>
+                <b class="open-sans font-18">Single var pattern</b>   <br />
+                To avoid the above problems, you should declare and optionally initialize all variables at the beginning of a function.
+                This is a well-known coding pattern in JavaScript and is named the <i>Single var pattern</i>.
+                A single <span class="cd">var</span> is used to declare all variables used in the function. Here is an example of how this is commonly done:
+            </p>
+<pre class="prettyprint">
+function func(arg1, arg2, arg3) {
+    var index, textFormat,
+        count = 0,
+        person = new Person("Hillary");
+        
+     // ...
+}
+</pre>
+            <p>
+                The issue of variable declaration is one of those issues where developers can get into heated debates.
+                Some will argue that the above example is not structured enough: they would prefer this:
+            </p>
+<pre class="prettyprint">
+function func(arg1, arg2, arg3) {
+    var count  = 0,
+        person = new Person("Hillary"),
+        index,
+        textFormat;
+
+    // ...
+
+}
+</pre>
+
+            <p>
+                Each variable has its own line.
+                The initialized variables are listed first, followed by the ones that are not initialized.
+                Also notice how the = signs of the initializations are vertically aligned.
+            </p>
+            <p>
+                If these rules work for your team you should adopt these.
+                In our own work we are a little less strict and have adopted a few exceptions to the single var pattern.
+            </p>
+            <p>
+                First, it may be helpful to group variable declarations with each group having its own <span class="cd">var</span>, like so:
+            </p>
+<pre class="prettyprint">
+(function () {
+    var win = window,
+        doc = document,
+        nav = navigator;
+
+    var userAgent = nav.userAgent,
+        isIE = /msie/t.text(userAgent) && !win.opera,
+        isFirefox = /Firefox/.text(userAgent),
+        isWebKit = /AppleWebKit/.test(userAgent),
+        hasTouch = doc.documentElement.ontouchstart !== "undefined";
+
+    // ...
+
+}());
+</pre>
+
+
+            <p>
+                We also allow multiple uninitialized variables on a line, like so. However, initialized variables are best kept on their own line:
+            </p>
+<pre class="prettyprint">
+function (employees) {
+    var type, index, element, option,
+        person = new Person("Annie"),
+        employeeCount = employees.length;
+
+    // ...
+}
+
+</pre>
+            <p>
+                It turns out that the single-var pattern is rather error prone.
+                If you accidentally terminate a line with a semicolon (a common mistake), then all subsequent variables become global which is highly undesirable.
+            </p>
+<pre class="prettyprint">
+function (employees) {
+    var type,
+        person = new Person("Annie");
+        employeeCount = employees.length;   // global!
+
+    // ...
+}
+
+</pre>
+
+            <p>
+                Some JavaScript developers move the comma forward, to better see that each line has a comma.
+            </p>
+<pre class="prettyprint">
+function (employees) {
+    var type
+      , person = new Person("Annie")
+      , employeeCount = employees.length;   
+
+   // ...
+}
+</pre>
+            <p>
+                A consequence of enforcing the single var rule is that iterator variables (like, <span class="cd">i</span>, <span class="cd">j</span>, <span class="cd">k</span> or <span class="cd">count</span>) also end up
+                being declared and initialized at the beginning of the function. Here is an example:
+            </p>
+<pre class="prettyprint">
+function func(arr) {
+    var count = 10,
+        i = 0,
+        len = arr.length;
+
+    for (; i < len; i++) {
+        // ..
+    }
+}
+
+</pre>
+
+
+            <p>
+                However, this does not feel right; the for-loop seems incomplete and unnatural.
+                Our approach is to allow the <span class="cd">var</span> in the <span class="cd">for</span> statements where they are used.
+                This way the declarations and their initialization are right there ('in your face' so to speak), close to where they are used.
+                In summary, we prefer this:
+            </p>
+<pre class="prettyprint">
+function func(arr) {
+    var count = 10;
+
+    for (var i = 0, len = arr.length; i < len; i++) {
+        // ..
+    }
+}
+
+</pre>
+
+            <p>
+                <b class="open-sans font-18">Function declarations</b><br />
+                Just like variables, methods are hoisted and should be declared before they are used.
+                Within a function it is best to declare functions immediately following the variable declarations.
+<pre class="prettyprint">
+function func(arr) {
+    var count, element, status;
+
+    // immediately declare methods
+    var inner1 = function () { /* ... */ };
+    var inner2 = function () { /* ... */ };
+
+    // ...
+
+}
+
+</pre>
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/crackingidioms'>Cracking JavaScript Idioms</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

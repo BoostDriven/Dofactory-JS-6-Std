@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Placeholder";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/placeholder">Placeholder</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Placeholder</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A way to signify unused function parameters.<br /><br />
+                jQuery uses the underscore (<span class="cd">_</span>) placeholder at several places.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Placeholder Idiom uses an underscore (<span class="cd">_</span>) to indicate an unused parameter.
+                jQuery uses this idiom also. Here are two code snippets from its source: the first one has a placeholder parameter in a callback function.
+                The second uses it in a try/catch block:
+            </p>
+
+<pre class="prettyprint">
+// Listener
+callback = function( _, isAbort ) {
+    // etc.
+}
+</pre>
+            <p>
+                And
+            </p>
+<pre class="prettyprint">
+// Need an extra try/catch for cross domain requests in Firefox 3
+try {
+    for ( i in headers ) {
+        xhr.setRequestHeader( i, headers[ i ] );
+    }
+} catch( _ ) {}
+
+</pre>
+            <p>
+                Placeholder is a simple but helpful idiom.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/overload'>Overloading</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/shortwalk'>Short Walk</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

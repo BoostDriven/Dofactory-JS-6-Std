@@ -1,0 +1,339 @@
+﻿@{
+    ViewBag.Title = "Chain Of Responsibility";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/chain">Chain of Responsibiity</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Chain of Responsibiity</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.
+            </p>
+
+            <partial name="_UsageMedium" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Chain of Responsibility pattern provides a chain of loosely coupled objects one of which can satisfy a request.
+            This pattern is essentially a linear search for an object that can handle a particular request.
+        </p>
+        <p class="ptext">
+            An example of a chain-of-responsibility is event-bubbling in which an event propagates through a series of nested controls
+            one of which may choose to handle the event.
+        </p>
+        <p class="ptext">
+            The Chain of Responsiblity patterns is related to the Chaining Pattern which is frequently used in JavaScript (jQuery makes extensive use of this pattern).
+            To learn more about the Chaining patterns view the Modern Patterns section.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-chain-of-responsibility.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: <b style="color:#088;">Request</b>
+                    <ul>
+                        <li>initiates the request to a chain of handler objects</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Handler</b> -- In sample code: <b style="color:#088;">Request.get() method</b>
+                    <ul>
+                        <li>defines an interface for handling the requests</li>
+                        <li>implements the successor link (returning 'this')</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            This example differs slightly from the classic Chain of Responsibility pattern in that not one, but all
+            handlers participate in handling the request.
+        </p>
+        <p class="ptext">
+            The code demonstrates an elegant solution to a money dispensing machine problem.
+            Say, a customer requires $247 from an ATM machine.
+            What is the combination of bank notes ($100, $50, $20, $10, $5, $1) that satisfies that request?
+        </p>
+        <p class="ptext">
+            A <span class="cd">Request</span> is created with the amount requested.  Next, a series of <span class="cd">get</span> calls are chained together,
+            each one handling a particular denomination. Each handler determines the number of bank notes dispensed and substracts this amount from the remaining amount.
+            The request object is passed through the chain by returning <span class="cd">this</span> in the <span class="cd">get</span> method.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Request = function(amount) {
+    this.amount = amount;
+
+    log.add("Requested: $" + amount + "\n");
+}
+
+Request.prototype = {
+    get: function(bill) {
+        var count = Math.floor(this.amount / bill);
+        this.amount -= count * bill;
+
+        log.write("Dispense " + count + " $" + bill + " bills");
+
+        return this;
+    }
+}
+
+// log helper 
+var log = (function() {
+    var log = "";
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var request = new Request(378);
+    request.get(100).get(50).get(20).get(10).get(5).get(1);
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Request = function (amount) {
+                this.amount = amount;
+
+                log.add("Requested: $" + amount + "\n");
+            }
+
+            Request.prototype = {
+                get: function (bill) {
+                    var count = Math.floor(this.amount / bill);
+                    this.amount -= count * bill;
+
+                    log.add("Dispense " + count + " $" + bill + " bills");
+
+                    return this;
+                }
+            }
+
+            function run() {
+
+                var request = new Request(378);
+                request.get(100).get(50).get(20).get(10).get(5).get(1);
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Chain</span> returns (i.e. reveals) only a single item: the <span class="cd">Request</span> constructor function and its prototype by association.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Chain = (function () {
+    var Request = function (amount) {
+        this.amount = amount;
+
+        log.add("Requested: $" + amount + "\n");
+    }
+
+    Request.prototype = {
+        get: function (bill) {
+            var count = Math.floor(this.amount / bill);
+            this.amount -= count * bill;
+
+            log.add("Dispense " + count + " $" + bill + " bills");
+
+            return this;
+        }
+    }
+
+    return {
+        Request: Request
+    }
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+function run() {
+
+    var chain = Patterns.Classic.Chain;
+
+    var request = new chain.Request(378);
+    request.get(100).get(50).get(20).get(10).get(5).get(1);
+
+    log.show();
+}</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Chain = (function () {
+                var Request = function (amount) {
+                    this.amount = amount;
+
+                    log.add("Requested: $" + amount + "\n");
+                }
+
+                Request.prototype = {
+                    get: function (bill) {
+                        var count = Math.floor(this.amount / bill);
+                        this.amount -= count * bill;
+
+                        log.add("Dispense " + count + " $" + bill + " bills");
+
+                        return this;
+                    }
+                }
+
+                return {
+                    Request: Request
+                }
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+            function run1() {
+
+                var chain = Patterns.Classic.Chain;
+
+                var request = new chain.Request(378);
+                request.get(100).get(50).get(20).get(10).get(5).get(1);
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/proxy'>Proxy</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/command'>Command</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+
+

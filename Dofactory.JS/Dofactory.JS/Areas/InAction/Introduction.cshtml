@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/inaction">Patterns in Action</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/introduction">Introduction</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Introduction</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Introduction to the JavaScript Patterns in Action apps.<br /><br />
+                Apps that demonstrate Idioms, Design Patterns, and Pattern Architectures 
+                in a more realistic context.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <div>
+            <p>
+                The goal of this section is to demonstrate Idioms and Design Patterns in a more realistic context.
+                These pages are client only; any Ajax access to the server has been mocked with a tool called <i>fauxServer</i>.
+                Several pages make use of the popular <i>Backbone</i> MVC Framework.
+                The charting is implemented with the <i>flot</i> library.
+            </p>
+            <p>
+                There are many things you can build with JavaScript.
+                The next Patterns-in-Action examples in this section represent a sampling of the more common uses in web app development:
+                Dashboard (charting), record management with CRUD (create, read, update, and delete), search, and pagination, mapping.
+                Most apps today feature one or more of these items.
+                Feel free to use these examples as a starting point in your own projects.
+            </p>
+            <p>
+                When reviewing the code you'll see that numerous Idioms and Design Patterns have been used.
+                Special <span class="cd">// **</span> comments (with two asterisks) are included to make it easy to locate these patterns.
+                A final note: we did not set out to cram as many patterns into a single page; what you see here is fairly representative of
+                real-world, pattern-based application code.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/inaction'>Back to List</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/inaction/dashboard'>Dashboard</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

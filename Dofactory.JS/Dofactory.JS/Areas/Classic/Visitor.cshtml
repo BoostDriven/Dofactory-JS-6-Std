@@ -1,0 +1,479 @@
+﻿@{
+    ViewBag.Title = "Visitor";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/visitor">Visitor</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Visitor</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+            </p>
+
+            <partial name="_UsageLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Visitor pattern defines a new operation to a collection of objects without changing the objects themselves.
+            The new logic resides in a separate object called the Visitor.
+        </p>
+        <p class="ptext">
+            Visitors are useful when building extensibility in a library or framework.
+            If the objects in your project provide a 'visit' method that accepts a Visitor object which can make changes to the receiving object
+            then you are providing an easy way for clients to implement future extensions.
+        </p>
+        <p class="ptext">
+            In most programming languages the Visitor pattern requires that the original developer anticipates functional adjustments in the future.
+            This is done by including methods that accept a Visitor and let it operate on the original collection of objects.
+        </p>
+        <p class="ptext">
+            Visitor is not important to JavaScript because it offers far more flexibility by the ability to add and remove methods at runtime.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-visitor.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>ObjectStructure</b> -- In sample code: <b style="color:#088;">employees array</b>
+                    <ul>
+                        <li>maintains a collection of Elements which can be iterated over</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Elements</b> -- In sample code: <b style="color:#088;">Employee objects</b>
+                    <ul>
+                        <li>defines an accept method that accepts visitor objects</li>
+                        <li>in the accept method the visitor's visit method is invoked with 'this' as a parameter</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Visitor</b> -- In sample code: <b style="color:#088;">ExtraSalary, ExtraVacation</b>
+                    <ul>
+                        <li>implements a visit method. The argument is the Element being visited. This is where the Element's changes are made</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            In this example three employees are created with the <span class="cd">Employee</span> constructor function.
+            Each is getting a 10% salary raise and 2 more vacation days.
+            Two visitor objects, <span class="cd">ExtraSalary</span> and <span class="cd">ExtraVacation</span>, make the necessary changes to the employee objects.
+        </p>
+        <p class="ptext">
+            Note that the visitors, in their <span class="cd">visit</span> methods, access the closure variables <span class="cd">salary</span> and <span class="cd">vacation</span> through a public interface.
+            It is the only way because closures are not accessible from the outside.
+            In fact, <span class="cd">salary</span> and <span class="cd">vacation</span> are not variables, they are function arguments, but it works because they are also part of the closure.
+        </p>
+        <p class="ptext">
+            Notice the <span class="cd">self</span> variable. It is used to maintain the current context (stored as a closure variable) and is used in the <span class="cd">visit</span> method.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+        <pre class="prettyprint">
+var Employee = function (name, salary, vacation) {
+
+    var self = this;
+        
+    this.accept = function (visitor) {
+        visitor.visit(self);
+    };
+    this.getName = function () {
+        return name;
+    };
+    this.getSalary = function () {
+        return salary;
+    };
+    this.setSalary = function (sal) {
+        salary = sal;
+    };
+    this.getVacation = function () {
+        return vacation;
+    };
+    this.setVacation = function (vac) {
+        vacation = vac;
+    };
+};
+
+var ExtraSalary = function () {
+    this.visit = function (emp) {
+        emp.setSalary(emp.getSalary() * 1.1);
+    };
+};
+var ExtraVacation = function () {
+    this.visit = function (emp) {
+        emp.setVacation(emp.getVacation() + 2);
+    };
+};
+
+// log helper
+var log = (function() {
+    var log = "";
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+        
+    var employees = [
+        new Employee("John", 10000, 10),
+        new Employee("Mary", 20000, 21),
+        new Employee("Boss", 250000, 51)
+    ];
+
+    var visitorSalary = new ExtraSalary();
+    var visitorVacation = new ExtraVacation();
+        
+    for (var i = 0, len = employees.length; i < len; i++) {
+
+        var emp = employees[i];
+            
+        emp.accept(visitorSalary);
+        emp.accept(visitorVacation);
+
+        log.add(emp.getName() + ": $" + emp.getSalary() +
+            " and " + emp.getVacation() + " vacation days");
+    }
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+
+            var Employee = function (name, salary, vacation) {
+
+                var self = this;
+
+                this.accept = function (visitor) {
+                    visitor.visit(self);
+                };
+                this.getName = function () {
+                    return name;
+                };
+                this.getSalary = function () {
+                    return salary;
+                };
+                this.setSalary = function (sal) {
+                    salary = sal;
+                };
+                this.getVacation = function () {
+                    return vacation;
+                };
+                this.setVacation = function (vac) {
+                    vacation = vac;
+                };
+            };
+
+            var ExtraSalary = function () {
+                this.visit = function (emp) {
+                    emp.setSalary(emp.getSalary() * 1.1);
+                };
+            };
+            var ExtraVacation = function () {
+                this.visit = function (emp) {
+                    emp.setVacation(emp.getVacation() + 2);
+                };
+            };
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run() {
+
+                var employees = [
+                    new Employee("John", 10000, 10),
+                    new Employee("Mary", 20000, 21),
+                    new Employee("Boss", 250000, 51)
+                ];
+
+                var visitorSalary = new ExtraSalary();
+                var visitorVacation = new ExtraVacation();
+
+                for (var i = 0, len = employees.length; i < len; i++) {
+
+                    var emp = employees[i];
+
+                    emp.accept(visitorSalary);
+                    emp.accept(visitorVacation);
+
+                    log.add(emp.getName() + ": $" + emp.getSalary() +
+                        " and " + emp.getVacation() + " vacation days");
+                }
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Visitor</span> returns (i.e. reveals) only a single item: the <span class="cd">Employee</span> constructor function.
+        </p>
+        <p class="ptext">
+            In the <span class="cd">run</span> method an array with 3 employees is created. Next, two 'visitor' functions are defined:  <span class="cd">extraSalary</span> and <span class="cd">extraVacation</span>
+            which are going to be applied to each employee. We could have added these to the Visitor module, but this better demonstrates that you can arbitrarily create and apply functions
+            to any object. The only requirement is that the properties and methods referenced in the function do exist on the object.
+        </p>
+        <p class="ptext">
+            This shows that the Visitor pattern is essentially native to JavaScript as expressed by the Apply Invocation pattern.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Visitor = (function () {
+
+    var Employee = function (name, salary, vacation) {
+           
+        this.getName = function () { return name; };
+        this.setName = function (value) { name = value; };
+            
+        this.getSalary = function () { return salary; };
+        this.setSalary = function (value) { salary = value; };
+            
+        this.getVacation = function () { return vacation; };
+        this.setVacation = function (value) { vacation = value; }
+    };
+
+    return { Employee: Employee };
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var visitor = Patterns.Classic.Visitor;
+
+    var employees = [
+        new visitor.Employee("John", 10000, 10),
+        new visitor.Employee("Mary", 20000, 21),
+        new visitor.Employee("Boss", 250000, 51)
+    ];
+
+    // create 'visitor' functions
+    var extraSalary = function () { 
+        this.setSalary(this.getSalary() * 1.1) 
+    };
+
+    var extraVacation = function () { 
+        this.setVacation(this.getVacation() + 2) 
+    };
+
+    for (var i = 0, len = employees.length; i < len; i++) {
+
+        var emp = employees[i];
+
+        // apply 'visitor' functions
+        extraSalary.apply(emp);
+        extraVacation.apply(emp);
+
+        log.add(emp.getName() + ": $" + emp.getSalary() +
+            " and " + emp.getVacation() + " vacation days");
+    }
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Visitor = (function () {
+
+                var Employee = function (name, salary, vacation) {
+
+                    this.getName = function () { return name; };
+                    this.setName = function (value) { name = value; };
+
+                    this.getSalary = function () { return salary; };
+                    this.setSalary = function (value) { salary = value; };
+
+                    this.getVacation = function () { return vacation; };
+                    this.setVacation = function (value) { vacation = value; }
+                };
+
+                return { Employee: Employee };
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+
+                var visitor = Patterns.Classic.Visitor;
+
+                var employees = [
+                    new visitor.Employee("John", 10000, 10),
+                    new visitor.Employee("Mary", 20000, 21),
+                    new visitor.Employee("Boss", 250000, 51)
+                ];
+
+                // create 'visitor' functions
+                var extraSalary = function () {
+                    this.setSalary(this.getSalary() * 1.1)
+                };
+
+                var extraVacation = function () {
+                    this.setVacation(this.getVacation() + 2)
+                };
+
+                for (var i = 0, len = employees.length; i < len; i++) {
+
+                    var emp = employees[i];
+
+                    // apply 'visitor' functions
+                    extraSalary.apply(emp);
+                    extraVacation.apply(emp);
+
+                    log.add(emp.getName() + ": $" + emp.getSalary() +
+                        " and " + emp.getVacation() + " vacation days");
+                }
+
+                log.show();
+            }
+
+        </script>
+
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/template'>Template Method</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modelview'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+

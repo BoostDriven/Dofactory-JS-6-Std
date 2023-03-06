@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Façade";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/facade">Façade</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Façade</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A single object that represents an entire subsystem.<br /><br />
+                The jQuery API is a Façade to its internal functionality.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Façade pattern provides an interface that shields a client from complex functionality.
+                This definition appears to closely match jQuery's API which provides an easy-to-use interface to traverse the DOM, perform Ajax interactions,
+                event handling, and animation. None of these things is simple and each requires a large and complex body of JavaScript code.
+            </p>
+            <p>
+                The jQuery library is cross-browser, that is, it supports all popular browsers.
+                This involves a huge effort on the part of the authors of jQuery; not only are there several browsers to support (IE, Chrome, Safari, Firefox),
+                but each has different versions with differences among them. There are subtle, and not so subtle, differences between all these browsers as well as
+                bugs for which clever workarounds needed to be found.
+            </p>
+            <p>
+                In summary, the API of jQuery is an implementation of the Façade pattern.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/proxy'>Proxy</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/adapter'>Adapter</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,532 @@
+﻿@{
+    ViewBag.Title = "Builder";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/builder">Builder</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Builder</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Separate the construction of a complex object from its representation so that the same
+                construction process can create different representations.
+            </p>
+
+            <partial name="_UsageMediumLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Builder pattern allows a client to construct a complex object by specifying the type and content only. Construction details are hidden from the client entirely.
+        </p>
+        <p class="ptext">
+            The most common motivation for using Builder is to simplify client code that creates complex objects.
+            The client can still direct the steps taken by the Builder without knowing how the actual work is accomplished.
+            Builders frequently encapsulate construction of Composite objects (another GoF design pattern) because the procedures involved are often repetitive and complex.
+        </p>
+        <p class="ptext">
+            Usually it is the last step that returns the newly created object which makes it easy for a Builder to
+            participate in fluent interfaces in which multiple method calls, separated by dot operators, are chained together
+            (note: fluent interfaces are implementation of the Chaining Pattern as presented in the Modern patterns section).
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-builder.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Director</b> -- In sample code: <b style="color: #088;">Shop</b>
+                    <ul>
+                        <li>constructs products by using the Builder's multistep interface</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Builder</b> -- not used in JavaScript
+                    <ul>
+                        <li>declares a multistep interface for creating a complex product</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>ConcreteBuilder</b> -- In sample code: <b style="color: #088;">CarBuilder, TruckBuilder</b>
+                    <ul>
+                        <li>implements the multistep Builder interface</li>
+                        <li>maintains the product through the assembly process</li>
+                        <li>offers the ability to retrieve the newly created product</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Products</b> -- In sample code: <b style="color: #088;">Car, Truck</b>
+                    <ul>
+                        <li>represents the complex objects being assembled</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            The AbstractBuilder is not used because JavaScript does not support abstract classes.
+            However, the different Builders must implement the same multistep interface for the Director to be able to step through the assembly process
+        </p>
+        <p class="ptext">
+            The JavaScript code has a <span class="cd">Shop</span> (the Director) and two builder objects: <span class="cd">CarBuilder</span> and <span class="cd">TruckBuilder</span>.
+            The Shop's <span class="cd">construct</span> method accepts a Builder instance which it then takes through a series of assembly steps: <span class="cd">step1</span> and <span class="cd">step2</span>.
+            The Builder's <span class="cd">get</span> method returns the newly assembled products (<span class="cd">Car</span> objects and <span class="cd">Truck</span> objects).
+        </p>
+        <p class="ptext">
+            The client has control over the actual object construction process by offering different builders to the <span class="cd">Shop</span>.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+        @*<br />
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+        <br />*@
+        <br />
+<pre class="prettyprint">
+function Shop() {
+    this.construct = function(builder) {
+        builder.step1();
+        builder.step2();
+        return builder.get();
+    }
+}
+
+function CarBuilder() {
+    this.car = null;
+    this.step1 = function() {
+        this.car = new Car();
+    };
+    this.step2 = function() {
+        this.car.addParts();
+    };
+    this.get = function() {
+        return this.car;
+    };
+}
+
+function TruckBuilder() {
+    this.truck = null;
+    this.step1 = function() {
+        this.truck = new Truck();
+    };
+    this.step2 = function() {
+        this.truck.addParts();
+    };
+    this.get = function() {
+        return this.truck;
+    };
+}
+
+function Car() {
+    this.doors = 0;
+    this.addParts = function() {
+        this.doors = 4;
+    };
+    this.say = function() {
+        log.add("I am a " + this.doors + "-door car");
+    };
+}
+
+function Truck() {
+    this.doors = 0;
+    this.addParts = function() {
+        this.doors = 2;
+    };
+    this.say = function() {
+        log.add("I am a " + this.doors + "-door truck");
+    };
+}
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+function run() {
+    var shop = new Shop();
+
+    var carBuilder = new CarBuilder();
+    var truckBuilder = new TruckBuilder();
+
+    var car = shop.construct(carBuilder);
+    var truck = shop.construct(truckBuilder);
+
+    car.say();
+    truck.say();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            function Shop() {
+                this.construct = function (builder) {
+                    builder.step1();
+                    builder.step2();
+                    return builder.get();
+                }
+            }
+
+            function CarBuilder() {
+                this.car = null;
+                this.step1 = function () {
+                    this.car = new Car();
+                };
+                this.step2 = function () {
+                    this.car.addParts();
+                };
+                this.get = function () {
+                    return this.car;
+                };
+            }
+
+            function TruckBuilder() {
+                this.truck = null;
+                this.step1 = function () {
+                    this.truck = new Truck();
+                };
+                this.step2 = function () {
+                    this.truck.addParts();
+                };
+                this.get = function () {
+                    return this.truck;
+                };
+            }
+
+            function Car() {
+                this.doors = 0;
+                this.addParts = function () {
+                    this.doors = 4;
+                };
+                this.say = function () {
+                    log.add("I am a " + this.doors + "-door car");
+                };
+            }
+
+            function Truck() {
+                this.doors = 0;
+                this.addParts = function () {
+                    this.doors = 2;
+                };
+                this.say = function () {
+                    log.add("I am a " + this.doors + "-door truck");
+                };
+            }
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+            function run() {
+                var shop = new Shop();
+
+                var carBuilder = new CarBuilder();
+                var truckBuilder = new TruckBuilder();
+
+                var car = shop.construct(carBuilder);
+                var truck = shop.construct(truckBuilder);
+
+                car.say();
+                truck.say();
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Builder</span> holds all of Builder's functions.
+            Only the <span class="cd">Shop</span>, <span class="cd">CarBuilder</span>, and <span class="cd">TruckBuilder</span> are exposed (revealed), whereas the
+            <span class="cd">Car</span> and <span class="cd">Truck</span> constructor functions are kept private inside the module.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Builder = (function () {
+
+    var Car = function () {
+        this.doors = 0;
+        this.addParts = function () {
+            this.doors = 4;
+        };
+        this.say = function () {
+            log.add("I am a " + this.doors + "-door car");
+        };
+    };
+
+    var Truck = function () {
+        this.doors = 0;
+        this.addParts = function () {
+            this.doors = 2;
+        };
+        this.say = function () {
+            log.add("I am a " + this.doors + "-door truck");
+        };
+    };
+        
+    var Shop = function () {
+        this.construct = function (builder) {
+            builder.step1();
+            builder.step2();
+            return builder.get();
+        }
+    };
+
+    var CarBuilder = function () {
+        this.car = null;
+        this.step1 = function () {
+            this.car = new Car();
+        };
+        this.step2 = function () {
+            this.car.addParts();
+        };
+        this.get = function () {
+            return this.car;
+        }
+    };
+
+    var TruckBuilder = function () {
+        this.truck = null;
+        this.step1 = function () {
+            this.truck = new Truck();
+        };
+        this.step2 = function () {
+            this.truck.addParts();
+        };
+        this.get = function () {
+            return this.truck;
+        };
+    };
+
+    return {
+        Shop: Shop,
+        CarBuilder: CarBuilder,
+        TruckBuilder: TruckBuilder
+    };
+})();
+
+
+function run() {
+
+    var builder = Patterns.Classic.Builder;
+
+    var carBuilder = new builder.CarBuilder();
+    var truckBuilder = new builder.TruckBuilder();
+
+    var shop = new builder.Shop();
+
+    var car = shop.construct(carBuilder);
+    var truck = shop.construct(truckBuilder);
+
+    car.say();
+    truck.say();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Builder = (function () {
+
+                var Car = function () {
+                    this.doors = 0;
+                    this.addParts = function () {
+                        this.doors = 4;
+                    };
+                    this.say = function () {
+                        log.add("I am a " + this.doors + "-door car");
+                    };
+                };
+
+                var Truck = function () {
+                    this.doors = 0;
+                    this.addParts = function () {
+                        this.doors = 2;
+                    };
+                    this.say = function () {
+                        log.add("I am a " + this.doors + "-door truck");
+                    };
+                };
+
+                var Shop = function () {
+                    this.construct = function (builder) {
+                        builder.step1();
+                        builder.step2();
+                        return builder.get();
+                    }
+                };
+
+                var CarBuilder = function () {
+                    this.car = null;
+                    this.step1 = function () {
+                        this.car = new Car();
+                    };
+                    this.step2 = function () {
+                        this.car.addParts();
+                    };
+                    this.get = function () {
+                        return this.car;
+                    }
+                };
+
+                var TruckBuilder = function () {
+                    this.truck = null;
+                    this.step1 = function () {
+                        this.truck = new Truck();
+                    };
+                    this.step2 = function () {
+                        this.truck.addParts();
+                    };
+                    this.get = function () {
+                        return this.truck;
+                    };
+                };
+
+                return {
+                    Shop: Shop,
+                    CarBuilder: CarBuilder,
+                    TruckBuilder: TruckBuilder
+                };
+            })();
+
+
+            function run1() {
+
+                var builder = Patterns.Classic.Builder;
+
+                var carBuilder = new builder.CarBuilder();
+                var truckBuilder = new builder.TruckBuilder();
+
+                var shop = new builder.Shop();
+
+                var car = shop.construct(carBuilder);
+                var truck = shop.construct(truckBuilder);
+
+                car.say();
+                truck.say();
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/abstractfactory'>Abstract Factory</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/factorymethod'>Factory Method</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+

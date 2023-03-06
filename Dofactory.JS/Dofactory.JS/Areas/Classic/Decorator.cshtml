@@ -1,0 +1,442 @@
+﻿@{
+    ViewBag.Title = "Decorator";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/decorator">Decorator</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Decorator</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+            </p>
+
+            <partial name="_UsageMediumHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Decorator pattern extends (decorates) an object’s behavior dynamically.
+            The ability to add new behavior at runtime is accomplished by a Decorator object which ‘wraps itself’ around the original object.
+            Multiple decorators can add or override functionality to the original object.
+        </p>
+        <p class="ptext">
+            An example of a decorator is security management where business objects are given additional access to privileged information depending on the privileges of the authenticated user.
+            For example, an HR manager gets to work with an employee object that has appended (i.e. is decorated with) the employee's salary record so that salary information can be viewed.
+        </p>
+        <p class="ptext">
+            Decorators provide flexibility to statically typed languages by allowing runtime changes as opposed to inheritance which takes place at compile time.
+            JavaScript, however, is a dynamic language and the ability to extend an object at runtime is baked into the language itself.
+        </p>
+        <p class="ptext">
+            For this reason, the Decorator pattern is less relevant to JavaScript developers.
+            In JavaScript the Extend and Mixin patterns subsume the Decorator pattern. We will look at this in the JavaScript optimized code.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-decorator.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: the run() function
+                    <ul>
+                        <li>maintains a reference to the decorated Component</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Component</b> -- In sample code: <b style="color:#088;">User</b>
+                    <ul>
+                        <li>object to which additional functionality is added</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Decorator</b> -- In sample code: <b style="color:#088;">DecoratedUser</b>
+                    <ul>
+                        <li>'wraps around' Component by maintaining a reference to it</li>
+                        <li>defines an interface that conforms to Component's interface</li>
+                        <li>implements the additional functionality (addedMembers in diagram)</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            In the example code a <span class="cd">User</span> object is decorated (enhanced) by a <span class="cd">DecoratedUser</span> object.  It
+            extends the User with several address-based properties. The original
+            interface must stay the same, which explains why  <span class="cd">user.name</span> is assigned to  <span class="cd">this.name</span>.
+            Also, the  <span class="cd">say</span> method of DecoratedUser hides the  <span class="cd">say</span> method of User.
+        </p>
+        <p class="ptext">
+            JavaScript itself is far more effective in dynamically extending objects
+            with additional data and behavior. You can learn more about extending objects
+            in the Modern Patterns under Mixin pattern. The JavaScript optimized solution below also demonstrates a better solution in JavaScript.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+        <br />
+<pre class="prettyprint">
+var User = function(name) {
+    this.name = name;
+    this.say = function() {
+        log.add("User: " + this.name);
+    };
+}
+
+var DecoratedUser = function(user, street, city) {
+    this.user = user;
+    this.name = user.name;  // ensures interface stays the same
+    this.street = street;
+    this.city = city;
+    this.say = function() {
+        log.add("Decorated User: " + this.name + ", " +
+                   this.street + ", " + this.city);
+    };
+}
+
+// logging helper
+var log = (function() {
+    var log = "";
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
+
+function run() {
+
+    var user = new User("Kelly");
+    user.say();
+
+    var decorated = new DecoratedUser(user, "Broadway", "New York");
+    decorated.say();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var User = function (name) {
+                this.name = name;
+                this.say = function () {
+                    log.add("User: " + this.name);
+                };
+            }
+
+            var DecoratedUser = function (user, street, city) {
+                this.user = user;
+                this.name = user.name;  // ensures interface stays the same
+                this.street = street;
+                this.city = city;
+                this.say = function () {
+                    log.add("Decorated User: " + this.name + ", " +
+                        this.street + ", " + this.city);
+                };
+            }
+
+            function run() {
+
+                var user = new User("Kelly");
+                user.say();
+
+                var decorated = new DecoratedUser(user, "Broadway", "New York");
+                decorated.say();
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Decorator</span> returns two methods:
+            <span class="cd">extend</span>  and <span class="cd">extendDeep</span>. They are described in the
+            Modern Patterns section under the Mixin pattern (another 'decorator').
+            The <span class="cd">extend</span> method extends an object with additional properties and methods. <span class="cd">extendDeep</span>
+            also extends an object but does it recursively which includes nested objects and arrays.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Decorator = (function () {
+    
+    var extend = function (dest, source) {
+        for (var prop in source) {
+            if (source.hasOwnProperty(prop)) {
+                dest[prop] = source[prop];
+            }
+        }
+    };
+
+    var extendDeep = function (dest, source) {
+        for (var prop in source) {
+            if (source.hasOwnProperty(prop)) {
+                if (typeof prop === "object") {
+                    dest[prop] = $.isArray(prop) ? [] : {};
+                    this.deepExtend(dest[prop], source[prop]);
+                }
+                else {
+                    dest[prop] = source[prop];
+                }
+            }
+        }
+    };
+
+    return { 
+        extend: extend,
+        extendDeep: extendDeep
+    };
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var decorator = Patterns.Classic.Decorator;
+
+    var User = function (name) {
+        this.name = name;
+        this.say = function () {
+            log.add("User: " + this.name);
+        };
+    }
+
+    var user = new User("Kelly");
+    user.say();
+
+    decorator.extend(user, {
+        street: "Broadway",
+        city: "New York",
+        say: function () {
+            log.add("Extended User: " + this.name + ", " +
+                    this.street + ", " + this.city);
+        }
+    });
+    user.say();
+
+    decorator.extendDeep(user, {
+        school: "Columbia",
+        grades: {
+            "Spring": 4.0,
+            "Fall": 3.5
+        },
+        say: function () {
+            log.add("Deeply Extended User: " + this.name + ", " +
+                    this.street + ", " + this.city + ", " +
+                    this.school + ", grades: " +
+                    this.grades.Spring + ", " + this.grades.Fall);
+        }
+    });
+    user.say();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Decorator = (function () {
+
+                var extend = function (dest, source) {
+                    for (var prop in source) {
+                        if (source.hasOwnProperty(prop)) {
+                            dest[prop] = source[prop];
+                        }
+                    }
+                };
+
+                var extendDeep = function (dest, source) {
+                    for (var prop in source) {
+                        if (source.hasOwnProperty(prop)) {
+                            if (typeof prop === "object") {
+                                dest[prop] = $.isArray(prop) ? [] : {};
+                                this.deepExtend(dest[prop], source[prop]);
+                            }
+                            else {
+                                dest[prop] = source[prop];
+                            }
+                        }
+                    }
+                };
+
+                return {
+                    extend: extend,
+                    extendDeep: extendDeep
+                };
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+
+                var decorator = Patterns.Classic.Decorator;
+
+                var User = function (name) {
+                    this.name = name;
+                    this.say = function () {
+                        log.add("User: " + this.name);
+                    };
+                }
+
+                var user = new User("Kelly");
+                user.say();
+
+                decorator.extend(user, {
+                    street: "Broadway",
+                    city: "New York",
+                    say: function () {
+                        log.add("Extended User: " + this.name + ", " +
+                            this.street + ", " + this.city);
+                    }
+                });
+                user.say();
+
+                decorator.extendDeep(user, {
+                    school: "Columbia",
+                    grades: {
+                        "Spring": 4.0,
+                        "Fall": 3.5
+                    },
+                    say: function () {
+                        log.add("Deeply Extended User: " + this.name + ", " +
+                            this.street + ", " + this.city + ", " +
+                            this.school + ", grades: " +
+                            this.grades.Spring + ", " + this.grades.Fall);
+                    }
+                });
+                user.say();
+
+                log.show();
+            }
+
+        </script>
+
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/composite'>Composite</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/facade'>Façade</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,344 @@
+﻿@{
+    ViewBag.Title = "Module";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/module">Module</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Module</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            Organizes programs in logical and functional units.
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+
+            <p>
+                We have seen how the Namespace pattern significantly reduces the risk of name collisions.
+                We were even able to reduce the global footprint to zero with the Bookmarklet Pattern.
+                The next step in our progression is the Module pattern which is one of the most significant patterns in JavaScript.
+            </p>
+            <p>
+                The Module pattern allows developers to organize their applications in modules or functional areas.
+                Most languages allow programs to be organized in logical or functional units called packages, modules, or areas.
+                JavaScript has no special syntax to do so, but the Module pattern is a frequently used technique to organize parts of the program as self-contained units
+                that can be changed independently without affecting any other module.
+            </p>
+            <p>
+                The Module pattern makes use of immediate anonymous functions and closures.  Here is the idea in code:
+            </p>
+<pre class="prettyprint">
+var module = (function () {
+
+    // private area ...
+
+    return {
+
+        // public area ...
+
+    };
+
+}());
+
+</pre>
+            <p>
+                In its most basic form, the Module is an immediate function whose return value is assigned to a variable (called <span class="cd">module</span> in our example).
+            </p>
+            <p>
+                In the private area of the module you define variables and functions which represent the module's private state.
+                It is off-limits to the outside world. This is courtesy of the closure created by the function in which the private state is maintained.
+            </p>
+            <p>
+                The public area is the returned object literal.  It represents the public interface (properties and methods) of the module which is accessible from anywhere in the program.
+            </p>
+            <p>
+                Let's look at a simple example:
+            </p>
+<pre class="prettyprint">
+var module = (function () {
+
+    // private area
+
+    var count = 0;
+    var increment = function () { count++; };
+    var decrement = function () { count--; };
+
+    return {
+
+        // public area
+
+        addOne: function () { increment(); },
+        subtractOne: function () { decrement(); },
+        getCount: function () { return count; }
+    };
+})();
+</pre>
+            <p>
+                Again, the private area is inaccessible from outside the module. Through closure, the public area does have access to all private members.
+                For example, the variable count cannot be changed directly, but consumers of the module can indirectly change the value through the addOne and subtractOne methods on the public interface.
+            </p>
+            <p>
+                Notice also how a new object is created without the <span class="cd">new</span> operator by defining an object literal which is returned by the anonymous function.
+            </p>
+            <p>
+                A variety of the Module pattern is called the Revealing Module pattern.  Its purpose is to reveal private variables and/or functions via the public interface.  Here is an example:
+            </p>
+<pre class="prettyprint">
+var module = (function () {
+
+    // private area
+
+    var count = 0;
+    var increment = function () {count++;};
+    var decrement = function () {count--;};
+
+    return {
+
+        // public area
+
+        add: function () { increment(); },
+        subtract: function () { decrement(); },
+        getCount: function () { return count; },
+
+        inc: increment,                // revealing method
+        dec: decrement                 // revealing method
+    };
+})();
+
+</pre>
+            <p>
+                Two new methods were added to the public interface: <span class="cd">inc</span> and <span class="cd">dec</span>.  They 'reveal' the private functions <span class="cd">increment</span> and <span class="cd">decrement</span> to outside consumers of the module.
+            </p>
+            <p>
+                Here is a slightly modified way to implement the revealing module pattern. First, create all properties and methods as private local variables and
+                functions and, next, only return the ones that should be publicly available. You can use the same or different names for the public members. Here is an example where we use the same names:
+            </p>
+<pre class="prettyprint">
+var module = (function () {
+
+    var count = 0;
+    var increment = function () { count++; };
+    var decrement = function () { count--; };
+
+    return {
+        increment: increment,       // same names
+        decrement: decrement    
+    };
+})();
+
+</pre>
+            <p>
+                In this last example the returned object literal's purpose has been reduced to a mechanism to expose private members as public members.
+                There is no need to have any code in the return value.  This is an elegant and tidy way of structuring your immediate functions modules.
+            </p>
+            <p>
+                There is nothing to prevent you from creating global variables or interact with existing global objects from within the module.
+                However, if you start doing this is becomes difficult to keep track of what is inside and what is outside.
+                Wouldn't it be clearer if we could import the necessary globals into the module and only touch these?
+                The answer is yes, and, in fact, this is common best practice.  You import global variables as arguments into the module functions, like so:
+            </p>
+<pre class="prettyprint">
+var module = (function (win, $, undefined) {
+
+    var doc = win.document;
+    var nav = win.navigation;    
+
+    return {
+
+    };
+
+})(window, jQuery);
+
+</pre>
+            <p>
+                In this example we are importing 2 global arguments at the bottom of the code: they are window (the global object) and jQuery.
+                Notice that we are also adding a third parameter named undefined at the top which seems odd. Let's examine each of these arguments.
+            </p>
+            <p>
+                The first argument named window imports the global object into the module.
+                A couple of properties on the window are assigned to local variables for direct and fast access: they are document and navigation.
+                Following these assignments there is no need to directly access the global object anymore (win or window) and it will be obvious if we do.
+                Also, assigning global properties to local variables will speed up the application as it reduces the need for the JavaScript engine to follow the scope chain to resolve the references.
+            </p>
+            <p>
+                The second argument jQuery is represented by the $ parameter.
+                As mentioned earlier, there are other libraries that use the same $ global variable name (for example, Prototype) which can cause name conflicts on your page.
+                By including jQuery as an argument and binding it to the parameter named $, then, in your module, you can be sure that $ is in fact an alias for jQuery and nothing else.
+            </p>
+            <p>
+                The third argument is a variable named undefined. It is included to prevent hackers from overwriting the built-in undefined JavaScript variable (which has a value of undefined by default).
+                Here is how that would work.
+            </p>
+            <p>
+                As you saw, only two arguments are provided at the end of the module (when invoking the immediate function), whereas the anonymous function accepts three parameters.
+                JavaScript will not complain when too many or too few arguments are provided when calling a function.  Any extra arguments will be ignored, and
+                any missing arguments will be undefined.  In our module we have a missing argument whose name and value will be undefined.
+                So, if someone decided that it would be funny to reassign undefined = true, then this will correct that situation and have no adverse effect on your module;
+                we know that undefined is truly undefined.
+            </p>
+            <p>
+                The above Module pattern is widely used and is sufficient for most situations.
+                However, when the project starts to grow even larger, you may feel the need to split your module into multiple files.
+                However, you have to be careful because if your JavaScript files are not included in the right order, you run the risk of overwriting all or parts of your own module.
+                This can be solved with the Partial Module pattern. Below is some simple code that shows the idea:
+            </p>
+<pre class="prettyprint">
+var module = (function (self) {
+
+    var top = 10;
+
+    self.multiply = function (x,y) { return x * y; };
+    self.divide = function (x,y) { return x / y; };
+    self.getTop = function () { return top; };
+
+    return self;
+    
+})(module || {});
+
+</pre>
+            <p>
+                Notice how module is passed as an argument at the bottom of the module.
+                If no module exists, then an empty object will be passed in.  Inside the module the '<span class="cd">self</span>' reference (that is, the module itself) is enhanced with three methods:
+                <span class="cd">multiply</span>, <span class="cd">divide</span>, and <span class="cd">getTop</span>.  The function returns <span class="cd">self</span> which is then (re-) assigned to a variable called <span class="cd">module</span>.
+            </p>
+            <p>
+                A disadvantage of the Partial module is that each file has its own private state which is not shared with the other Partial modules.
+                For example, the top variable in the above code is only visible in this file but not in other files that define the module.
+            </p>
+            <p>
+                This can be solved by assigning the incoming state to the local state and enhance it with additional properties and methods.
+                Once a module is fully loaded, that is all files are loaded, we remove the public state from the module.
+                If it is not fully loaded, we assign the local state to the self.state which is then carried to the next file.
+                If this sounds complicated, it is, but here is an example of the so-called <i>private state module</i>:
+            </p>
+<pre class="prettyprint">
+var module = (function (self) {
+
+    var state = self.state = self.state || {};
+    
+    // private state enhancements
+    state.index = 9;
+    state.getIndex = function () {return this.index;};
+
+    if (isLoaded()) {
+        delete self.state;
+    } else {
+        self.state = state;
+    }
+
+    // addional code
+
+    return self;
+    
+})(module || {});
+
+</pre>
+            <p>
+                We do not recommend this last pattern.  The added complexity of reassigning the internal state in each file and the overhead of determining whether all module files
+                have been loaded is too high a price for being able to share private variables.
+            </p>
+            <p>
+                In reality the limitation of not sharing private state may not be always be bad; it forces you to build self-contained sub-modules each of which
+                has its own responsibility as part of the bigger module.
+            </p>
+            <p>
+                The Namespace pattern is frequently used in combination with Module pattern.
+                A common approach is as follows: at the beginning of each file a namespace is defined which is then followed by a module that is added to this namespace. Here is an outline of this approach:
+            </p>
+<pre class="prettyprint">
+var events = MyApplication.namespace("Utils.Events");
+
+events.module = (function () {
+    // private area ...
+    return {
+        // public area ...
+    };
+})();
+
+</pre>
+            <p>
+                Because the namespace method returns a reference to itself, you can shorten the code a bit by immediately assigning the module to the namespace.
+                An additional benefit is that it also removes the need for a global variable (named events in the example above).
+            </p>
+<pre class="prettyprint">
+MyApplication.namespace("Util.Events").module = (function () {
+
+    // private area ...
+
+    return {
+
+        // public area ...
+
+    };
+})();
+
+</pre>
+            <p>
+                This way of chaining code together is another frequently used pattern, called the Chaining pattern which we will discuss in the next section.
+            </p>
+            <p>
+                Before wrapping up, here are some notable points about the Module pattern.
+            </p>
+            <p>
+                The Module pattern is JavaScript's manifestation of the Gang-of-Four Singleton pattern.
+                Modules are immediate functions that execute only once, their return value being the module.
+                Only a single instance of the module will ever exist (which is the idea behind Singleton).
+            </p>
+            <p>
+                As mentioned before, the Module pattern is widely used.
+                You can confirm this by opening up any popular JavaScript library such as jQuery, ExtJs, Backbone, YUI, Ember, Node.js and you'll recognize this pattern right away.
+                Some libraries, such as jQuery and Backbone have their entire code base in a single module.  Others, such as ExtJs and YUI are partitioned in namespaces and include numerous modules.
+            </p>
+            <p>
+                Another reason why Module is so popular in the JavaScript community is because it exhibits many characteristics of good object-oriented design,
+                including:  information hiding, encapsulation, high cohesion/loose coupling, open/closed design and extensibility.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/namespace'>Namespace</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/chaining'>Chaining</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

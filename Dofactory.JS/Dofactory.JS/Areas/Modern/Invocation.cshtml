@@ -1,0 +1,349 @@
+﻿@{
+    ViewBag.Title = "Invocation";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/invocation">Invocation</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Invocation</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Alternative ways to invoke a function or a method.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                Earlier we had mentioned that each function in JavaScript comes with two bonus arguments: <span class="cd">arguments</span> and <span class="cd">this</span>.
+                These are not visible in the formal parameter list but are passed in by the compiler and are available to the entire function scope.
+                The <span class="cd">arguments</span> parameter holds all arguments that were provided when the function was called. Here we will focus on the second bonus argument: <span class="cd">this</span>.
+            </p>
+            <p>
+                All object-oriented programming languages have a similar concept to JavaScript's <span class="cd">this</span>. It may be called this, me, or self, but they all reference the same thing;
+                the object context that the function executes in.  Object context sounds complicated, but an easy way to remember this is that it provides the function an answer to the question where am I,
+                that is, which object instance am I part off?
+            </p>
+            <p>
+                In JavaScript, the value of <span class="cd">this</span> is determined by its Invocation pattern.  There are 4 versions: the function invocation pattern, the method invocation pattern,
+                the constructor invocation pattern and the apply invocation pattern.  They all differ in how they initialize the value of <span class="cd">this</span>.  We'll look at each of these.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Function Invocation Pattern</b><br />
+                First of all, we need to distinguish functions from methods.
+                A standalone function that is not part of an object is called a function or a global function because it resides on the global object.
+                A function that is defined as part of an object is called a method. The '<span class="cd">this</span>' value in a (global) function is bound to the global object.
+                This is the Function Invocation Pattern.  Here is an example:
+            </p>
+<pre class="prettyprint">
+function show() {
+    alert(this === window);    // => true
+    alert(this)                // => [object Window]
+}
+
+show();
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    function show() {
+                        alert(this === window);    // => true
+                        alert(this)                // => [object Window]
+                    }
+
+                    show();
+                }
+            </script>
+            <br /><br />
+
+            <p>
+                This confirms that <span class="cd">this</span> is indeed bound to the global object.  Note that the above code only works in the browser (and not on the server)
+                because window is the name given to the global object in browsers.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Method Invocation Pattern</b><br />
+                As mentioned, a method is a function member of an object.  When a method is invoked, then the <span class="cd">this</span> value is bound to the object instance.
+                This is called the Method Invocation Pattern. Consider this code:
+            </p>
+<pre class="prettyprint">
+var calculator = {
+    total: 0,
+    add: function (x) { this.total += x; },
+    sub: function (x) { this.total -= x; },
+    show: function () { alert("total = " + this.total); }
+}
+
+calculator.add(10);
+calculator.show();       // => total = 10
+
+calculator.sub(6);
+calculator.show();       // => total = 4
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run2() {
+                    var calculator = {
+                        total: 0,
+                        add: function (x) { this.total += x; },
+                        sub: function (x) { this.total -= x; },
+                        show: function () { alert("total = " + this.total); }
+                    }
+
+                    calculator.add(10);
+                    calculator.show();       // => total = 10
+
+                    calculator.sub(6);
+                    calculator.show();       // => total = 4
+                }
+            </script>
+            <br /><br />
+            <p>
+                In all three methods (add, sub, show) the value of <span class="cd">this</span> is bound to the surrounding object instance.
+                These methods have full read-write access to the object's properties (in this example just this.total).
+                Outside the object the total property can be accessed by <span class="cd">calculator.total</span> and inside the object it is accessible as <span class="cd">this.total</span>.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Constructor Invocation Pattern</b><br />
+                Invoking a constructor function with the <span class="cd">new</span> operator creates a new object.  Not surprisingly, the <span class="cd">this</span> variable will be bound to the newly created object.
+                This is called the Constructor Invocation Pattern.
+            </p>
+            <p>
+                There are three steps that take place when executing a constructor function. First a new object is created which is then bound to <span class="cd">this</span>.
+                Next, the function body executes, and properties and methods are added to the object. And, finally, the constructor function implicitly returns the newly created object
+                (you can overwrite the return value by explicitly returning another object but there is rarely a reason to do so).
+            </p>
+            <p>
+                Here is an example:
+            </p>
+<pre class="prettyprint">
+var Calculator = function () {
+    this.total = 0;
+    this.add  = function (x) { this.total += x; };
+    this.sub = function (x) { this.total -= x; },
+    this.show = function () { alert("total = " + this.total); }
+}
+
+var calculator = new Calculator();
+
+calculator.add(10);
+calculator.show();       // => total = 10
+
+calculator.sub(6);
+calculator.show();       // => total = 4
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run3() {
+                    var Calculator = function () {
+                        this.total = 0;
+                        this.add = function (x) { this.total += x; };
+                        this.sub = function (x) { this.total -= x; },
+                            this.show = function () { alert("total = " + this.total); }
+                    }
+
+                    var calculator = new Calculator();
+
+                    calculator.add(10);
+                    calculator.show();       // => total = 10
+
+                    calculator.sub(6);
+                    calculator.show();       // => total = 4
+                }
+            </script>
+            <br /><br />
+            <p>
+                Invoking a constructor function without the <span class="cd">new</span> operator changes the Invocation pattern from a Constructor Invocation pattern to a Function Invocation pattern.
+                Remember that the Function Invocation pattern binds <span class="cd">this</span> to the global object, so forgetting the <span class="cd">new</span> can be a serious problem.
+                We have already discussed this issue and a safeguard in the Constructor pattern.
+            </p>
+            <p>
+                As an alternative you can move the calculator's methods to its prototype, like so:
+            </p>
+<pre class="prettyprint">
+var Calculator = function () {
+    this.total = 0;
+}
+
+Calculator.prototype = {
+    add: function (x) { this.total += x; },
+    sub: function (x) { this.total -= x; },
+    show: function () { alert("total = " + this.total); }
+}
+
+var calculator = new Calculator();
+
+calculator.add(10);
+calculator.show();       // => total = 10
+
+calculator.sub(6);
+calculator.show();       // => total = 4
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+                    var Calculator = function () {
+                        this.total = 0;
+                    }
+
+                    Calculator.prototype = {
+                        add: function (x) { this.total += x; },
+                        sub: function (x) { this.total -= x; },
+                        show: function () { alert("total = " + this.total); }
+                    }
+
+                    var calculator = new Calculator();
+
+                    calculator.add(10);
+                    calculator.show();       // => total = 10
+
+                    calculator.sub(6);
+                    calculator.show();       // => total = 4
+                }
+            </script>
+            <br /><br />
+            <p>
+                In the prototype definition the <span class="cd">this</span> value is also bound to the calculator object instance.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Apply Invocation pattern</b><br />
+                The Application Invocation pattern offers the most flexibility. You use the apply function to invoke a function and then set the <span class="cd">this</span> value yourself.
+                Two arguments are needed: first the value for <span class="cd">this</span>, and secondly an array of arguments used to invoke the function.  Here is an example:
+            </p>
+<pre class="prettyprint">
+function giveName(first, last) {
+    this.first = first;
+    this.last = last;
+};
+var person = {};
+
+giveName.apply(person, ["Neil", "Anderson"]);
+
+alert(person.first + " " + person.last);   // => Neil Anderson
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run5();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run5() {
+                    function giveName(first, last) {
+                        this.first = first;
+                        this.last = last;
+                    };
+                    var person = {};
+
+                    giveName.apply(person, ["Neil", "Anderson"]);
+
+                    alert(person.first + " " + person.last);   // => Neil Anderson
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                The <span class="cd">giveName</span> function assigns a first and last name to an object.
+                We have an empty object named person and then apply the giveName function to it. The first argument is the person object (which is bound to <span class="cd">this</span>) and a
+                two-element array with the first and last as the second argument.  The alert shows that person now has the name Neil Anderson.
+            </p>
+            <p>
+                In addition to <span class="cd">apply</span>, JavaScript comes with a very similar built-in function called <span class="cd">call</span>.
+                It does exactly the same, but the difference is that the second argument is not an array, but a series of individual arguments.  Here is an example:
+            </p>
+<pre class="prettyprint">
+function giveName(first, last) {
+    this.first = first;
+    this.last = last;
+};
+var person = {};
+
+giveName.call(person, "Neil", "Anderson");
+
+alert(person.first + " " + person.last);   // => Neil Anderson
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run6();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run6() {
+                    function giveName(first, last) {
+                        this.first = first;
+                        this.last = last;
+                    };
+                    var person = {};
+
+                    giveName.call(person, "Neil", "Anderson");
+
+                    alert(person.first + " " + person.last);   // => Neil Anderson
+                }
+            </script>
+            <br /><br />
+            <p>
+                The Apply Invocation pattern is a powerful pattern. You can use it with any object as long as it supports the interface that the function expects.
+                Essentially, you are able to attach 'temporary methods' to all objects that meet a certain interface requirement.
+                Actually, in the above example giveName works for any object as there are no requirements to the object's interface:
+                it creates (or overwrites) a first and last property and assigns the values provided.
+            </p>
+            <p>
+                If you are coming from .NET, you will recognize the Apply Invocation pattern as .NET's <i>extension methods</i>.
+                Extension methods have a slightly different syntax, but the effects are the same: you get full control over what object this is bound to.
+                The name extension method is very appropriate as you are temporarily extending objects with these methods.
+                Another name you may see in JavaScript for the Apply Invocation pattern is the <i>borrow method pattern</i> which also describes the pattern well.
+                Finally, <i>delegation</i> has also been used as a name for apply/call method invocation.
+            </p>
+            <p>
+                The common thread in the Invocation methods is the binding of <span class="cd">this</span>. The 4 patterns demonstrate that it can be bound to the global object,
+                the current object instance, a newly created object, or anything we choose.
+            </p>
+            <p>
+                In object-oriented programming the hidden <span class="cd">this</span> parameter is an important concept; it is the context (i.e. object) in which the function executes.
+                The value of <span class="cd">this</span> is bound just before the function begins execution.  This is called late binding, because it takes place at runtime at such a late stage.
+                It makes these functions highly reusable as it allows them to do their work in many different contexts.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/chaining'>Chaining</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/mixin'>Mixin</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "ShortWalk";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/shortwalk">ShortWalk</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>ShortWalk</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Shortens the length of the prototype chain walk.<br /><br />
+                jQuery assigns frequently used global functions to local variables to speed up processing.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                Within the Single var area in jQuery there are several assignments of built-in JavaScript functions to local variables.  Here is an extract:
+            </p>
+
+<pre class="prettyprint">
+core_push = Array.prototype.push,
+core_slice = Array.prototype.slice,
+core_indexOf = Array.prototype.indexOf,
+core_toString = Object.prototype.toString,
+core_hasOwn = Object.prototype.hasOwnProperty,
+core_trim = String.prototype.trim,
+
+</pre>
+            <p>
+                These are implementations of the Short Walk idiom which is designed to speed up processing.
+                Having these methods available as local variables will prevent the JavaScript engine from having to walk the scope chain
+                every time these methods are needed.
+            </p>
+            <p>
+                A slight disadvantage is that you need to invoke these with <span class="cd">call</span> or <span class="cd">apply</span>, making the code a bit less legible:
+            </p>
+<pre class="prettyprint">
+core_push.call( ret, arr );
+
+core_indexOf.call( arr, elem, i );
+
+core_toString.call(obj)
+
+</pre>
+            <p>
+                These lines are all from jQuery.
+            </p>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Minification</b><br />
+                The above Short Walk idiom does more than provide faster access.
+                It also helps in minifying the code. The local variables can get shortened to 1 or 2 character names, which would not be possible with built-in methods with
+                longer names and object chains.  This is the Minification Idiom.
+
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/placeholder'>Placeholder</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/optionshash'>Options Hash</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

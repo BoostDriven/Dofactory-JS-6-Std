@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "Design Patterns & JavaScript";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/javascriptpatterns">JS Patterns</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Design Patterns & JavaScript</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Exploring the role of Design Pattern in JavaScript.
+            </p>
+            <p>
+                JavaScript Patterns are <i>pragmatic</i> design solutions to common software challenges.
+                Some of the Modern JavaScript Patterns attempt to implement features that are missing from the JavaScript language.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                JavaScript has been around since the mid 90's. For most of this time, its use was limited to simple, non-critical tasks such as
+                changing DOM elements or make letters dance on a web page. This changed dramatically with the introduction of Web 2.0 and AJAX, just a few years ago.
+                Since then the interest and use of JavaScript has exploded.  You can see this clearly on github.com where JavaScript is listed as the most popular language.
+            </p>
+            <img src="/img/diagrams/javascript-github.jpg" style="padding: 20px 0 30px 19px;" alt="" />
+            <p>
+                Of course, the github figures are mostly about open source projects and in the commercial world the numbers are different.
+                You can check tiobe.com for the most popular programming languages as determined by references on the web in the form of jobs, training courses, blogs, etc.
+                They have JavaScript ranked as #7. Actually, this may be an underrepresentation because almost all internet developers are dealing with JavaScript one way or another.
+                Programming positions or skills are usually listed by backend programming skills (Rails, PHP, .NET, Java) rather than JavaScript which, together with HTML and CSS,
+                is frequently considered a 'supplementary' skill.
+            </p>
+            <p>
+                The bottom line is that JavaScript's popularity has increased dramatically in recent years and with it an interest in techniques for building well-structured,
+                large-scale applications using design patterns and pattern architectures.
+            </p>
+            <p>
+                If you are programming in JavaScript or jQuery you are already using patterns, possibly without realizing it.
+                For example, if you are writing event handlers you're using the Observer pattern; if you are looping over a collection of data items you are using the Iterator pattern,
+                and if you are using jQuery like this <span class="cd">$("#div").addClass("focus").css("border","3px");</span> you are using the Chaining pattern.
+                Design patterns are deeply embedded in the world of JavaScript programming. We will look at all these examples and more in greater detail at the appropriate sections.
+            </p>
+            <p>
+                The traditional GoF patterns (discussed in our Classic pattern section) involve advanced object-oriented designs with an emphasis on object composition and object relationships.
+                Many of the 23 patterns are relevant to JavaScript, but others less so.  JavaScript is a flexible language with the unique ability to change object definitions at runtime rendering
+                some of the original GoF patterns irrelevant.
+            </p>
+            <p>
+                <b class="open-sans font-18">How do Patterns evolve?</b><br />
+                As you know, our website (www.dofactory.com) focuses on design patterns.
+                A few times we have been contacted by developers who tell us about a solution they developed for a particular problem and they are wondering whether
+                it qualifies as a pattern or not; and if so, how does one take it to the next level and make it into an 'official' design pattern.
+            </p>
+            <p>
+                We tell them to fill out a form, attach a $195 application fee, put it in an envelope, and mail it to the <i>Pattern Regulatory Agency</i>.
+                Okay, okay, just kidding… There is no such thing as a committee that approves or rejects pattern applications. Design Patterns evolve naturally.
+                Let's look at a hypothetical scenario in the area of network programming.
+            </p>
+            <p>
+                Typically, it starts with a blogger or open-source contributor who writes about a solution they developed for a particular software design problem.
+                Others pick up on the idea, test it, modify it, refine it, and publish their enhancements. Then, a developer realizes there are strong similarities with the
+                Proxy pattern (which has been known for many years) and people start referring to this solution as the Net Proxy pattern (because it solves a particular networking problem).
+                It is a useful solution and more and more developers start picking up on the idea. And this is how this pattern starts its life in the network programming field.
+            </p>
+            <p>
+                What this shows is that the evolution of new patterns is a natural process and that the crowd determines which ones are worthwhile and which ones not.
+                Furthermore, there is no formality in documenting patterns and there is no oversight to ensure that these solutions meet the pattern criteria as described by GoF.
+                In the process, the concept of a design pattern has been loosened (or diluted, depending on your perspective) to a more pragmatic, ready-to-use solution that helps
+                solve a common problem in software development.
+            </p>
+            <p>
+                A good example of this pragmatism is how JavaScript library developers interpret the Model View patterns which include MVC, MVP, and MVVM (we have an entire section on MV* patterns).
+                The MV* patterns have been around for many years, are well understood, and are very clearly defined.  JavaScript developers have embraced these patterns with the release of numerous
+                JavaScript MV* libraries and frameworks including Backbone, Knockout, Ember, and Angular.
+            </p>
+            <p>
+                However, what is different is that most of these cannot be easily categorized as MVC, MVP or MVVM.  They all have some flavor of a Model and a View, but their
+                responsibilities and interactions are frequently quite different from the original patterns.  This has led to the <i>MVA</i> moniker: Model View Anything.
+                Again, this is another example of JavaScript developers building pragmatic pattern solutions that work for them but with little or no formality.
+            </p>
+            <p>
+                There is yet another force at play. Many JavaScript programmers have a background in developing apps using mature object-oriented programming environments,
+                such as, Java, C++, C#, Ruby, and PHP.  When they started doing more and more in JavaScript, it became clear very quickly that the language is lacking many features
+                that are common in other languages, such as namespaces, packages, access level modifiers: private, public, protected, and more.
+            </p>
+            <p>
+                JavaScript is a small (but flexible) language that was never designed for large-scale applications development. Several of the more recent patterns
+                (discussed in the Modern and Architecture patterns sections) implement modern language features that are missing from JavaScript and that
+                allow structured, large-scale application development. Examples of these patterns include Module, Namespace, Overload and AMD.
+            </p>
+            <p>
+                The diagram below depicts how JavaScript has adopted and extended the design patterns coming from the mature OO development world.
+                The patterns on the left (mature OO languages) are highly structured and well defined whereas the ones on the right (JavaScript) are far more loosely defined
+                and do not necessarily adhere to the narrow definitions that exists on the left.
+            </p>
+            <div style="padding:30px 0 30px 40px;">
+                <img src="/img/diagrams/javascript-patternsandjavascript.jpg" alt="" />
+            </div>
+
+            <p>
+                Four categories of patterns can be identified in JavaScript: Classic, MV*, Modern, and Architecture. They are all listed in the above figure.
+                The Classic patterns are the 23 GoF patterns. MV* refers to the Model View Patterns.
+                Both the Classic and MV* patterns have been adjusted to optimally work within JavaScript. Each of these categories is discussed in their own section.
+            </p>
+            <p>
+                Many of the patterns in the Modern and Architecture patterns categories are specific to JavaScript.
+                The difference between Modern and Architecture patterns is the level at which they operate.
+                Modern and Architecture patterns are each discussed in their own section.
+            </p>
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/designpatterns'>What are Design Patterns?</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/essentials/oodesign'>OO, SOLID, & DRY principles?</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

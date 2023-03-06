@@ -1,0 +1,264 @@
+﻿@{
+    ViewBag.Title = "JavaScript Transpilers";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/architecture">Architecture</a></li>
+    <li class="breadcrumb-item"><a href="/architecture/transpilers">Transpilers</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>JavaScript Transpilers</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                New languages that are transpiled (translated and compiled) to JavaScript.<br /><br />
+                All these languages are different attempts to address limitations that exist in the JavaScript language.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                By now you are well aware that JavaScript was not designed for large scale development and that the language is lacking many features that are common in mature, object-oriented languages.
+                One way to address this lack of features is by using Design Patterns as explained in the different sections in this program.
+            </p>
+            <p>
+                Another approach is to build a new language with the features that are missing from native JavaScript.
+                The only way to run this code in the browser is to translate and compile (transpile) the code into standard JavaScript that is supported by today's browsers.
+                And this is exactly what they do.
+            </p>
+            <p>
+                Examples of these source-to-source compiled languages include: CoffeeScript, Dart, ClosureScript, and TypeScript.
+                We will briefly touch on each one of these, but mostly TypeScript because it very nicely shows how Design Patterns are used to generate the missing features
+                in standard JavaScript.  Let's look at each language.
+            </p>
+            <p>
+                <b class="font-18 open-sans">CoffeeScript</b>, an open source project by Jeremy Ashkenas, is a language with a very clean syntax that uses indentation rather than JavaScript's brackets, braces and semicolons.
+                Its emphasis is on code brevity and it frequently takes up only half the size of similar JavaScript code. In most cases it is easy to see how CoffeeScript gets translated
+                to JavaScript and vice versa.  CoffeeScript is widely used and is particularly popular with Ruby developers.
+            </p>
+            <p>
+                <b class="font-18 open-sans">Dart</b> is an open source web programming language developed by Google. It has a C-like syntax and supports classes, interfaces, abstract classes, inheritance, type annotations, and more.
+                An internal Google memo has stated that Dart's goal is to solve JavaScript's problems that cannot be solved by evolving the JavaScript language.
+                Whether they will succeed remains to be seen of course. Dart prefers to run in its own VM, but like the other languages it also compiles to JavaScript.
+            </p>
+            <p>
+                <b class="font-18 open-sans">ClojureScript</b> is a subset of Clojure which is an open source project by Rich Hickey.
+                It is a Lisp-like language in which code is treated as data. It has many features found in Common Lisp and also includes a sophisticated macro system.
+                The original Clojure compiles to Java byte code, but ClojureScript transpiles to JavaScript that runs on all browsers and mobile devices.
+            </p>
+            <p>
+                Finally, <b class="font-18 open-sans">TypeScript</b> is a language that was designed by Microsoft as an open source project.
+                What is unique about TypeScript it that it is JavaScript itself -- all it adds is some <i>syntactic sugar</i>.
+                This is very different from CoffeeScript, Dart, and ClojureScript because these are unique languages with their own syntax, grammar, etc.
+            </p>
+            <p>
+                The <i>syntactic sugar</i> of TypeScript includes types, classes, modules, and interfaces, but ultimately these get translated to pure JavaScript
+                which will run on any OS and any platform or browser that runs standard JavaScript.  This makes TypeScript particularly interesting because it allows
+                us to easily study the mappings between missing language features (classes, modules, interfaces, etc.) and standard JavaScript we use today.
+            </p>
+            <p>
+                We will see in the following paragraphs that TypeScript gets translated to JavaScript code that makes extensive use of Design Patterns.
+                All of these patterns should be familiar to you because they have been discussed in prior sections.
+            </p>
+            <p>
+                The TypeScript team has made it very easy to compare TypeScript against the translated JavaScript.
+                Simply visit their website at <a href="javascript:openSite('http://www.typescriptlang.org');void(0);">www.typescriptlang.org</a> and select the play menu item.
+                This will open a playground page where the TypeScript and the resulting JavaScript is displayed side-by-side. Here is a screenshot:
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-playground.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                This screen offers instant gratification: you enter TypeScript on the left as you enter the code it gets immediately translated into JavaScript on the right.
+                At the very bottom of the page it states that the playground runs entirely in the browser and no server calls are made.
+                So the TypeScript compiler runs real-time on the client, which is rather impressive.
+            </p>
+            <p>
+                The dropdown above the TypeScript text box has some walkthrough examples of different features that you can select and study.
+                The image above shows classes; other examples available are for types, modules, inheritance, and a ray tracer example that includes
+                statics, constructors, exports, interfaces, and more.
+            </p>
+            <p>
+                Next we will examine several TypeScript-to-JavaScript translations. These include the following features and concepts:
+                typing, <span class="cd">class</span>, <span class="cd">constructor</span>, inheritance, <span class="cd">module</span>, <span class="cd">interface</span>,
+                <span class="cd">export</span>, <span class="cd">private</span>, and <span class="cd">public</span>.
+            </p>
+            <p>
+                <strong>Typing</strong><br />
+                Type annotations are an important part of TypeScript.
+                They allow the compiler to enforce the intended contract between the code and a function or variable. Here is an example:
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-types.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                The parameter in the function <span class="cd">hello</span> has a type annotation of <span class="cd">string</span>. This informs TypeScript that only strings
+                are allowed into <span class="cd">hello</span> function calls.
+                However, the argument named <span class="cd">person</span> is an array and the compiler detects the problem.
+                The error message states that the "Supplied parameter does not match the signature of the target", which is indeed the case.
+            </p>
+            <p>
+                Notice that the JavaScript on the right does not have any trace of the type.
+                Typing is only used by the TypeScript editor and compiler to ensure that correct types are used at code and compile time,
+                but the JavaScript output files themselves are not affected.  Again, typing is a key aspect of TypeScript and is very helpful in
+                building a robust IDE (integrated development environment), but for our purposes we will not focus on this too much.
+            </p>
+            <p>
+                <strong>class</strong><br />
+                TypeScript supports classes although JavaScript is a class-less language.  We will start off with an empty class.
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-class1.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                The <span class="cd">class</span> gets mapped to an immediate function in JavaScript.
+                It actually uses the Revealing Module pattern because the nested function named <span class="cd">Person</span> is returned.
+                TypeScript considers this nested function the default constructor that has no parameters.
+            </p>
+            <p>
+                Next we'll add a typed property called <span class="cd">name</span>, a <span class="cd">constructor</span> that accepts a <span class="cd">name</span>,
+                and a method named <span class="cd">hello</span>:
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-class2.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                The typed string disappears and does not get translated. TypeScript uses it to verify that the <span class="cd">name</span> property and the incoming <span class="cd">name</span>
+                argument in the <span class="cd">constructor</span> are of the same type.
+            </p>
+            <p>
+                The constructor maps to a private function in JavaScript with the same name.
+                It accepts a <span class="cd">name</span> argument which is then assigned to a name property.
+                The <span class="cd">hello</span> method is added to <span class="cd">Person</span>'s prototype allowing all person instances to share this method.
+                The person instance is returned.  Notice that the <span class="cd">Person</span> prototype method is assigned inside the <span class="cd">Person</span> immediate
+                function which actually is a nice way to encapsulate the <span class="cd">Person</span>'s code. The generated code appears to be robust and highly effective.
+            </p>
+            <p>
+                <strong>interface</strong><br />
+                Interfaces are another feature supported by TypeScript.  We'll look at these next:
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-class3.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                The interface <span class="cd">ICustomer</span> has two members: a property of type <span class="cd">string</span> and a method which takes no arguments and returns a <span class="cd">string</span>.
+                The <span class="cd">Customer</span> class implements this <span class="cd">interface</span>.  TypeScript ensures that the interface members, <span class="cd">name</span> and
+                <span class="cd">getName</span>, are indeed implemented in the class. If not, it shows a red underline under the word <span class="cd">class</span>.
+            </p>
+            <p>
+                Just like type annotations, interfaces are not translated to JavaScript; they are merely used to verify complete and valid implementations of derived classes.
+            </p>
+            <p>
+                <strong>module</strong><br />
+                Next are modules, which are interesting:
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-class4.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                We have a module named <span class="cd">MyApp</span> that exports a <span class="cd">Customer</span> class. The class itself is the same as the one we saw before.
+                At the bottom we create an instance of <span class="cd">Customer</span>, but prefixed with the module name.
+            </p>
+            <p>
+                On the right we have a global variable <span class="cd">MyApp</span> which is passed into the immediate function that creates the Customer.
+                Inside we have the <span class="cd">Customer</span> immediate function which is then assigned to the <span class="cd">MyApp</span> function argument, which is the module name.
+                The internals of the <span class="cd">Customer</span> immediate function are the same as we have seen before.
+            </p>
+            <p>
+                Notice the argument into the 'module' immediate function, which is <span class="cd">(MyApp || (MyApp = {})</span>.
+                This ensures that <span class="cd">MyApp</span> exists and is not overwritten in case it was already defined elsewhere.
+            </p>
+            <p>
+                We have two nested Module patterns: one for the module and another for the class.
+                The class is the Revealing Module pattern because it reveals (returns) the private constructor function of the same name.
+                The module name <span class="cd">MyApp</span> turns into the root name of the namespace, hence we are also seeing the Namespace pattern in action.
+                It is quite interesting to see how all these patterns fall into place.
+            </p>
+            <p>
+                <strong>Inheritance</strong><br />
+                Finally, we will review inheritance.
+            </p>
+        </div>
+        <div style="padding:0px 0 30px 0px;">
+            <img src="/img/diagrams/javascript-typescript-class5.jpg" alt="" />
+        </div>
+        <div class="ptext">
+            <p>
+                In TypeScript we have a <span class="cd">Person</span> base class and an <span class="cd">Employee</span> class which extends <span class="cd">Person</span>.
+                The Person <span class="cd">constructor</span> has a <span class="cd">name</span> parameter with a <span class="cd">public</span> access modifier.
+                What this does is it automatically creates an object property with the same name, like <span class="cd">this.name</span> (you can see this on the right).
+                This works because in JavaScript all object properties are public. But, interestingly, if you were to prefix it with <span class="cd">private</span> then you would
+                see exactly the same (give it a try).  The only difference is that TypeScript will ensure that private members are not externally accessed.
+                Finally, having no access modifier leaves the assignment to the developer, thus, <span class="cd">this.name = name;</span> is not automatically created.
+            </p>
+            <p>
+                <span class="cd">Employee</span> extends <span class="cd">Person</span>. The TypeScript Employee <span class="cd">constructor</span> accepts
+                another public parameter named <span class="cd">salary</span>.
+                The base class's constructor is called with <span class="cd">super(name)</span>.
+                <span class="cd">Employee</span> also adds its own method, named <span class="cd">show</span> which will display an employee's salary.
+                Let's switch to the right and examine the generated JavaScript.
+            </p>
+            <p>
+                For inheritance to work, TypeScript provides an <span class="cd">__extends</span> function you can see at the top right.
+                This function first checks if it already defined elsewhere; if not it create a new function. <span class="cd">__extends</span> is similar to the <span class="cd">inherit</span>
+                function we have seen under the Mixin Pattern in the Modern Patterns (note: this function is also available as Object.create in newer browsers).
+                The difference is that this function has a <span class="cd">this.constructor = d;</span> statement (by the way <span class="cd">d</span> = derived class and
+                <span class="cd">b</span> = base class).  If you have read the section on prototypes it will be clear that this statement is actually very desirable because
+                it ensures that the constructor property is set correctly in all derived objects.
+            </p>
+            <p>
+                The generated <span class="cd">Person</span> class is like all others we have seen before.
+                The <span class="cd">Employee</span> is different because it inhertits from <span class="cd">Person</span>.
+                It accepts the base class as a parameter named <span class="cd">_super</span> in the immediate function.
+                The <span class="cd">Employee</span> immediate function make a call to <span class="cd">__extends</span> with two arguments: the derived class and the base class,
+                that is, <span class="cd">Employee</span> and <span class="cd">Person</span> (called <span class="cd">_super</span>).
+                The <span class="cd">Employee</span> 'constructor' function also makes a call to <span class="cd">_super</span> to set the <span class="cd">name</span> argument.
+                After that the <span class="cd">salary</span> is assigned to its own property. This line was also auto-generated because <span class="cd">salary</span> is prefixed
+                with the <span class="cd">public</span> keyword in TypeScript.
+            </p>
+            <p>
+                This completes our review of TypeScript and how it gets translated to standard JavaScript. What we like about this language is that it so clearly
+                validates the notion that Design Patterns are required to getting JavaScript up to a feature level that is generally only available in mature, object-oriented languages.
+            </p>
+            <p>
+                Whether you use TypeScript in your own work is left up to you. There are numerous JavaScript developers who love these languages that get transpiled to
+                JavaScript because it allows them to increase productivity and the quality and robustness of the JavaScript code they produce.
+                We suggest you experiment with these and see if there is one that meets your needs.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/architecture/amdrequire'>AMD & Require.js</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture/errorhandling'>Error Handling</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

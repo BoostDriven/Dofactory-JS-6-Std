@@ -1,0 +1,472 @@
+﻿@{
+    ViewBag.Title = "Abstract Factory";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/abstractfactory">Abstract Factory</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Abstract Factory</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Provide an interface for creating families of related or dependent objects without
+                specifying their concrete classes.
+            </p>
+
+            <partial name="_UsageMedium" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Introduction</h3>
+        <br />
+        <div >
+            <p>
+                An Abstract Factory creates objects that are related by a common theme.
+                In object-oriented programming a Factory is an object that creates other objects.
+                An Abstract Factory has abstracted out a theme which is shared by the newly created objects.
+            </p>
+            <p>
+                Suppose we have two Abstract Factories whose task it is to create page controls, such as, buttons, textboxes, radio buttons, and listboxes.
+                One is the Light Factory which creates controls that are white and the other the Dark Factory which creates controls that are black.
+                Both Factories creates the same types of controls, but they differ in color, which is their common theme.
+                This is an implementation of the Abstract Factory pattern.
+            </p>
+            <p>
+                Over time the Abstract Factory and Factory Method patterns have merged into a more general pattern called Factory.
+                A Factory is simply an object that creates other objects.
+            </p>
+            <p>
+                You may be wondering why you would want to leave the responsibility of the construction of objects to others rather than simply calling a constructor function with the new keyword directly.
+                The reason is that that constructor functions are limited in their control over the overall creation process and sometimes you will need to hand over control to a factory that has broader knowledge.
+            </p>
+            <p>
+                This includes scenarios in which the creation process involves object caching, sharing or re-using of objects, complex logic, or applications that maintain object and type counts,
+                and objects that interact with different resources or devices.  If your application needs more control over the object creation process, consider using a Factory.
+            </p>
+        </div>
+
+    </div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-md-8">
+        <h3>Diagram</h3>
+        <br />
+        <div >
+
+            <img src="/img/diagrams/javascript-abstract-factory.jpg" alt="" />
+
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-md-8">
+        <h3>Participants</h3>
+        <br />
+        <div >
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>AbstractFactory</b> -- not used in JavaScript
+                    <ul>
+                        <li>declares an interface for creating products</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>ConcreteFactory</b> -- In sample code: <b style="color:#088;">EmployeeFactory, VendorFactory</b>
+                    <ul>
+                        <li>a factory object that 'manufactures' new products</li>
+                        <li>the create() method returns new products</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Products</b> -- In sample code: <b style="color:#088;">Employee, Vendor</b>
+                    <ul>
+                        <li>the product instances being created by the factory</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>AbstractProduct</b> -- not used in JavaScript
+                    <ul>
+                        <li>declares an interface for the products that are being created</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-md-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <div >
+            <p>
+                JavaScript does not support class-based inheritance therefore the abstract classes as depicted in the diagram are not used in the JavaScript sample.
+                Abstract classes and interfaces enforce consistent interfaces in derived classes.
+                In JavaScript we must ensure this consistency ourselves by making sure that each 'Concrete' object has the same interface definition (i.e. properties and methods) as the others
+            </p>
+            <p>
+                In the example we have two Concrete Factories: <span class="cd">EmployeeFactory</span> and <span class="cd">VendorFactory</span>.
+                The first one creates <span class="cd">Employee</span> instances, the second one <span class="cd">Vendor</span> instances.
+                Both products are person types (with the same interface) which allows the client to treat them the same.
+                An array with two employees and two vendors is created. Each person is then asked to say what and who they are.
+            </p>
+            <p>
+                The <span class="cd">log</span> function is a helper which collects and displays results.
+            </p>
+            @* <br />
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false">Run</a>
+                <br />*@
+            <br />
+<pre class="prettyprint">
+function Employee(name) {
+    this.name = name;
+    this.say = function () {
+        log.add("I am employee " + name);
+    };
+}
+
+function EmployeeFactory() {
+    this.create = function(name) {
+        return new Employee(name);
+    };
+}
+
+function Vendor(name) {
+    this.name = name;
+    this.say = function () {
+        log.add("I am vendor " + name);
+    };
+}
+
+function VendorFactory() {
+    this.create = function(name) {
+        return new Vendor(name);
+    };
+}
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var persons = [];
+
+    var employeeFactory = new EmployeeFactory();
+    var vendorFactory = new VendorFactory();
+
+    persons.push(employeeFactory.create("Joan DiSilva"));
+    persons.push(employeeFactory.create("Tim O'Neill"));
+
+    persons.push(vendorFactory.create("Gerald Watson"));
+    persons.push(vendorFactory.create("Nicole McNight"));
+
+    for (var i = 0, len = persons.length; i < len; i++) {
+        persons[i].say();
+    }
+
+    log.show();
+}
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>
+
+            <script type="text/javascript">
+
+                function Employee(name) {
+                    this.name = name;
+                    this.say = function () {
+                        log.add("I am employee " + name);
+                    };
+                }
+
+                function EmployeeFactory() {
+                    this.create = function (name) {
+                        return new Employee(name);
+                    };
+                }
+
+                function Vendor(name) {
+                    this.name = name;
+                    this.say = function () {
+                        log.add("I am vendor " + name);
+                    };
+                }
+
+                function VendorFactory() {
+                    this.create = function (name) {
+                        return new Vendor(name);
+                    };
+                }
+
+                // log helper
+                var log = (function () {
+                    var log = "";
+                    return {
+                        add: function (msg) { log += msg + "\n"; },
+                        show: function () { alert(log); log = ""; }
+                    }
+                })();
+
+                function run() {
+
+                    var persons = [];
+
+                    var employeeFactory = new EmployeeFactory();
+                    var vendorFactory = new VendorFactory();
+
+                    persons.push(employeeFactory.create("Joan DiSilva"));
+                    persons.push(employeeFactory.create("Tim O'Neill"));
+
+                    persons.push(vendorFactory.create("Gerald Watson"));
+                    persons.push(vendorFactory.create("Nicole McNight"));
+
+                    for (var i = 0, len = persons.length; i < len; i++) {
+                        persons[i].say();
+                    }
+
+                    log.show();
+                }
+
+            </script>
+
+
+
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-md-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <div >
+            <p>
+                The Namespace pattern has applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+                A Revealing Module named <span class="cd">AbstractFactory</span> encapsulates all of Abstract Factory's functions.
+                Only the <span class="cd">EmployeeFactory</span> and <span class="cd">VendorFactory</span> are exposed (revealed), whereas the
+                <span class="cd">Employee</span> and <span class="cd">Vendor</span> constructor functions are kept private inside the module.
+            </p>
+            <p>
+                The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+                that is, if a name already exists it won't overwrite it.
+            </p>
+            <p>
+                The <span class="cd">log</span> function is a helper which collects and displays results.
+            </p>
+            @*<br />
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>
+                <br />*@
+            <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").AbstractFactory = (function () {
+
+    var Employee = function (name) {
+        this.name = name;
+        this.say = function () {
+            log.add("I am employee " + name);
+        };
+    };
+
+    var Vendor = function (name) {
+        this.name = name;
+        this.say = function () {
+            log.add("I am vendor " + name);
+        };
+    };
+
+    var EmployeeFactory = function () {
+        this.create = function (name) {
+            return new Employee(name);
+        };
+    };
+
+    var VendorFactory = function () {
+        this.create = function (name) {
+            return new Vendor(name);
+        };
+    };
+
+    return {
+        EmployeeFactory: EmployeeFactory, 
+        VendorFactory: VendorFactory
+    };
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var abstract = Patterns.Classic.AbstractFactory;
+
+    var employeeFactory = new abstract.EmployeeFactory();
+    var vendorFactory = new abstract.VendorFactory();
+
+    var persons = [];
+
+    persons.push(employeeFactory.create("Joan DiSilva"));
+    persons.push(employeeFactory.create("Tim O'Neill"));
+
+    persons.push(vendorFactory.create("Gerald Watson"));
+    persons.push(vendorFactory.create("Nicole McNight"));
+
+    for (var i = 0, len = persons.length; i < len; i++) {
+        persons[i].say();
+    }
+
+    log.show();
+}
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>
+
+            <script type="text/javascript">
+                var Patterns = {
+                    namespace: function (name) {
+                        var parts = name.split(".");
+                        var ns = this;
+
+                        for (var i = 0, len = parts.length; i < len; i++) {
+                            ns[parts[i]] = ns[parts[i]] || {};
+                            ns = ns[parts[i]];
+                        }
+
+                        return ns;
+                    }
+                };
+
+                Patterns.namespace("Classic").AbstractFactory = (function () {
+
+                    var Employee = function (name) {
+                        this.name = name;
+                        this.say = function () {
+                            log.add("I am employee " + name);
+                        };
+                    };
+
+                    var Vendor = function (name) {
+                        this.name = name;
+                        this.say = function () {
+                            log.add("I am vendor " + name);
+                        };
+                    };
+
+                    var EmployeeFactory = function () {
+                        this.create = function (name) {
+                            return new Employee(name);
+                        };
+                    };
+
+                    var VendorFactory = function () {
+                        this.create = function (name) {
+                            return new Vendor(name);
+                        };
+                    };
+
+                    return {
+                        EmployeeFactory: EmployeeFactory,
+                        VendorFactory: VendorFactory
+                    };
+                })();
+
+                // log helper
+                var log = (function () {
+                    var log = "";
+                    return {
+                        add: function (msg) { log += msg + "\n"; },
+                        show: function () { alert(log); log = ""; }
+                    }
+                })();
+
+
+                function run1() {
+
+                    var abstract = Patterns.Classic.AbstractFactory;
+
+                    var employeeFactory = new abstract.EmployeeFactory();
+                    var vendorFactory = new abstract.VendorFactory();
+
+                    var persons = [];
+
+                    persons.push(employeeFactory.create("Joan DiSilva"));
+                    persons.push(employeeFactory.create("Tim O'Neill"));
+
+                    persons.push(vendorFactory.create("Gerald Watson"));
+                    persons.push(vendorFactory.create("Nicole McNight"));
+
+                    for (var i = 0, len = persons.length; i < len; i++) {
+                        persons[i].say();
+                    }
+
+                    log.show();
+                }
+
+
+            </script>
+
+        </div>
+        <div class="d-flex py-30 ">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/introduction'>Introduction</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/builder'>Builder</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

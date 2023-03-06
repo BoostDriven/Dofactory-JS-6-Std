@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Iterator";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/iterator">Iterator</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Iterator</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Sequentially access the elements of a collection.<br /><br />
+                jQuery's <span class="cd">each</span> method is an implementation of the Iterator Pattern.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Iterator Pattern allows traversal (or looping) over a collection of objects.
+                Collections in JavaScript include arrays and the properties on objects.
+                jQuery's implementation of the iterator pattern is the <span class="cd">each</span> method and handles both collection types as the example below demonstrates.
+                Here is an example of where jQuery is used to iterate over an array:
+            </p>
+
+<pre class="prettyprint">
+var rhyme = ["Eeny", "Meeny", "Miny", "Moe"];
+
+$.each(rhyme, function (index, value) {
+    alert(index + ": " + value);    // => 0: Eeny, 1: Meeny, 2: Miny, 3: Moe
+});
+
+</pre>
+            <p>
+                And here jQuery iterates over object properties:
+            </p>
+<pre class="prettyprint">
+var employee = {first: "Jonathan", last: "VanderHorn"};
+
+$.each(employee, function (index, value) {
+    alert(index + ": " + value);   // => first: Jonathan, last: VanderHorn
+});
+
+</pre>
+            <p>
+                The source code of <span class="cd">each</span> shows that it is able to handle either type. These are the relevant lines in that method:
+            </p>
+<pre class="prettyprint">
+each: function( obj, callback, args ) {
+    var name,
+        i = 0,
+        length = obj.length,
+        isObj = length === undefined || jQuery.isFunction( obj );
+
+    // ..
+
+    if ( isObj ) {
+        for ( name in obj ) {
+            if ( callback.call( obj[ name ], name, obj[ name ] ) === false ) {
+                break;
+            }
+        }
+    } else {
+        for ( ; i < length; ) {
+            if ( callback.call( obj[ i ], i, obj[ i++ ] ) === false ) {
+                break;
+        }
+    }
+}
+
+</pre>
+            <p>
+                The iterator is not written from scratch with methods like: <span class="cd">current</span>, <span class="cd">next</span>, and <span class="cd">hasNext</span> as explained in the original GoF Iterator pattern.
+                Instead it uses the built-in <span class="cd">for</span> and the <span class="cd">for-in</span> constructs.
+                In the code above we can see that the <span class="cd">if</span> block iterates over object properties (using for-in) and the <span class="cd">else</span> block iterates over arrays (using for).
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/singleton'>Singleton</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/observer'>Observer</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

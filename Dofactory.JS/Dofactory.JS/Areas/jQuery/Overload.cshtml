@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "Overloading";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/overload">Overloading</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Overloading</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Allows function overloading using argument switching.<br /><br />
+                jQuery uses overloading. A good example is the top-level jQuery method itself which
+                performs argument switching and is therefore overloaded.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                Many languages support <i>function overloading</i> which is a feature that allows you to have multiple functions with the same name,
+                but they all have a different set of parameters.  For example <span class="nobr cd">add(x, y)</span> and <span class="nobr cd">add(x, y, z)</span> are overloaded functions.
+                In typed languages the parameter type is also significant. We may have <span class="nobr cd">add(x, y)</span> which adds two numbers and <span class="nobr cd">add(s, t)</span>
+                which concatenating two string values with <span class="cd">s</span> and <span class="cd">t</span> of type string.
+            </p>
+            <p>
+                JavaScript does not support overloading. However, you mimic it with a technique called <i>argument switching</i>.
+                jQuery uses it extensively. In fact, the main jQuery method itself (which is aliased as $) is overloaded.
+                It does different things depending on the arguments that are being passed. Here are some examples of different uses for jQuery (or $):
+            </p>
+
+<pre class="prettyprint">
+$(function() {
+   // ... 
+});
+</pre>
+            <p>
+                This is a shorthand for <span class="cd">$(document).ready()</span> which runs when the DOM has been fully loaded.
+                A function is passed into the <span class="cd">$()</span> function.
+            </p>
+            <p>
+                Here is another example:
+            </p>
+<pre class="prettyprint">
+$("#menu").addClass("active");
+</pre>
+            <p>
+                This is the regular selector syntax which returns a list of elements that meet the selector criteria. The <span class="cd">$()</span> function is passed a string.
+            </p>
+            <p>
+                And another example:
+            </p>
+<pre class="prettyprint">
+$("&lt;p&gt;Hello there!&lt;/p&gt;").insertAfter("#intro");
+</pre>
+            <p>
+                This inserts a new DOM element after a specific location in the HTML document.
+            </p>
+            <p>
+                These are all examples of function overloading. The overloaded versions expect argument types that are either a function or a string.
+                As you would expect the jQuery source code checks for the selector type. Here is an outline of this code (simplified):
+            </p>
+<pre class="prettyprint">
+init: function( selector, context, rootjQuery ) {
+
+        // HANDLE: $(HTML)
+        if (....) {
+
+           return this;
+        }
+
+        // HANDLE: $(expr) 
+        if (....) {
+
+           return this;
+        }
+
+        // HANDLE: $(function)
+        if ( jQuery.isFunction( selector ) ) {
+           return rootjQuery.ready( selector );
+        }
+        // ...
+}
+
+</pre>
+            <p>
+                Interestingly, this goes beyond standard function overloading.
+                If the selector type is a string value, the function needs to determine whether this is a CSS selector or an HTML string.
+                This could be called <i>semantic overloading</i>.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/doubleexclamation'>Double Exclamation</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/placeholder'>Placeholder</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

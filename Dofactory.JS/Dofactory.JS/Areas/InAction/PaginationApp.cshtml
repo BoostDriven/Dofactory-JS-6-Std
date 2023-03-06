@@ -1,0 +1,259 @@
+﻿@{
+    ViewBag.Title = "Pagination app";
+}
+
+<style>
+    .page-item.active .page-link { background-color: #419288 !important; }
+</style>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/inaction">Patterns in Action</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/pagination">Pagination</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/paginationapp">App</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-9">
+        <div class="d-flex">
+            <div><h2>Pagination</h2></div>
+            <div class="pl-20 pt-12">Page through a list of paintings.</div>
+        </div>
+    </div>
+    <div class="col-2 text-right">
+        <a class="btn btn-red" href='/inaction/pagination'>Close App</a>
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+
+<div id="pictures-content"></div>
+
+<script type="text/template" id="pictures-template">
+    <div class="row width-700 m-auto">
+    </div>
+</script>
+
+<script type="text/template" id="picture-template">
+    <a href="javascript:alert('Hey there! You just clicked on {{ title }}');" class="no-underline text-center font-17 text-dark">
+        <img src="/img/pictures/{{ picture }}" class="img-thumbnail" />
+        <span class="d-block text-center">{{ title }}</span>
+    </a>
+</script>
+
+<br />
+<br />
+<br />
+<br />
+
+@section scripts
+{
+    <script type="text/javascript">
+        var Patterns = {
+        // ** namespace pattern
+        namespace: function (name) {
+            // ** single var pattern
+            var parts = name.split(".");
+            var ns = this;
+
+            // ** iterator pattern
+            for (var i = 0, len = parts.length; i < len; i++) {
+                // ** || idiomT
+                ns[parts[i]] = ns[parts[i]] || {};
+                ns = ns[parts[i]];
+            }
+
+            return ns;
+        }
+    };
+
+    // ** namespace pattern
+    // ** revealing module pattern
+    // ** singleton pattern
+    Patterns.namespace("InAction").Pagination = (function () {
+
+        // ** namespace pattern
+        var Models = {};
+        var Views = {};
+        var Routers = {};
+
+        // Change template token markers to {{ and }}
+        _.templateSettings = {
+            interpolate: /\{\{(.+?)\}\}/g,
+            evaluate: /\{\{(.+?)\}\}/g
+        };
+
+        // ** extend pattern
+        Routers.Router = Backbone.Router.extend({
+
+            // ** init pattern
+            initialize: function (options) {
+                this.el = options.el;
+            },
+            routes: {
+                "": "paginate",
+                ":page": "paginate"
+            },
+            paginate: function (page) {
+
+                // ** truthy/falsy idiom
+                var p = page ? parseInt(page, 10) : 1;
+
+
+                // ** chaining pattern
+                this.el.html(new Views.Pagination({ page: p }).el);
+                this.el.append(new Views.Pictures({ page: p }).el);
+                this.el.append(new Views.Pagination({ page: p }).el);
+            }
+        });
+
+        // ** extend pattern
+        // ** option hash idiom
+        Models.Picture = Backbone.Model.extend({
+        });
+
+        // ** extend pattern
+        // ** option hash idiom
+        Models.Pictures = Backbone.Collection.extend({
+            model: Models.Picture,
+            url: "pagination"
+        });
+
+        // ** extend pattern
+        // ** option hash idiom
+        Views.Pictures = Backbone.View.extend({
+
+            tagName: "div",
+            className: "row width-700 m-auto",
+
+            // ** init pattern
+            initialize: function (options) {
+                this.page = options.page;
+
+                this.collection = new Models.Pictures();
+                this.collection.bind("update", this.render, this);
+                this.collection.fetch({ data: { page: this.page } });
+            },
+            render: function () {
+
+                // ** iterator pattern
+                this.collection.each(function (picture) {
+                    var view = new Views.Picture({ model: picture });
+                    this.$el.append(view.render().el);
+                }, this);
+
+                return this;
+            }
+        });
+
+        // ** extend pattern
+        // ** option hash idiom
+        Views.Picture = Backbone.View.extend({
+
+            tagName: "div",
+            className: "col-4 pt-30",
+            template: _.template($('#picture-template').html()),
+
+            render: function () {
+                this.$el.html(this.template(this.model.toJSON()));
+                return this;
+            }
+        });
+
+        // ** extend pattern
+        // ** option hash idiom
+        Views.Pagination = Backbone.View.extend({
+
+            tagName: "div",   // this is default
+
+            className: "width-100 m-auto",
+            // ** init pattern
+            initialize: function (options) {
+                this.page = options.page;
+                this.render();
+            },
+
+            render: function () {
+
+                var pageCount = Math.ceil(pictures.length / 9);
+                ////this.$el.css("padding-right", "100px");
+
+                var html = "<ul class='pagination m-auto pt-25'>";
+                for (var i = 0; i < pageCount; i++) {
+                    var ix = i + 1;
+                    html += "<li class='page-item " + ((ix === this.page) ? "active" : "") + "'><a class='page-link' href='#" + ix + "'>" + ix + "</a></li>";
+                }
+                html += "</ul>";
+                $(this.el).html(html);
+
+                return this;
+            }
+        });
+
+        var pictures = [
+           { id: 1, picture: "1a.jpg", title: "Painting 1" },
+           { id: 2, picture: "2a.jpg", title: "Painting 2" },
+           { id: 3, picture: "3a.jpg", title: "Painting 3" },
+           { id: 4, picture: "4a.jpg", title: "Painting 4" },
+           { id: 5, picture: "5a.jpg", title: "Painting 5" },
+           { id: 6, picture: "6a.jpg", title: "Painting 6" },
+           { id: 7, picture: "7a.jpg", title: "Painting 7" },
+           { id: 8, picture: "8a.jpg", title: "Painting 8" },
+           { id: 9, picture: "9a.jpg", title: "Painting 9" },
+           { id: 10, picture: "10a.jpg", title: "Painting 10" },
+           { id: 11, picture: "11a.jpg", title: "Painting 11" },
+           { id: 12, picture: "12a.jpg", title: "Painting 12" },
+           { id: 13, picture: "13a.jpg", title: "Painting 13" },
+           { id: 14, picture: "14a.jpg", title: "Painting 14" },
+           { id: 15, picture: "15a.jpg", title: "Painting 15" },
+           { id: 16, picture: "16a.jpg", title: "Painting 16" },
+           { id: 17, picture: "17a.jpg", title: "Painting 17" },
+           { id: 18, picture: "18a.jpg", title: "Painting 18" },
+           { id: 19, picture: "19a.jpg", title: "Painting 19" },
+           { id: 20, picture: "20a.jpg", title: "Painting 20" },
+           { id: 21, picture: "21a.jpg", title: "Painting 21" },
+           { id: 22, picture: "22a.jpg", title: "Painting 22" },
+           { id: 23, picture: "23a.jpg", title: "Painting 23" },
+           { id: 24, picture: "24a.jpg", title: "Painting 24" },
+           { id: 25, picture: "25a.jpg", title: "Painting 25" }
+        ];
+
+        // server Mock
+        fauxServer.addRoute("picturesPage", "pagination", "GET", function (context) {
+
+            // ** single var pattern
+            var pageSize = 9;
+            var start = (context.data.page - 1) * pageSize + 1;
+            var finish = Math.min(start + pageSize, pictures.length + 1);
+
+            context.data = _.filter(pictures, function (item) {
+                var index = parseInt(item.id, 10);
+                return (index >= start && index < finish);
+            });
+
+            return context.data;
+        });
+
+        // Startup code
+        var start = function () {
+            var router = new Routers.Router({ el: $("#pictures-content") });
+            Backbone.history.start();
+        }
+
+        return {
+            start: start
+        };
+    })();
+
+
+    $(function () {
+
+        // ** facade pattern
+        Patterns.InAction.Pagination.start();
+    });
+
+    </script>
+}

@@ -1,0 +1,891 @@
+﻿@{
+    ViewBag.Title = "Cracking JavaScript Idioms";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/crackingidioms">Idioms</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Cracking JavaScript Idioms</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Teaching you the art of decyphering hard-to-read JavaScript Idioms.
+            </p>
+            <p>
+                JavaScript idioms are concise and effective solutions that are potentially difficult to understand.
+                JavaScript, being an extremely flexible language, offers many opportunities to create useful idioms.
+                Exploring these idioms is beneficial and fun!
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                A great way to learn JavaScript is by reading the code of libraries and frameworks written by expert developers, such as, jQuery, Mootools, Dojo, Backbone, ExtJs, Ember, and many others.
+                Exploring these sources will reveal many <i>programming gems</i> which you then add to your own bag of coding tricks and techniques.  It takes time but it is well worth the effort.
+            </p>
+            <p>
+                JavaScript is a language of great flexibility and while spelunking these libraries and frameworks you will most likely encounter code that you wonder:
+                what in the world is going on here?  You feel confident with the JavaScript syntax and all of a sudden you run into a statement that totally throws you off;
+                either 1) it does not makes sense (i.e. what does this mean), or 2) you know what it means, but you have no idea why anyone would do this.
+                Here is an example of each (from real-world code):
+            </p>
+<pre class="prettyprint">
+options || (options = {});    // what does this mean?
+
+var _true_ = true;            // why would anyone do this?
+</pre>
+            <p>
+                It is hard to discern what the first line does, and, as far as the second example, why would anyone reassign true?
+                It takes time and experience to decipher these <i>idioms</i> which is the topic of this section.
+            </p>
+            <p>
+                What exactly is an idiom? According to Wikipedia it is "<i>
+                    an expression of a simple task, algorithm, or data structure that is not a built-in feature
+                    in the programming language being used, or, conversely, the use of an unusual or notable feature that is built into a programming language
+                </i>". Then it goes on:
+                "<i>
+                    The term can be used more broadly, however, to refer to complex algorithms or programming design patterns.
+                    Knowing the idioms associated with a programming language and how to use them is an important part of gaining fluency in that language
+                </i>."
+            </p>
+            <p>
+                An example of an idiom in the English language is "It's raining cats and dogs".  It is a short and effective way of saying that it rains very hard.
+                Any native speaker will understand this, but those that are not are left wondering what the heck they are talking about.
+            </p>
+            <p>
+                Programming idioms are concise and effective solutions. The problem in JavaScript is that they can be rather obscure and therefore they frequently
+                throw off beginning, and sometimes even experienced JavaScript developers. In this section we will list and explain some of the more common idioms
+                (some may refer to these as hacks). This will prevent you from scratching your head when examining someone else's code and spend
+                time searching for an answer.  It actually is a fun section.
+            </p>
+            <p>
+                Most JavaScript idioms are very short and terse. They are used for a variety of reasons: for instance, they 1) make the code more effective and/or efficient,
+                2) allow you to do things that are not natively supported by JavaScript, 3) reduce the code size which in turn reduces the download times,
+                4) allow the minifier to further reduce the code size, and 5) raises the 'cool factor' of the author.
+                The last reason is disappearing quickly as the entire JavaScript community is catching up by learning to read and understand these 'hacks'.
+            </p>
+            <p>
+                Going back to patterns, there is a continuum of patterns from high to low level. At the highest level we have architecture patterns,
+                in the middle we have design patterns, and at the lowest level we are finding idioms. Idioms are sometimes referred to as mini patterns.
+                All of these are discussed in this package. Architecture patterns in the Architecture Patterns and MV Patterns sections.
+                Design patterns in the Modern Patterns and Classic Patterns sections. Finally, idioms are discussed in the rest of this section.
+            </p>
+            <p>
+                Let's look at JavaScript idioms.
+            </p>
+            <p>
+                <b class="open-sans font-18">The && and || operators</b> <br />
+                In JavaScript the && (and) and || (or) operators behave in ways that some developers may not expect. First, they short-circuit evaluations and
+                secondly, they return the last evaluated value (not necessarily true or false).
+            </p>
+            <p>
+                Short-circuiting is a way for the JavaScript engine to increase performance.
+                With &&, when the first operand evaluates to false, then the second operand is not executed because the result will always be false.
+                Similarly, with ||, when the first operand evaluates to true, then the second operand is not executed because the result will always be true.  Here is an example of each:
+            </p>
+<pre class="prettyprint">
+if (true || (a + b))     //  => a + b will never execute
+if (false && (a + b))    //  => a + b will never execute
+</pre>
+            <p>
+                JavaScript developers use this feature to avoid the 'object has no properties' error.
+                This error occurs when you request the value of a property on an object that does not exist. This is what that looks like:
+            </p>
+<pre class="prettyprint">
+if (obj && obj.Property) var a = obj.Property;
+</pre>
+            <p>
+                This code first checks whether obj is undefined (i.e. does not exist); if so, short-circuiting will stop any further execution.
+                Next it checks whether <span class="cd">obj.Property</span> is undefined. If so, it also stops further execution.
+                Only when <span class="cd">obj.Property</span> is defined will it execute the code block in which its value is assigned to variable <span class="cd">a</span>.
+            </p>
+            <p>
+                Many developers do not realize that in JavaScript logical expressions with && and || do not return true or false; instead, they return the value of the last
+                expression that was evaluated.  For example: <span class="nobr cd">false || "8"</span> will return "8".  Similarly, <span class="nobr cd">"apple" && true</span>, returns "apple"
+                and not true (because of short-circuiting).
+            </p>
+            <p>
+                Despite these unexpected return values, these conditions mostly behave as expected because if-statements only look for 'falsy' and 'truthy' expressions
+                (falsy and truthy are explained shortly).
+            </p>
+            <p>
+                Again, JavaScript developers are using this behavior to their advantage by writing shorter code.  At the beginning of a function you frequently see these kinds of code:
+            </p>
+<pre class="prettyprint">
+param = param || '';
+</pre>
+            <p>
+                Or
+            </p>
+<pre class="prettyprint">
+param || (param = '');
+</pre>
+            <p>
+                Both do the same: they assign a default value to an undefined parameter – an empty string in the examples.
+                Note that this also works when <span class="nobr cd">param</span> is false, null, or 0 as these are all considered 'falsy'.
+            </p>
+            <p>
+                These lines are shorthand for this ternary expression:
+            </p>
+<pre class="prettyprint">
+param = param ? param : '';
+</pre>
+            <p>
+                If you wish to check <span class="nobr cd">param</span> <i>only</i> for undefined then you need something like this:
+            </p>
+<pre class="prettyprint">
+param = (typeof param !== "undefined") ? param : '';
+</pre>
+            <p>
+                Let's say you have three node objects. If you need a property from one of three node objects you could use this shorthand:
+            </p>
+<pre class="prettyprint">
+var count = (node1 || node2 || node3).count();
+</pre>
+            <p>
+                It uses the fact that the conditional expression returns a node object and not true or false. If you don't know this then the above expression can be rather puzzling.
+            </p>
+            <p>
+                Combining && and || allows you to shorten your code, but possibly at the cost of readability:
+            </p>
+<pre class="prettyprint">
+return tree && tree.nodes && tree.nodes.length || 0;
+</pre>
+            <p>
+                Here we check that tree and its nodes property are defined. If so, return the number of nodes, else return 0, thus ensuring that the return value is always numeric.
+            </p>
+            <p>
+                <b class="open-sans font-18">Falsy and Truthy</b><br />
+                Most languages have a Boolean data type that is either true or false (or 1 or 0).
+                Whatever the true and false values are, there is no ambivalence about which is which: true is true and false is false (not true).  JavaScript's built-in Boolean type works exactly like this.
+            </p>
+            <p>
+                However, JavaScript is a flexible language and true/false evaluations are often less clear. First of all we have dynamic types, meaning a variable type can change type at any time.
+                A string, for example, can be changed to a number, a Boolean, an object, and even a function, at runtime. Secondly, as we demonstrated before, logical statements work perfectly
+                fine with any type, they don't have to be Boolean at all.
+            </p>
+            <p>
+                Developers use the terms 'falsy' and 'truthy' to denote the falseness or truthiness of an expression.
+                The rules are as follows: 'falsy' expressions include those that evaluate to false, null, undefined, the empty string, the number 0, and NaN (not a number, which is a special number).
+                Everything else is considered 'truthy', including Infinity, objects, functions, and arrays, whether they are empty or not.
+            </p>
+            <p>
+                These rules can lead to confusing code, like this:
+            </p>
+<pre class="prettyprint">
+if ("sidewalk") {
+    alert("sidewalk" == false);  // => false
+    alert("sidewalk" == true);   // => false
+}
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run() {
+                    if ("sidewalk") {
+                        alert("sidewalk" == true);   // => false
+                        alert("sidewalk" == false);  // => false
+                    }
+                }
+            </script>
+            <br /><br />
+            <p>
+                Note that the words truthy and falsy are not official terms but they are broadly understood in the JavaScript community.
+            </p>
+            <p>
+                <b class="open-sans font-18">Double exclamation (!!)</b><br />
+                Here are a couple examples of code you may run into with double exclamation marks:
+            </p>
+<pre class="prettyprint">
+var state = !!options.overlay;
+
+return !!result;
+</pre>
+            <p>
+                You may look at this code for a while and perhaps conclude that it does nothing; it simply reverses a Boolean value and then it reverses it back to the original value.
+                However you would be wrong, because in JavaScript the double !! is used to ensure that what is returned is truly a boolean type.
+            </p>
+            <p>
+                The first ! will evaluate the truthy-or falsy-ness of the expression and return a boolean. Remember that falsy values include
+                false, null, undefined, the empty string '', the number 0, and NaN. Everything else is truthy. The second ! will then reverse the boolean value and returns a true boolean.
+            </p>
+            <p>
+                Here is an example where a numeric value is coerced into a boolean value using !!
+            </p>
+<pre class="prettyprint">
+var odd = !!(number % 2);
+</pre>
+            <p>
+                Again, this can be tricky to decipher; only when you know what the purpose of the !! is can you make sense of it.
+            </p>
+            <p>
+                <b class="open-sans font-18">The $ and _ identifiers</b><br />
+                In JavaScript, identifier names (e.g. variables, object, and functions) must start with $, _, or a letter.
+                The remaining characters can be $, _, letters, and numbers. An identifier cannot start with a number.
+            </p>
+            <p>
+                Given these rules, both $ and _ are valid identifiers. When you first encounter these you may be wondering what they mean.
+                They look particularly odd when combined with dot notation as in <span class="nobr cd">$.fn.tooltip()</span> and <span class="nobr cd">_.pluck()</span>.
+                Because of their uniqueness, different libraries have been 'competing' for these names.
+            </p>
+            <p>
+                The jQuery library, for example, uses <span class="nobr cd">$</span> as a shortcut to their core <span class="nobr cd">jQuery()</span> function.
+                Some other libraries such as Prototype and Mootools also use the $ identifier.
+                As far as using the <span class="nobr cd">_</span>, we are aware of only one library that claims this name, which, naturally, is called underscore.js.
+            </p>
+            <p>
+                In the section on Namespaces (in the Modern Patterns section) we discuss how using the same global identifier becomes a problem for developers using multiple libraries in their web pages.
+                Fortunately, library authors have come up with a workaround convention by implementing a <span class="nobr cd">noConflict()</span> method which allows developers to select what $ means at
+                any point in their own script. This will be discussed further under the Namespace pattern in the Modern Patterns section.
+            </p>
+            <p>
+                <b class="open-sans font-18">Assign globals to locals</b><br />
+                Sometimes you see code like this in JavaScript modules (the Module pattern is described in the Modern Patterns section).
+            </p>
+<pre class="prettyprint">
+function () {
+    var oProto = Object.prototype,
+        aProto = Array.prototype,
+        fProto = Function.prototype;
+
+     // ...
+     
+})();
+</pre>
+            <p>
+                In this code the prototypes of built-in <span class="nobr cd">Object</span>, <span class="nobr cd">Function</span>, and <span class="nobr cd">Array</span> are
+                assigned to local variables. The main reason for doing this is to assist the minifier in reducing the code size.
+                The minifier cannot change the name of native JavaScript objects and its members (nor can it change any reference to a 3rd party library).
+            </p>
+            <p>
+                However, by assigning the reference to a local variable at the beginning of your script, you allow the minifier to minify the local variable at all locations that it is used.
+                For instance, each <span class="nobr cd">Object.prototype</span> reference gets reduced to <span class="nobr cd">x</span> (if this is the minifier's assigned name).
+                This is the Minification idiom whereby you structure your code for maximum compression.
+            </p>
+            <p>
+                You may also see functions assigned to local variables:
+            </p>
+<pre class="prettyprint">
+(function () {
+    var slice = Array.slice,
+        unshift = Array.unshift,
+        toString = Object.toString,
+        hasOwnProperty = Object.hasOwnProperty;
+
+    // ...
+
+})();
+</pre>
+
+            <p>
+                There are two reasons for doing this: it speeds up access to built-in prototype methods and it facilitates further minification.
+                The speed advantages occur when these local functions are invoked using a <span class="nobr cd">call</span> or <span class="nobr cd">apply</span> method, for example:
+            </p>
+<pre class="prettyprint">
+slice.call(array, 0, n);
+
+hasOwnProperty.call(obj, key); 
+</pre>
+            <p>
+                Alternatively, you may see the pattern below. It may look a bit odd, but the end-result is exactly the same as the example above.
+                The only difference is that literal object expressions and literal array expressions are used rather than their type names.
+                This one is a bit slower than the one above because new array or object instances are created on each line.
+            </p>
+<pre class="prettyprint">
+(function () {
+     var slice = [].slice;
+     var unslice = [].unslice;
+     var toString = {}.toString;
+     var hasOwnProperty = {}.hasOwnProperty;
+
+     //...
+
+}();
+</pre>
+            <p>
+                In computational or graphics libraries you may find code that looks like this:
+            </p>
+<pre class="prettyprint">
+(function () {
+var math = Math,
+    mathRound = math.round,
+    mathFloor = math.floor,
+    mathCeil = math.ceil,
+    mathMax = math.max,
+    mathMin = math.min,
+    mathAbs = math.abs,
+    mathCos = math.cos,
+    mathSin = math.sin,
+    mathPI = math.PI
+
+    //...
+
+}();
+</pre>
+            <p>
+                Again, the authors are creating fast-access references to frequently used native methods. Having local variables prevents the JavaScript engine from having to search the
+                scope chain for these frequently used types and methods. This is particularly beneficial for methods and properties that are on the global object because it is always
+                the last searched object in the scope chain. Examples include <span class="nobr cd">Document</span>, <span class="nobr cd">Math</span>, and <span class="nobr cd">alert</span>.
+            </p>
+            <p>
+                Finally, you may run into code that looks like this:
+            </p>
+<pre class="prettyprint">
+(function () {
+    var _true_ = true,
+        _false_ = false,
+        _null_ = null;
+
+    // ...
+
+})();
+</pre>
+            <p>
+                This may not be obvious at first, but it allows the minifier to reduce the length of native variable names, shaving off extra bytes from the JavaScript files being downloaded.
+            </p>
+            <p>
+                <b class="open-sans font-18">Bonus arguments</b><br />
+                Functions in JavaScript come with two bonus arguments: <span class="nobr cd">this</span> and <span class="nobr cd">arguments</span>.
+                They are not visible in the formal parameter list but are passed by the compiler and are available within the scope of the function.
+                As you know, <span class="nobr cd">this</span> references the current object context, meaning the object it is currently working on.
+                This can be a built-in object or your own custom object.  By default, global functions have the global object as their context, whereas methods that are part of an
+                object will have their object as the current context.
+                The Invocation pattern, which is part of the Modern Patterns section, has a lot more to say about the value of <span class="nobr cd">this</span>.
+            </p>
+            <p>
+                The other bonus argument is named <span class="nobr cd">arguments</span>. It has a list of arguments that were provided with the invocation of the function.
+                It looks like an array, but it is not because other than <span class="nobr cd">length</span> and <span class="nobr cd">item(index)</span> it is lacking all array methods.
+                One of the first things you see done in many functions is that the incoming <span class="nobr cd">arguments</span> object is transformed into an array. The code looks like this:
+            </p>
+<pre class="prettyprint">
+function func(a, b, c) {
+    var args = [].slice.call(arguments, 0);
+    
+    // ...
+}
+</pre>
+            <p>
+                Or this:
+            </p>
+<pre class="prettyprint">
+function func(a, b, c) {
+    var args = Array.prototype.slice.call(arguments, 0);
+    
+     // ...
+}
+</pre>
+            <p>
+                Both statements convert <span class="nobr cd">arguments</span> to an array.  The first example uses an array literal. Its <span class="nobr cd">slice</span> method is explicitly
+                called with arguments entered as the <span class="nobr cd">this</span> value
+                and 0 as the begin argument into <span class="nobr cd">slice</span>.  The second does exactly the same with slightly different syntax. It explicitly includes 'prototype' to speed up the JavaScript
+                engine because we know that the built-in <span class="nobr cd">slice</span> method lives on the array's prototype. Not including prototype will return the same results, like so:
+            </p>
+<pre class="prettyprint">
+function func(a, b, c) {
+    var args = Array.slice.call(arguments, 0);
+    
+    // ...
+}
+</pre>
+            <p>
+                Now, with all arguments stored in an array we have full access to the built-in array methods.
+            </p>
+            <p>
+                It is interesting to note that the <span class="nobr cd">arguments</span> feature allows you to declare functions without any parameters and then
+                invoke these with any combination of arguments.  Inside the function you can then use the <span class="nobr cd">arguments</span> bonus variable to determine the arguments that were passed in.
+                The disadvantage of course is that your arguments are not assigned a name.
+            </p>
+            <p>
+                There may be a use case for not declaring parameters when you don't know what arguments to expect, but generally it serves little purpose other than making functions more obscure.
+                However, this feature does highlight the highly flexible and forgiving nature of JavaScript functions.
+            </p>
+            <p>
+                <b class="open-sans font-18">Placeholder parameters</b><br />
+                Sometimes you need to declare a parameter that is not used. This is the case when your code is invoked in a certain way, but you have no use for the argument provided.
+                Examples are callback functions and try-catch exception blocks. You could name the parameter <span class="nobr cd">notUsed</span>, <span class="nobr cd">blah</span>, <span class="nobr cd">xyz</span>,
+                or <span class="nobr cd">ex</span> in the case of try catch. A common and more expressive way of doing this is by using an underscore (<span class="nobr cd">_</span>) which is a valid identifier name in JavaScript.
+            </p>
+            <p>
+                The beauty is that arguments are visible only locally, that is, within the function body, so their names do not interfere with variables on the global object namespace.
+                If it did, this would be a problem because there is a popular library called underscore.js which, uses the underscore (_) as its alias (similar to $ and jQuery).
+            </p>
+            <p>
+                Here is how you use this placeholder parameter:
+            </p>
+<pre class="prettyprint">
+function myCallback(_, result) {
+    // ...
+}
+</pre>
+            <p>
+                And
+            </p>
+<pre class="prettyprint">
+try {
+    // ...
+} catch(_) {
+    // do not respond to an exception
+}       
+</pre>
+            <p>
+                So, now when you see an underscore parameter, you can be pretty certain it is unused.
+            </p>
+            <p>
+                <b class="open-sans font-18">Function overloading</b><br />
+                JavaScript does not natively support function overloading. Function overloading allows you to create functions with the same name but with different signatures.
+                A function signature is the combination of arguments, their types and the order in which they appear (in some languages it also includes the return data type).
+            </p>
+            <p>
+                As an example, <span class="nobr cd">createUser(first, last)</span> is different from <span class="nobr cd">createUser(age, name, street)</span>.
+                These function are said to be <i>overloaded</i> and the runtime determines which function to call, based on the arguments provided.
+            </p>
+            <p>
+                In JavaScript this does not exist. When invoking a function, any number of arguments is accepted as well as any argument data type.
+                So, JavaScript is just fine when invoking a function with any number and any type of arguments irrespective of the function definition. It won't even complain.
+            </p>
+            <p>
+                This flexibility allows us to mimic function overloading. Here is how this works. You create a single function and immediately inside this function you check the arguments and their types.
+                If they do not match the 'default' argument pattern (signature) you switch them around and adjust them to another signature. Here is an example:
+            </p>
+<pre class="prettyprint">
+var animate = function (delay, callback, size)
+
+    // potentially switch arguments
+
+    if (isFunction(delay)) {  // test for function
+        callback = delay; 
+        size = callback; 
+        delay = 100;             // default delay
+    }
+
+    // execute according to default pattern 
+}
+
+var isFunction = function (item) {
+    return Object.prototype.toString.call(item) == "[object Function]";
+}
+
+// can be invoked in two ways
+animate(2000, function () { alert('hi'); }, 200);
+
+animate(function () { alert('hi'); }, 200);
+</pre>
+            <p>
+                The <span class="nobr cd">animate</span> function expects 3 arguments of type: number, function, and number. However, it can also be called with 2 arguments: function and number.
+                The function first checks if the first argument is a function. If it is then it swaps the arguments until they match the default signature.
+                The missing delay is given a default value of 100. Next, it continues executing based on the default parameter pattern.
+            </p>
+            <p>
+                Alternatively, you could check the arguments coming in and then build a switch statement calling any number of appropriate helper functions (possibly nested methods).
+            </p>
+            <p>
+                <b class="open-sans font-18">Options hash</b><br />
+                The Options hash idiom is designed to create better function signatures and APIs. Here is the problem.
+                Suppose you write a constructor function that creates a new element to be placed on an HTML document:
+            </p>
+<pre class="prettyprint">
+var Element = function (type, content, width, height, margin, padding, border, background) {
+     // code goes here
+};
+</pre>
+            <p>
+                As a client of this function you have to provide 8 arguments which must be in the correct order or else unexpected things start to happen.
+                Furthermore, some may be optional whereas others are required.  It is common to have the required parameters first followed by the optional ones, so you can do things like:
+            </p>
+<pre class="prettyprint">
+var element = new Element("TextBox", "Joe", "200px");
+</pre>
+            <p>
+                The remaining 5 parameters will be undefined and the function can check for arguments that are undefined or null and set these to reasonable default values.
+            </p>
+            <p>
+                Now assume that you only have argument values for type and padding, i.e. the first and sixth parameter.
+                Your function call will look something like this:
+            </p>
+
+<pre class="prettyprint" style="width:620px;">
+var element = new Element("TextBox", null, null, null, null, "12px", null, null); 
+</pre>
+            <div class="ptext">
+                <p>
+                    This is an awful way to program, as well as very error prone.
+                </p>
+                <p>
+                    Fortunately, an elegant solution exists that will greatly improve the API. It is called <i>Options hash</i>. It has also been referred to as the <i>Configuration pattern</i>.
+                </p>
+                <p>
+                    Options hash allows you to pass all optional arguments in a single object.  It works like this: you partition the parameters in two groups: required and optional.
+                    The required ones are placed at the beginning of the parameter list.  All optional parameters are captured in a single parameter, usually called options or settings.
+                    This options parameter is an object with name/value pairs that include all optional parameters.  Any arguments that the caller cannot provide can be skipped.
+                </p>
+                <p>
+                    Let's apply this pattern to improve our <span class="nobr cd">Element</span> function.
+                    We have only one required parameter and the remainder is optional, so the function signature can be changed to this:
+                </p>
+<pre class="prettyprint">
+var Element = function (type, options) {
+     // code goes here
+};
+</pre>
+                <p>
+                    That looks much better.  In fact, the options parameter itself is optional, so only the first argument is required.
+                </p>
+                <p>
+                    Here are a few examples of how you can invoke this function:
+                </p>
+            </div>
+<pre class="prettyprint" style="width:650px;">
+var button = new Element("Button", {content: "Submit", padding: "8px"});
+var textbox = new Element("TextBox", {width: "120px", height: "22px", border: "1px"});
+var checkbox = new Element("Checkbox");
+
+</pre>
+            <div class="ptext">
+                <p>
+                    Nice. But how do you handle this inside the function?  First you create an object with reasonable default values for each optional parameter.
+                    The <span class="nobr cd">Element</span> function will look like this:
+                </p>
+<pre class="prettyprint">
+var Element = function (type, options) {
+    var defaults = {
+        content: null,
+        width: "120px",
+        height: "20px",
+        margin: "3px",
+        padding: "2px",
+        border: "0px",
+        background: "white"
+    };
+
+    // more code here
+};
+</pre>
+                <p>
+                    Next, you extend the default object with the incoming options argument. Extending means that you copy all properties from one object to another object.
+                    You can use the jQuery <span class="nobr cd">extend</span> method or write your own (it is fairly simple).  Here we use jQuery <span class="nobr cd">extend</span>:
+                </p>
+<pre class="prettyprint">
+var Element = function (type, options) {
+    var defaults = {
+        content: null,
+        width: "120px",
+        height: "20px",
+        margin: "3px",
+        padding: "2px",
+        border: "0px",
+        background: "white"
+    };
+
+    this.type = type;
+    this.settings = $.extend({}, defaults, options);
+};
+</pre>
+                <p>
+                    The <span class="nobr cd">extend</span> method starts with an empty object (the object literal) and extends it with the properties of the default values and then
+                    overwrites only the ones that are provided in the <span class="nobr cd">options</span> parameter: very elegant.
+                </p>
+                <p>
+                    Remember that the <span class="nobr cd">options</span> parameter itself is optional. How do we handle the situation in which <span class="nobr cd">options</span> is not provided? Here is how:
+                </p>
+<pre class="prettyprint">
+var Element = function (type, options) {
+    var defaults = {
+        content: null,
+        width: "120px",
+        height: "20px",
+        margin: "3px",
+        padding: "2px",
+        border: "0px",
+        background: "white"
+    };
+
+    this.type = type;
+    this.settings = $.extend({}, defaults, options || {});
+
+};
+</pre>
+                <p>
+                    All we did was add <span class="nobr cd">|| {}</span>.  This checks if the options argument value is falsy (null or undefined).
+                    If so, it returns an empty object.  Finally, if you prefer, you can also place the default values inline as an <span class="nobr cd">extend</span> argument.
+                </p>
+<pre class="prettyprint">
+var Element = function (type, options) {
+    this.type = type;
+    this.settings = $.extend({}, {
+        content: null,
+        width: "120px",
+        height: "20px",
+        margin: "3px",
+        padding: "2px",
+        border: "0px",
+        background: "white"
+    }, options || {});
+
+    // your code here
+};
+
+</pre>
+                <p>
+                    This idiom is also called the <i>Configuration pattern</i> because it is frequently used to configure an object.
+                    In these scenarios you may see the options parameter named as <span class="nobr cd">settings</span>, <span class="nobr cd">configuration</span>, or something similar.
+                    Also, it is not necessarily the case that all items in this object are optional, some libraries that use this idiom require the client to provide at least some values.
+                    In the jQuery Patterns section, we will see an example of this.
+                </p>
+                <p>
+                    <b class="open-sans font-18">Immediate functions</b><br />
+                    The frequently used Module pattern (discussed in the Modern Patterns section) is usually implemented as an anonymous immediate (self-executing)
+                    function that contains the entire code base for the module. The general format looks like this:
+                </p>
+<pre class="prettyprint">
+(function () {
+  // code goes here..
+}());
+</pre>
+                <p>
+                    The term immediate function is commonly used and describes it well. We will use this term throughout this package.
+                    However, you should be aware there are other names including: <i>self-executing anonymous function</i> and <i>self-invoked anonymous function</i>.
+                    More recently we are seeing <i>IIFE</i> being used as an abbreviation for <i>immediately invoked function expression</i>.
+                </p>
+                <p>
+                    There are many different ways to create immediate functions. When you see the different varieties for the first time, they may leave you
+                    puzzled until you realize that these are just different ways to ensure that the enclosing function immediately executes.
+                    Here we list some of these varieties.  Note that, at the end, they all do the same thing, that is, they immediately execute the function.
+                    Whichever you choose is your personal preference, although the one above is the more common approach.
+                </p>
+                <p>
+                    Let's start with a slight variation, by rearranging the brackets at the end. Note that the effect is the same.  Crockford and his JSLint tool do prefer the first syntax
+                    as he feels that it more clearly indicates the result of a function being invoked (rather than the function object itself). Here it is:
+                </p>
+<pre class="prettyprint">
+(function () {
+  // code goes here..
+})();
+</pre>
+                <p>
+                    The next one is also becoming popular and this is how Facebook implements the module pattern. It creates an immediate function by placing a leading ! in front of the function keyword instead of having surrounding brackets.
+                </p>
+<pre class="prettyprint">
+!function () {
+  // code goes here..
+}();
+</pre>
+                <p>
+                    You can also explicitly call the function immediately with a <span class="nobr cd">call</span> method.
+                    The advantage of using <span class="nobr cd">call</span> is that you have the option to control the function's scope by passing a different argument.
+                    This is explained later in the Invocation pattern in the Modern Patterns section.
+                </p>
+<pre class="prettyprint">
+(function () {
+  // code goes here..
+}).call();
+</pre>
+                <p>
+                    Another variety is with a + or - before the function name.  This one can leave you really confused.
+                </p>
+<pre class="prettyprint">
++function () {
+  // code goes here..
+}();
+
+</pre>
+                <p>
+                    Finally, let's go totally crazy and see some other valid options:
+                </p>
+<pre class="prettyprint">
+~function () {
+  // code goes here..
+}();
+</pre>
+                <p>
+                    Or
+                </p>
+<pre class="prettyprint">
+delete function () {
+  // code goes here..
+}();
+</pre>
+                <p>
+                    Or
+                </p>
+<pre class="prettyprint">
+void function () {
+  // code goes here..
+}();
+</pre>
+                <p>
+                    Or
+                </p>
+<pre class="prettyprint">
+100% function () {
+  // code goes here..
+}();
+</pre>
+                <p>
+                    Some developers will actually use these exotic constructs in their programs; possibly to show off their developer 'chops'.
+                    Of course, this will make it very difficult for anyone who comes after them that needs to maintain their code long after they have left the project.
+                </p>
+                <p>
+                    You may be wondering how these strange constructs work.  The answer will help you decipher other weird varieties in case you run into these.
+                    To understand the mechanics of these activations, let's start off with a normal function declaration.
+                </p>
+<pre class="prettyprint">
+function go() {
+  // code goes here..
+}
+</pre>
+                <p>
+                    This function has a name, <span class="nobr cd">go</span> in this case, and will be loaded at compile time into memory.
+                    It will execute whenever it is called; simple enough.
+                </p>
+                <p>
+                    Below is a function declaration without a name, a so-called anonymous function.
+                    It is somewhat pointless to do this as there is no way to reference and execute it anywhere in the program.
+                </p>
+<pre class="prettyprint">
+function () {
+  // code goes here..
+}
+</pre>
+                <p>
+                    By placing parenthesis around the declaration, we group what is inside and it gets treated as an expression, but without any side effects.
+                    JavaScript is happy, but nothing happens.
+                </p>
+<pre class="prettyprint">
+(function () {
+  // code goes here..
+})
+</pre>
+                <p>
+                    We can call the above function expression by placing parenthesis at the end (possibly with arguments).
+                    This will create an immediate function that executes as soon as the compiler encounters it.
+                </p>
+<pre class="prettyprint">
+(function () {
+  // code goes here..
+})();
+</pre>
+                <p>
+                </p>
+<pre class="prettyprint">
+</pre>
+                <p>
+                    There are other ways to turn an anonymous function declaration into an expression.
+                    For example, by prefixing it with a ! (not operator) or + (add operator) or ~ (bitwise NOT operator) which are the tricks we have seen before.
+                    When adding () at the end, the expression executes immediately.
+                    It is important to know that there are no side effects due to prefixing the declaration with a ! or + or ~ operator; they are totally harmless.
+                </p>
+                <p>
+                    In summary, anything that turns the function declaration into an expression, followed by () will immediately execute the function.
+                    This explains why all the above hacks work equally well.  You can invent your own variety because coming up with an expression is not too hard.
+                </p>
+                <p>
+                    A function declaration is simply a declaration of a function which can be executed later by calling its name followed by two brackets ().
+                    These brackets optionally contain arguments.
+                </p>
+                <p>
+                    <b class="open-sans font-18">new function()</b><br />
+                    Just in case you haven't seen enough ways to build an immediate function here is yet another option.
+                    You can use <span class="nobr cd">new function ()</span> to wrap your code and execute it immediately. It works like the immediate functions described earlier and it also creates a closure.
+                    An important difference is that there is no way to pass in arguments, which in many situations is a serious disadvantage. Here is how you'd use it:
+                </p>
+<pre class="prettyprint">
+new function () {
+    // code goes here
+};
+</pre>
+                <p>
+                    You can confirm that it executes immediately by including an alert:
+                </p>
+<pre class="prettyprint">
+new function () {
+    alert("In 'new function ()'");
+};
+</pre>
+                <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+                <script type="text/javascript">
+                    function run1() {
+                        new function () {
+                            alert("In 'new function ()'");
+                        };
+                    }
+                </script>
+                <br /><br />
+                <p>
+                    The same <span class="nobr cd">new function ()</span> construct can also be used to create a new object instance, like so:
+                </p>
+<pre class="prettyprint">
+var person = new function () {
+    this.age = 0;
+    this.setAge = function (age) {
+        this.age = age;
+    };
+};
+</pre>
+                <p>
+                    This is valid JavaScript and you are using a function expression as if it were a constructor function.  The only difference is that it is not really reusable.
+                    When running the above code through JSLint you will get a message that states that the first line is a "weird construction" and suggests removing the new keyword.
+                    Given all these issues we think it is better not to use this construct.
+                </p>
+                <p>
+                    <b class="open-sans font-18">Leading semicolon</b><br />
+                    When exploring 3rd party source code, you may run into a JavaScript source file that starts with a semicolon.
+                    Typically, this is used with the Module pattern by plugin developers that know that their code will be surrounded by other developer's code.  It looks like this:
+                </p>
+<pre class="prettyprint">
+;(function () {
+  // code goes here..
+})();
+</pre>
+                <p>
+                    It looks like a typo, but it is not. Its purpose is to protect itself from preceding code that was improperly closed, which can cause problems.
+                    A semicolon will prevent this from happening.  If the preceding code was improperly closed then your semicolon will correct this.
+                    If it was properly closed, then your semicolon will be harmless and there will be no side effects.  This idiom is referred to as a <i>leading semicolon</i>.
+                </p>
+
+
+            </div>
+            <div class="d-flex py-30 pl-md-40">
+                <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/prototypes'>Prototypes in JavaScript</a></div>
+                <div class="ms-auto"><a class="font-16 open-sans" href='/essentials/codingstandards'>Coding Standards & Style</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

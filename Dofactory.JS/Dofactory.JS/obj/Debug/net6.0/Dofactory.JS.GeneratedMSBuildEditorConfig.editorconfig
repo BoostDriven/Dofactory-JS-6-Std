@@ -1,0 +1,469 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Dofactory.JS
+build_property.RootNamespace = Dofactory.JS
+build_property.ProjectDir = C:\Users\troyt\Downloads\Dofactory JS 6 Std\Dofactory.JS\Dofactory.JS\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = C:\Users\troyt\Downloads\Dofactory JS 6 Std\Dofactory.JS\Dofactory.JS
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/AmdRequire.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXEFtZFJlcXVpcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/ErrorHandling.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXEVycm9ySGFuZGxpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXEludHJvZHVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/Modularity.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXE1vZHVsYXJpdHkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/ScriptLoading.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXFNjcmlwdExvYWRpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/Testing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXFRlc3RpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/Transpilers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXFRyYW5zcGlsZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Architecture/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQXJjaGl0ZWN0dXJlXF9JbWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/AbstractFactory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xBYnN0cmFjdEZhY3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Adapter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xBZGFwdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Bridge.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xCcmlkZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Builder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xCdWlsZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Chain.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xDaGFpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Command.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xDb21tYW5kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Composite.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xDb21wb3NpdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Decorator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xEZWNvcmF0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Facade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xGYWNhZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/FactoryMethod.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xGYWN0b3J5TWV0aG9kLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Flyweight.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xGbHl3ZWlnaHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Interpreter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xJbnRlcnByZXRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xJbnRyb2R1Y3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Iterator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xJdGVyYXRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Mediator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xNZWRpYXRvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Memento.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xNZW1lbnRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Observer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xPYnNlcnZlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Prototype.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xQcm90b3R5cGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Proxy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xQcm94eS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Singleton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xTaW5nbGV0b24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/State.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xTdGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Strategy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xTdHJhdGVneS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Template.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xUZW1wbGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/Visitor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xWaXNpdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Classic/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xhc3NpY1xfSW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/CodingStandards.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xDb2RpbmdTdGFuZGFyZHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/CrackingIdioms.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xDcmFja2luZ0lkaW9tcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/DesignPatterns.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xEZXNpZ25QYXR0ZXJucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/EventLoop.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xFdmVudExvb3AuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xJbnRyb2R1Y3Rpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/JavaScriptPatterns.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xKYXZhU2NyaXB0UGF0dGVybnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/OODesign.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xPT0Rlc2lnbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/Prototypes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xQcm90b3R5cGVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/Unobtrusive.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xVbm9idHJ1c2l2ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Essentials/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNzZW50aWFsc1xfSW1hZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/DashboardApp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cRGFzaGJvYXJkQXBwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/DataEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cRGF0YUVudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/DataEntryApp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cRGF0YUVudHJ5QXBwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cSW50cm9kdWN0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/Pagination.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cUGFnaW5hdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/PaginationApp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cUGFnaW5hdGlvbkFwcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cU2VhcmNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/SearchApp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cU2VhcmNoQXBwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/InAction/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSW5BY3Rpb25cX0ltYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Adapter.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XEFkYXB0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Chaining.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XENoYWluaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/DoubleExclamation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XERvdWJsZUV4Y2xhbWF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Facade.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XEZhY2FkZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XEludHJvZHVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Iterator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XEl0ZXJhdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/LazyLoad.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XExhenlMb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Module.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XE1vZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Namespace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XE5hbWVzcGFjZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Observer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XE9ic2VydmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/OptionsHash.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XE9wdGlvbnNIYXNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Overload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XE92ZXJsb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Placeholder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFBsYWNlaG9sZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Plugin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFBsdWdpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Proxy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFByb3h5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/ShortWalk.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFNob3J0V2Fsay5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/Singleton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFNpbmdsZXRvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/SingleVar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFNpbmdsZVZhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/ZeroTimeout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XFplcm9UaW1lb3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/jQuery/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcalF1ZXJ5XF9JbWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XEludHJvZHVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/MV.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XE1WLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/MVC.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XE1WQy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/MVP.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XE1WUC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/MVVM.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XE1WVk0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/ModelView/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZWxWaWV3XF9JbWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Chaining.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXENoYWluaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Constructor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXENvbnN0cnVjdG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Introduction.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXEludHJvZHVjdGlvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Invocation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXEludm9jYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Lazyload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXExhenlsb2FkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Mixin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXE1peGluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Module.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXE1vZHVsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Monkeypatch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXE1vbmtleXBhdGNoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Multiton.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXE11bHRpdG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Namespace.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXE5hbWVzcGFjZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/Partial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXFBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Modern/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcTW9kZXJuXF9JbWFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Rockstar/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUm9ja3N0YXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/Rockstar/_Image.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUm9ja3N0YXJcX0ltYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Base/_Css.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX0Jhc2VcX0Nzcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Base/_Footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX0Jhc2VcX0Zvb3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Base/_Header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX0Jhc2VcX0hlYWRlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Base/_Js.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX0Jhc2VcX0pzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Base/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX0Jhc2VcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Shared/_UsageHigh.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1NoYXJlZFxfVXNhZ2VIaWdoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Shared/_UsageLow.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1NoYXJlZFxfVXNhZ2VMb3cuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Shared/_UsageMedium.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1NoYXJlZFxfVXNhZ2VNZWRpdW0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Shared/_UsageMediumHigh.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1NoYXJlZFxfVXNhZ2VNZWRpdW1IaWdoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_Shared/_UsageMediumLow.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1NoYXJlZFxfVXNhZ2VNZWRpdW1Mb3cuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/troyt/Downloads/Dofactory JS 6 Std/Dofactory.JS/Dofactory.JS/Areas/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 

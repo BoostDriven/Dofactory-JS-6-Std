@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Double Exlamation";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/doubleexclamation">Double Exlamation</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Double Exlamation</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Apply double exclamation to a variable to ensure it is boolean.<br /><br />
+                jQuery uses the double exclamation idiom about 20 times throughout its code base.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Double exclamation idiom converts an expression or or value that is <i>truthy</i> or <i>falsy</i> to a true boolean value.
+                This is discussed in the Essentials section. jQuery uses it in several places throughout its code base.  The grep method uses it twice:
+            </p>
+
+<pre class="prettyprint">
+grep: function (elems, callback, inv) {
+    var retVal,
+        ret = [],
+        i = 0,
+        length = elems.length;
+    inv = !!inv;
+
+    // Go through the array, only saving the items
+    // that pass the validator function
+    for (; i < length; i++) {
+        retVal = !!callback(elems[i], i);
+        if (inv !== retVal) {
+            ret.push(elems[i]);
+        }
+    }
+
+    return ret;
+}
+</pre>
+            <p>
+                In incoming <span class="cd">inv</span> argument is converted to a Boolean and the return value of the <span class="cd">callback</span> invocation also.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/singlevar'>Single var</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/overload'>Overloading</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,492 @@
+﻿@{
+    ViewBag.Title = "Composite";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/composite">Composite</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Composite</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Composite pattern allows the creation of objects with properties that are primitive items or a collection of objects.
+            Each item in the collection can hold other collections themselves, creating deeply nested structures.
+        </p>
+        <p class="ptext">
+            A tree control is a perfect example of a Composite pattern. The nodes of the tree either contain an individual object
+            (leaf node) or a group of objects (a subtree of nodes).
+        </p>
+        <p class="ptext">
+            All nodes in the Composite pattern share a common set of properties and methods which supports individual objects as well as object collections.
+            This common interface greatly facilitates the design and construction of recursive algorithms that iterate over each object in the Composite collection.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-composite.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Component</b> -- In sample code: <b style="color:#088;">Node</b>
+                    <ul>
+                        <li>declares the interface for objects in the composition</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Leaf</b> -- In sample code: <b style="color:#088;">Node</b>
+                    <ul>
+                        <li>represents leaf objects in the composition. A leaf has no children</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Composite</b> -- In sample code: <b style="color:#088;">Node</b>
+                    <ul>
+                        <li>represents branches (or subtrees) in the composition</li>
+                        <li>maintains a collection of child components</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            In our example a tree structure is created from <span class="cd">Node</span> objects. Each node has a name and 4 methods:
+            <span class="cd">add</span>, <span class="cd">remove</span>, <span class="cd">getChild</span>, and <span class="cd">hasChildren</span>.
+            The methods are added to <span class="cd">Node</span>'s prototype. This reduces the memory requirements as these methods are now shared by all nodes.
+            <span class="cd">Node</span> is fully recursive and there is no need for separate Component or Leaf objects.
+        </p>
+        <p class="ptext">
+            A small Composite tree is built by adding nodes to parent nodes. Once complete we invoke <span class="cd">traverse</span> which iterates over each
+            node in the tree and displays its name and depth (by showing indentation).
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Node = function (name) {
+    this.children = [];
+    this.name = name;
+}
+
+Node.prototype = {
+    add: function (child) {
+        this.children.push(child);
+    },
+    remove: function (child) {
+        var len = this.children.length;
+        for (var i = 0; i < len; i++) {
+            if (this.children[i] === child) {
+                this.children.splice(i, 1);
+                return;
+            }
+        }
+    },
+    getChild: function (i) {
+        return this.children[i];
+    },
+    hasChildren: function () {
+        return this.children.length > 0;
+    }
+}
+
+// recursively traverse a (sub)tree
+function traverse(indent, node) {
+
+    log.add(Array(indent++).join("--") + node.name);
+
+    for (var i = 0, len = node.children.length; i < len; i++) {
+        traverse(indent, node.getChild(i));
+    }
+}
+
+// logging helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var tree = new Node("root");
+    var left = new Node("left")
+    var right = new Node("right");
+    var leftleft = new Node("leftleft");
+    var leftright = new Node("leftright");
+    var rightleft = new Node("rightleft");
+    var rightright = new Node("rightright");
+
+    tree.add(left);
+    tree.add(right);
+    tree.remove(right);  // note: remove
+    tree.add(right);
+    left.add(leftleft);
+    left.add(leftright);
+    right.add(rightleft);
+    right.add(rightright);
+
+    traverse(1, tree);
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Node = function (name) {
+                this.children = [];
+                this.name = name;
+            }
+
+            Node.prototype = {
+                add: function (child) {
+                    this.children.push(child);
+                },
+                remove: function (child) {
+                    var len = this.children.length;
+                    for (var i = 0; i < len; i++) {
+                        if (this.children[i] === child) {
+                            this.children.splice(i, 1);
+                            return;
+                        }
+                    }
+                },
+                getChild: function (i) {
+                    return this.children[i];
+                },
+                hasChildren: function () {
+                    return this.children.length > 0;
+                }
+            }
+
+            // recursively traverse a (sub)tree
+
+            function traverse(indent, node) {
+
+                log.add(Array(indent++).join("--") + node.name);
+
+                for (var i = 0, len = node.children.length; i < len; i++) {
+                    traverse(indent, node.getChild(i));
+                }
+            }
+
+            function run() {
+
+                var tree = new Node("root");
+                var left = new Node("left")
+                var right = new Node("right");
+                var leftleft = new Node("leftleft");
+                var leftright = new Node("leftright");
+                var rightleft = new Node("rightleft");
+                var rightright = new Node("rightright");
+
+                tree.add(left);
+                tree.add(right);
+                tree.remove(right);  // note: remove
+                tree.add(right);
+                left.add(leftleft);
+                left.add(leftright);
+                right.add(rightleft);
+                right.add(rightright);
+
+                traverse(1, tree);
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Composite</span> returns all elements that make up the Composite pattern.
+            They are a <span class="cd">Node</span> object and a recursive <span class="cd">traverse</span> method.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Composite = (function () {
+
+    var Node = function (name) {
+        this.children = [];
+        this.name = name;
+    }
+
+    Node.prototype = {
+        add: function (child) {
+            this.children.push(child);
+        },
+        remove: function (child) {
+            var length = this.children.length;
+            for (var i = 0; i < length; i++) {
+                if (this.children[i] === child) {
+                    this.children.splice(i, 1);
+                    return;
+                }
+            }
+        },
+        getChild: function (i) {
+            return this.children[i];
+        },
+        hasChildren: function () {
+            return this.children.length > 0;
+        }
+    };
+
+    // recursively traverse a (sub)tree
+    var traverse = function (indent, node) {
+
+        log.add(Array(indent++).join("--") + node.name);
+
+        for (var i = 0, len = node.children.length; i < len; i++) {
+            this.traverse(indent, node.getChild(i));
+        }
+    };
+
+    return {
+        Node: Node,
+        traverse: traverse
+    };
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var composite = Patterns.Classic.Composite;
+
+    var tree = new composite.Node("root");
+    var left = new composite.Node("left")
+    var right = new composite.Node("right");
+    var leftleft = new composite.Node("leftleft");
+    var leftright = new composite.Node("leftright");
+    var rightleft = new composite.Node("rightleft");
+    var rightright = new composite.Node("rightright");
+
+    tree.add(left);
+    tree.add(right);
+    tree.remove(right);  // note: remove
+    tree.add(right);
+    left.add(leftleft);
+    left.add(leftright);
+    right.add(rightleft);
+    right.add(rightright);
+
+    composite.traverse(1, tree);
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Composite = (function () {
+
+                var Node = function (name) {
+                    this.children = [];
+                    this.name = name;
+                }
+
+                Node.prototype = {
+                    add: function (child) {
+                        this.children.push(child);
+                    },
+                    remove: function (child) {
+                        var length = this.children.length;
+                        for (var i = 0; i < length; i++) {
+                            if (this.children[i] === child) {
+                                this.children.splice(i, 1);
+                                return;
+                            }
+                        }
+                    },
+                    getChild: function (i) {
+                        return this.children[i];
+                    },
+                    hasChildren: function () {
+                        return this.children.length > 0;
+                    }
+                };
+
+                // recursively traverse a (sub)tree
+                var traverse = function (indent, node) {
+
+                    log.add(Array(indent++).join("--") + node.name);
+
+                    for (var i = 0, len = node.children.length; i < len; i++) {
+                        this.traverse(indent, node.getChild(i));
+                    }
+                };
+
+                return {
+                    Node: Node,
+                    traverse: traverse
+                };
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+
+                var composite = Patterns.Classic.Composite;
+
+                var tree = new composite.Node("root");
+                var left = new composite.Node("left")
+                var right = new composite.Node("right");
+                var leftleft = new composite.Node("leftleft");
+                var leftright = new composite.Node("leftright");
+                var rightleft = new composite.Node("rightleft");
+                var rightright = new composite.Node("rightright");
+
+                tree.add(left);
+                tree.add(right);
+                tree.remove(right);  // note: remove
+                tree.add(right);
+                left.add(leftleft);
+                left.add(leftright);
+                right.add(rightleft);
+                right.add(rightright);
+
+                composite.traverse(1, tree);
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/bridge'>Bridge</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/decorator'>Decorator</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+
+

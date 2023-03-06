@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/introduction">Introduction</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Introduction</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Introduction to jQuery and Design Patterns.<br /><br />
+                jQuery is a powerful library that lets you <i>write less</i> and <i>do more</i>.&nbsp;
+                It's source code reveals numerous Modern and Classic Design Patterns and Idioms.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                jQuery is by far the most popular JavaScript library in use today; 60% of the 10,000 most visited websites use it.
+                The total number of deployments worldwide is around 20 million websites.
+            </p>
+            <p>
+                jQuery is cross-browser (supporting all popular browsers) and is designed to simplify navigation of the HTML document, select DOM elements, and make changes to the web page.
+                On their website the authors state: "jQuery is a fast and concise JavaScript library that simplifies HTML document traversing, event handling, animation, and Ajax interactions for rapid web development". This describes it well.
+            </p>
+            <p>
+                It has been referred to as a <i>write less, do more</i> library which is absolutely correct.
+                For web app developers the pre-jQuery days were considerably harder.
+                Just to be able to select and manipulate elements on a page required a lot of messy code, especially in scenarios where multiple browsers and browser versions needed to be supported.
+            </p>
+            <p>
+                The jQuery selector syntax is based on CSS selectors which makes it succinct and highly effective.  It takes very little code to select a complex set of page elements.
+                Most web developers are familiar with CSS so that made the transition to jQuery relatively easy and painless.
+            </p>
+            <p>
+                The jQuery library is unique in that it focuses almost entirely on HTML manipulation.
+                Other popular libraries are usually broader in scope, such as providing MV frameworks, data binding, HTML templating, and/or utility type functionalities.
+                Many client side web projects use jQuery in combination with one other significant library, such as Backbone, Ember, or ExtJs.
+                This is also true for modern HTML5/CSS3 projects (by the way: jQuery is fully CSS3 compliant).
+            </p>
+            <p>
+                Another advantage of using jQuery is that there is very strong community support.  The library is maintained by an active group of JavaScript developers.
+            </p>
+            <p>
+                In this section we cover jQuery design patterns. We will dig into jQuery's source code and explore the patterns that have been used to build the library.
+                There are many. You can learn from these and use the exact same patterns in your own projects whether you use jQuery or not.
+                The best way to become an expert developer is to read and learn from code written by other expert developers.
+            </p>
+            <p>
+                Obviously, the developers of jQuery did not set out to cram as many patterns and best practices into their code as possible,
+                but it is remarkable how many have been applied while building this powerful library. A real testament of what can be accomplished with patterns.
+            </p>
+            <p>
+                To get started we suggest you download the jQuery source code.  It comes as a single JavaScript file with roughly 10,000 lines of code (including comments).
+                Although jQuery is distributed as a single file, this is not how it is maintained. In github.com, the repository for jQuery, you'll find that the code base is
+                partitioned in about 25 separate JavaScript files organized by functionality.  This makes sense or else development and maintenance would be a nightmare.
+            </p>
+            <p>
+                Once downloaded, open the jQuery source file in your favorite editor.
+                You will quickly recognize several commonly used JavaScript patterns.
+                Scrolling down the file you may discover a few more.
+                In the next several pages we will locate, identify, and discuss these patterns and best practice techniques.
+                Again, learning from the masters is the best way to becoming an expert JavaScript developer yourself.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery'>Back to List</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/module'>Module</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

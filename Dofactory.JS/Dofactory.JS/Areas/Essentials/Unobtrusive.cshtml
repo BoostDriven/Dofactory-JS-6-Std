@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Unobtrusive JavaScript";
+}
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/unobtrusive">Unobtrusive</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Unobtrusive JavaScript</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Explains the notion of Unobtrusive JavaScript, Layering, and Separation of Concerns.
+            </p>
+            <p>
+                It is considered a best practice to separate web pages into three areas of concern:
+                content (HTML), style (CSS), and behavior (JavaScript).
+                It makes these pages better organized, more understandable, and easier-to-maintain.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials</h3>
+        
+        <div class="pl-md-40">
+            <p>
+                The term <i>Unobtrusive JavaScript</i> refers to how you use JavaScript on web pages. The unobtrusive part denotes out-of-the-way, discreet, and without interference.
+                Initially it meant that if a browser did not support certain features or if JavaScript had been disabled the user would not be shut out.
+                If possible, JavaScript would run, but if not then the site would continue to present the necessary information. This approach is also referred to as <i>progressive enhancement</i>.
+            </p>
+            <p>
+                More recently however, the role of JavaScript has become so critical that many new sites simply cannot function without it and therefore most developers pretty much ignore the possibility
+                of JavaScript not being available. For example, single page applications (SPAs) that rely on Ajax to perform partial page refreshes will simply not work without JavaScript.
+            </p>
+            <p>
+                However, the concept of unobtrusive JavaScript lives on as a way of structuring web pages; this time from the perspective of the developer and how they <i>layer</i> (i.e. separate) their code.
+                The idea is that JavaScript should not be embedded with HTML, but rather there needs to be a separation of behavior (JavaScript) and content (HTML).
+            </p>
+            <p>
+                In many web pages you see JavaScript assigned to an onclick attribute on a DOM element, like so:
+            </p>
+<pre class="prettyprint">
+&lt;button onclick="alert('Hello');return false;" &gt;Click me&lt;/button&gt;
+</pre>
+            <p>
+                This works well on pages with just a few JavaScript snippets, but when your application starts to grow and you have hundreds of DOM elements across many pages that
+                require, say, JavaScript client-side validation, then it becomes very difficult to maintain. This is why it is best to separate the JavaScript from the HTML.
+            </p>
+            <p>
+                The notion of separating web pages in layers has another dimension: styles (using CSS). These three dimensions: <i>behavior</i>, <i>style</i>, and <i>content</i> are frequently referred
+                to as <i>the three layers of web design</i>.  Here is a graphic of these layers.
+            </p>
+            <div style="padding:24px 0 24px 100px;">
+                <img src="/img/diagrams/javascript-unobtrusive.jpg" alt="" />
+            </div>
+            <p>
+                Notice in the figure that each layer has its own file type: HTML resides in .html files (or something else depending on the technology used), JavaScript in .js files, and Style Sheets in .css files.
+                This greatly facilitates a clean separation of concerns.
+            </p>
+            <p>
+                Here is an example of the three layers:
+            </p>
+            <i>HTML</i>
+<pre class="prettyprint">
+&lt;div class="area"&gt;
+   &lt;button  id="clicker"&gt;Click here&lt;/button&gt;
+&lt;/div&gt;
+</pre>
+            <i>JavaScript</i>
+<pre class="prettyprint">
+$(function() {
+     $("#clicker").on('click', function() {
+         alert("Yep, clicked!");
+     });
+}
+</pre>
+            <i>CSS</i>
+<pre class="prettyprint">
+.area {
+   padding:10px;
+   background:lightblue;
+}
+</pre>
+            <style>
+                .area { padding: 10px; background: lightblue; }
+            </style>
+            <div class="area">
+                <button id="clicker">Click here</button> &nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            </div>
+
+            <br /><br />
+            <p>The benefits of organizing your pages in separate layers are numerous:</p>
+            <ul>
+                <li><b class="open-sans font-18">Increased Reusability</b>. The CSS style sheets and JavaScript code you write for one page is reusable at other pages. Pages that have CSS styles and JavaScript embedded in the HTML will not be reusable for those components. </li>
+                <li><b class="open-sans font-18">Easier to Maintain</b>. If you need to correct a mistake or make enhancements it is usually clear where, in which file, to go. If it involves behavior it is a JavaScript file, if it is the look and feel it is a CSS file, or else it is a web page's HTML itself.  Furthermore, if styles and behaviors are reused at multiple pages fixing it for one instance will most likely also fix it for all other instances.</li>
+                <li><b class="open-sans font-18">Team development</b>. Web app creation may involve people from different disciplines: developers, designers, information architects, usability experts, etc.  With the separation of layers, each can work on their own file type and not interfere with other people's work.</li>
+                <li><b class="open-sans font-18">Better Performance</b>. Once your browser has loaded a CSS or JavaScript file, it will keep it cached between pages.  If each page had its styles and scripts embedded in the HTML it would need to re-load this for each new page request. </li>
+                <li>
+                    <b class="open-sans font-18">Improved accessibility</b>. External style sheets and script files are easier ignored if the browser cannot handle these (or is configured not to handle these).  This is called <i>progressive enhancement</i>,
+                    in which the pages are designed to enhance the user experience as much as possible, but the baseline is still a usable page.
+                    The baseline will be HTML with text, images, and controls which every browser supports.
+                    Then if CSS is supported (which all do today) then the CSS files are served up. Finally, if JavaScript is not disabled then these files are loaded as well.
+                </li>
+            </ul>
+            <p>
+                Concerning the last point, this is less and less an issue today.  Browser makers are beginning to push users to upgrade more quickly to more recent browser versions.
+                All browsers today accept HTML, CSS, and JavaScript. In fact, we are on the cusp of the next stage: HTML5 and CSS3.
+                Right now, we are beginning to see developers writing HTML5 and CSS3 web apps knowing that, for the time being, they will miss out on customers that do not
+                keep up with their browser versions. Hopefully, their content and presentation is so compelling that it will spur a worldwide flurry of browser upgrades which
+                would make any web developers very happy.
+            </p>
+            <p>
+                As an aside, when using an MV* framework (MVC, MVP, MVVM) you typically also use a templating engine (such as mustache.js, underscore.js, or the built-in jQuery templating engine).
+                In those cases the data is dynamically injected into the HTML and maintained by data binding.  This is a very powerful concept and another step in facilitating the aforementioned
+                separation of concerns. MV* frameworks are discussed in the Model View Pattern section. Templating is demonstrated in the 'Patterns in Action' section.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/oodesign'>OO, SOLID, & DRY principles</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/essentials/eventloop'>The Event Loop</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(function () {
+            $("#clicker").on('click', function () {
+                alert("Yep, clicked!");
+            });
+        });
+    </script>
+}

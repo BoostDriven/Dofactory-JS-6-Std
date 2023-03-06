@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "MV Frameworks";
+}
+
+
+<style type='text/css'>
+    .knockout { padding: 15px; background-color: beige; }
+</style>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modelview">Model View</a></li>
+    <li class="breadcrumb-item"><a href="/modelview/mv">MV Frameworks</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>MV Frameworks</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                An overview of Model View JavaScript Frameworks.<br /><br />
+                Many high-quality MV Frameworks available today.
+                The problem is not the availability but rather selecting the one that is the best for your project.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                At this point you have a good understanding of the MVC, MVP, and MVVM design patterns and appreciate that they may offer a solid architectural foundation for your JavaScript projects.
+            </p>
+            <p>
+                To build your own MV framework can be a daunting task. Fortunately, there is no reason to do so.
+                There are many open-source projects available that have been field-tested in high-performance deployments, so all the work is done for you.
+            </p>
+            <p>
+                Assuming you have decided that you need the additional structure that an MV framework can offer, the only thing left is to choose the right framework for your project.
+                Unfortunately this is easier said than done because it takes time to do the research and determine which one is most appropriate for you.
+            </p>
+            <p>
+                When looking for a framework there are some criteria to keep in mind:
+            </p>
+            <ul>
+                <li>Which MV model -- that is, MVC, MVP, MVVM, or MVA -- best fits your project style?</li>
+                <li>Is the framework stable, mature, and has it plenty of successful real-world deployments.</li>
+                <li>Does the framework have good documentation with good example code</li>
+                <li>Is the framework actively maintained; are bugs resolved quickly and effectively?</li>
+                <li>Does it have an active community behind it that is willing to support each other?</li>
+                <li>Is the framework opiniated or not?  Are you willing to totally commit yourself?</li>
+            </ul>
+            <p>
+                The last point about <i>opiniated</i> frameworks is important. Some frameworks stay out of the way and let you use it when you need it.
+                In other words, you can use it as much or as little as you like in your pages. Others however, require that you follow their structure to the letter
+                for the entire project or else things stop working. These are called opiniated frameworks, i.e. they have strong opinions on standards, layout, code organization, and other conventions.
+            </p>
+            <br />
+            <p>
+                Below we have listed the most high-profile frameworks in order of popularity.
+                Mind you that things change very quickly in this space and what is fashionable today, may be out of favor tomorrow. So, take this ordering with a grain of salt.
+            </p>
+            <ol>
+                <li><b class="font-18 open-sans">Backbone</b>. Small framework, less than 1000 lines of code. MVC, with C standing for Collections. Includes rich Routing. Many successful deployments at high-profile sites. Mature.</li>
+                <li><b class="font-18 open-sans">Ember</b>. Large framework, both in size and functionality. Inspired by Rails and Cocoa. Well thought out but opiniated. Intended to control entire web page. New.</li>
+                <li><b class="font-18 open-sans">Angular</b>. Developed by Google. Includes templating and data binding. Designed with an eye towards the future: "this is where web development is going." MVVM like. Relatively new.</li>
+                <li><b class="font-18 open-sans">Knockout</b>. Pure MVVM. Includes templating, declarative data binding, and observable models. No built-in routing. Not very opiniated: allows limited usage. Mature.</li>
+                <li><b class="font-18 open-sans">Spine</b>. Very small framework. Derived from Backbone without Collections, but adds numerous small modifications. Uses Models and Controllers. Relatively new.</li>
+                <li><b class="font-18 open-sans">Batman</b>. Primarily for Rails and CoffeeScript developers. Rich models, views, and controllers. Highly opiniated: you must follow their conventions. New.</li>
+            </ol>
+            <p>
+                The least opiniated ones are Backbone, Knockout, and Spine. They are reasonably agnostic and can be used on an as-needed basis in most environments.
+                It is interesting to note that the highly opiniated frameworks, Ember and Batman, have close ties to Ruby on Rails which itself is an opiniated development framework
+                that has been built around the <i>convention over configuration</i> concept. Rails developers will most certainly lean towards these frameworks.
+            </p>
+            <p>
+                Furthermore, Knockout has evolved from the .NET MVVM arena, so developers that have experience with WPF or Silverlight in .NET will feel quickly at home with Knockout.
+            </p>
+            <p>
+                In our 'Patterns in Action' section we make use of Backbone.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modelview/mvvm'>MVVM</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Chaining";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/chaining">Chaining</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Chaining</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Allows multiple chained method calls on an object.<br /><br />
+                Most functions in jQuery are written to be chainable.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Chaining pattern allows method calls to be chained together in a single statement.
+                Chaining is deeply engrained in jQuery and any method that can support chaining does.
+                In jQuery chaining is important because it limits selector processing which involves DOM traversing which can be rather slow.
+                Here is an example of a chained jQuery statement:
+            </p>
+<pre class="prettyprint">
+$("#menu").addClass("highlight").css("margin", "2px").fadeIn("fast");
+</pre>
+            <p>
+                As an aside, the methods that operate on a jQuery selector set (a set of DOM elements) are commonly referred to as <i>commands</i>.  In the above code we have three commands.
+            </p>
+            <p>
+                The selector selects the #menu element only once; all subsequent commands are applied to the selector's result set in a chain, one after the other.
+            </p>
+            <p>
+                In jQuery's code base we find numerous methods that return <span class="cd">this</span> or <span class="cd">this.each</span> which mostly represents
+                the jQuery object which is the currently selected set of elements.  Many methods use an internal helper method named jQuery.access; it has a <span class="cd">chainable</span>
+                argument in which the calling method indicates whether chaining is supported or not.   Here is the skeleton code of jQuery.access and its use of the chainable flag:
+            </p>
+<pre class="prettyprint">
+access: function( elems, fn, key, value, chainable, emptyGet, pass ) {
+
+    // ...
+
+    return chainable ? ...
+
+}
+</pre>
+            <p>
+                Chaining in jQuery can also be applied to events, like so:
+            </p>
+<pre class="prettyprint">
+$("#menu").click(function (e) {
+        alert("You clicked me!");
+    }).mouseenter(function (e) {
+        $(this).css("backgroundColor", "Red");
+    }).mouseleave(function (e) {
+        $(this).css("backgroundColor", "Green");
+    }); 
+
+</pre>
+            <p>
+                In summary, the Chaining pattern is very important to jQuery.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/optionshash'>Options Hash</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/namespace'>Namespace</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

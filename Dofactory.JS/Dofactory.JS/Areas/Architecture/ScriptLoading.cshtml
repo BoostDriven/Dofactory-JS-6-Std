@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Script Loading";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/architecture">Architecture</a></li>
+    <li class="breadcrumb-item"><a href="/architecture/scriptloading">Script Loading</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Script Loading</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Effective JavaScript file loading techniques.<br /><br />
+                Script loaders can make a significant difference in page load times.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                Script loading is important if your goal is to build fast loading web apps. Loading a large number of script files by placing multiple &lt;script&gt; tags in the header
+                will slow down your app because they are loaded and executed <i>before</i> any HTML markup is rendered. Minifying your scripts helps but it does not change the fact
+                that script loading does block page rendering.
+            </p>
+            <p>
+                Script loaders are tools that can alleviate this problem by allowing the load process to take place asynchronously and/or in parallel (i.e. multiple script files at the same time).
+                It is important to do performance and comparison testing, but in many cases script loaders make a difference in page load times.
+            </p>
+            <p>
+                The truth is that script loaders are not always necessary. If your goal is to minimize page render times, then an easy way to make a difference is by concatenating all
+                script files into a single file and placing the script tag towards the end of the file, just before the closing &lt;/body&gt; tag.  Once loaded, browsers will do a good
+                job caching this file.
+            </p>
+            <p>
+                However, merging all files is not always possible; for example when your script tags reference CDN hosted files, such as on Google, Microsoft and Yahoo,
+                rather than pulling in files from your server.
+            </p>
+            <p>
+                Script loaders mostly follow a similar pattern to indicate what needs loading. Here is some generic code to show what it looks like:
+            </p>
+<pre class="prettyprint">
+ScriptLoader.load("jQuery.js", "app.js");
+</pre>
+            <p>
+                This will load the two named scripts asynchronously which will speed up loading. Unfortunately this may pose a problem for other scripts that have dependencies
+                on the above referenced scripts because when they execute it is not known whether these two files have completed loading or not.
+            </p>
+            <p>
+                Most script loaders offer a ready event to this timing issue. This event will fire when all scripts have completed loading and are available for use.
+                You pass it a callback that will execute at that time. The syntax looks something like this:
+            </p>
+<pre class="prettyprint">
+ScriptLoader.ready(function () {
+    // everything is loaded
+}
+</pre>
+            <p>
+                Most script loaders allow you to combine the two above snippets in a single call in which you pass an array with scripts that require loading and a
+                callback function which will be invoked when all scripts have completed loading, like so:
+            </p>
+<pre class="prettyprint">
+ScriptLoader.load(["jQuery.js", "app.js"], function () {
+     // callback called when loading has completed
+});
+
+</pre>
+            <p>
+                In case you're wondering how this works under the hood, most of these loaders simply insert a &lt;script&gt; element in the DOM document.
+                Here is some skeleton code to get the idea:
+            </p>
+<pre class="prettyprint">
+var tag = document.createElement("script");
+var src = http://mysite.com/js/app.js;
+var first = document.getElementsByTagName("script")[0];
+
+first.parentNode.insertBefore(tag, first);
+
+</pre>
+            <p>
+                This will insert the new script tag before the first &lt;script&gt; in the document, which most likely is a reference to the script loader's own JavaScript file.
+            </p>
+            <p>
+                There are a number of script loaders available. The most popular ones include Require.js, Head.js, curl.js and LazyLoad
+                (by the way, the name LazyLoad is a reference to the Lazy Load pattern, i.e. load on demand).
+            </p>
+            <p>
+                Some script loaders have a narrow focus and all they do is speed up file loading.  Others offer additional services which we will look at in a moment.
+                LazyLoad falls under the first category: it allows you to speed up the load processing by loading CSS and JavaScript files on demand.
+                LazyLoad is a tiny tool which when minified is less than 1K. Here is an example of how you use it with two JavaScript files:
+            </p>
+<pre class="prettyprint">
+LazyLoad.js(["jQuery.js", "app.js"],function () {
+    // executes when loading is complete
+});
+
+</pre>
+            <p>
+                The <span class="cd">js</span> method loads the files in parallel. If your files need to be loaded sequentially and in order, then the statements can be nested:
+            </p>
+<pre class="prettyprint">
+LazyLoad.js("jQuery.js",function () {
+    // executes when jQuery is complete
+    LazyLoad.js("app.js", function () {
+       // executes when both are complete
+    });
+});
+
+</pre>
+            <p>
+                LazyLoad has the ability to load CSS files in a similar way by using its <span class="cd">css</span> method.
+            </p>
+            <p>
+                Other script loaders do more than just loading scripts; they also help with organizing large applications.
+                The reason for this dual purpose is that script loading is inextricably related to the organization of your modules and the management of their dependencies.
+                Modularity is the topic of the next section followed by a review of these dual purpose loaders.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/architecture/introduction'>Introduction</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture/modularity'>Modularity</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

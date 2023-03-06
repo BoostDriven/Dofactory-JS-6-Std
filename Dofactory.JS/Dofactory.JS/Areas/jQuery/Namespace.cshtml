@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Namespace";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/namespace">Namespace</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Namespace</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Organizes the code to avoid name collisions.<br /><br />
+                jQuery makes use of the Namespace pattern in its code base.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                jQuery makes use of namespaces. A goal of the Namespace pattern is to limit the number of variables introduced to the global namespace to just a single name.
+                This single global item (object) then contains the entire code base for the application or library.
+            </p>
+            <p>
+                This is exactly how jQuery is organized: a single object, named jQuery, holds the entire body of code, including variables, properties, methods, and other (nested) namespaces.
+                Example nested namespaces include <span class="cd">event</span>, and <span class="cd">support</span> which are referenced as <span class="cd">jQuery.event</span> and <span class="cd">jQuery.support</span> respectively.
+            </p>
+            <p>
+                Actually, jQuery cheats a bit on the namespace pattern as it adds not one but two names to the global namespace, the second one being $ which is just shorthand for jQuery.
+                The $ is referred to as an <i>alias</i> of jQuery.  In your code you can replace any $ occurrence with jQuery and vice versa; they are the same and this will not change your code.
+            </p>
+            <p>
+                The statement below is from jQuery. It shows how the global names are exported.
+            </p>
+<pre class="prettyprint">
+// Expose jQuery to the global object
+window.jQuery = window.$ = jQuery;
+</pre>
+            <p>
+                You find this line at the bottom of the jQuery source file.
+            </p>
+            <br />
+            <p>
+                Another area where jQuery uses namespacing is with events. When attaching an event you can quality your event name with a namespace,
+                something like this: <span class="cd">click.Framework.User</span>:
+            </p>
+<pre class="prettyprint">
+$("#name").on("click.Framework.User ", function() { alert("clonk"); };
+</pre>
+            <p>
+                This will add click to the Framework and User namespace.
+                Namespaces with events are not hierarchical; instead, each name is just a separate namespace.
+                Our event is part of both the Framework namespace and the User namespace (and not the Framework.User namespace).
+            </p>
+            <p>
+                This mechanism allows you to selectively detach event handlers without affecting any other click handler:
+            </p>
+<pre class="prettyprint">
+$("#name").off("click.Framework"};
+$("#name").off("click.User"};
+
+</pre>
+            <p>
+                The two lines above have the same effect, as our click event is part of both namespaces.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/chaining'>Chaining</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/lazyload'>Lazy Load</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

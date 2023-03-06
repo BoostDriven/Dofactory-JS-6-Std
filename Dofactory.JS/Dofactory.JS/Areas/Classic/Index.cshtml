@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Classic Design Patterns";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Classic JavaScript Patterns</h2>
+        <div class="p-30">
+            <p>
+                The original 23 Design Patterns were published in 1995 by the Gang of Four (GoF).
+                Many of these are highly relevant to JavaScript, whereas others are less so. <br /><br />
+                This section reviews each of the Classic Patterns and for each one its <span class="nobr">'frequency-of-use'</span> is indicated.
+            </p>
+        </div>
+
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<div class="row">
+    <div class="col-9">
+        <table class="table">
+            <tr>
+                <th colspan="2"  class="open-sans font-18" style="border-top:0px solid white;border-bottom:2px solid #F45D48;">&nbsp;&nbsp;<span style="font-weight:600;">Gang-of-Four</span></th>
+            </tr>
+            <tr>
+                <td class="first-col">&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/introduction'>Introduction</a></td>
+                <td>Introduction to the JavaScript Classic Patterns</td>
+            </tr>
+        </table>
+
+        <table class="table">
+            <tr>
+                <th colspan="2" class="open-sans font-18 pt-20" style="border-top:0px solid white;border-bottom:1px solid #F45D48;">&nbsp;&nbsp;<span style="font-weight:600;">Creational Patterns</span></th>
+            </tr>
+            <tr>
+                <td class="first-col">&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/abstractfactory'>Abstract Factory</a></td>
+                <td>Creates an instance of several object families</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/builder'>Builder</a></td>
+                <td>Separates object construction from its representation</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/factorymethod'>Factory Method</a></td>
+                <td>Creates an instance of several related objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/prototype'>Prototype</a></td>
+                <td>A fully initialized instance to be copied or cloned</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/singleton'>Singleton</a></td>
+                <td>An object of which only a single instance can exist</td>
+            </tr>
+        </table>
+
+        <table class="table">
+            <tr>
+                <th colspan="2" class="open-sans font-18 pt-20" style="border-top:0px solid white;border-bottom:1px solid #F45D48;">&nbsp;&nbsp;<span style="font-weight:600;">Structural Patterns</span></th>
+            </tr>
+            <tr>
+                <td class="first-col">&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/adapter'>Adapter</a></td>
+                <td>Match interfaces of different objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/bridge'>Bridge</a></td>
+                <td>Separates an object’s interface from its implementation</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/composite'>Composite</a></td>
+                <td>A tree structure of simple and composite objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/decorator'>Decorator</a></td>
+                <td>Add responsibilities to objects dynamically</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/facade'>Façade</a></td>
+                <td>A single object that represents an entire subsystem</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/flyweight'>Flyweight</a></td>
+                <td>A fine-grained instance used for efficient sharing</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/proxy'>Proxy</a></td>
+                <td>An object representing another object</td>
+            </tr>
+        </table>
+
+        <table class="table">
+            <tr>
+                <th colspan='2' class="open-sans font-18 pt-20" style="border-top:0px solid white;border-bottom:1px solid #F45D48;">&nbsp;&nbsp;<span style="font-weight:600;">Behavioral Patterns</span></th>
+            </tr>
+            <tr>
+                <td class="first-col">&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/chain'>Chain of Resp.</a></td>
+                <td>A way of passing a request between a chain of objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/command'>Command</a></td>
+                <td>Encapsulate a command request as an object</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/interpreter'>Interpreter</a></td>
+                <td>A way to include language elements in a program</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/iterator'>Iterator</a></td>
+                <td>Sequentially access the elements of a collection</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/mediator'>Mediator</a></td>
+                <td>Defines simplified communication between objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/memento'>Memento</a></td>
+                <td>Capture and restore an object's internal state</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/observer'>Observer</a></td>
+                <td>A way of notifying change to a number of objects</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/state'>State</a></td>
+                <td>Alter an object's behavior when its state changes</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/strategy'>Strategy</a></td>
+                <td>Encapsulates an algorithm inside an object</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/template'>Template Method</a></td>
+                <td>Defer the exact steps of an algorithm to another object</td>
+            </tr>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;<a class="link" href='/classic/visitor'>Visitor</a></td>
+                <td>Defines a new operation to an object without change</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<br />
+<br />
+<hr />
+

@@ -1,0 +1,500 @@
+﻿@{
+    ViewBag.Title = "Interpreter";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/interpreter">Interpreter</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Interpreter</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Given a language, define a representation for its grammar along with an interpreter that uses the representation to interpret sentences in the language.
+            </p>
+
+            <partial name="_UsageLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Interpreter pattern offers a scripting language that allows end-users to customize their solution.
+        </p>
+        <p class="ptext">
+            Some applications are so complex that they require advanced configuration.
+            You could offer a basic scripting language which allows the end-user to manipulate your application through simple instructions.
+            The Interpreter pattern solves this particular problem – that of creating a simple scripting language.
+        </p>
+        <p class="ptext">
+            Certain types of problems lend themselves to be characterized by a language. This language describes the problem domain which should be well-understood and well-defined.
+            To implement this you need to map the language to a grammar.
+            Grammars are usually hierarchical tree-like structures that step through multiple levels and then end up with terminal nodes (also called literals).
+        </p>
+        <p class="ptext">
+            Problems like this, expressed as a grammar, can be implemented using the Interpreter design pattern.
+        </p>
+        <p class="ptext">
+            Today, if you really need this type of control in JavaScript it is probably easier to use a code generator like ANTLR which will allow you to build
+            your own command interpreters based on a grammar that you provide.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-interpreter.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: the run() program.
+                    <ul>
+                        <li>builds (or is given) a syntax tree representing the grammar</li>
+                        <li>establishes the initial context</li>
+                        <li>invokes the interpret operations</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Context</b> -- In sample code: <b style="color:#088;">Context</b>
+                    <ul>
+                        <li>contains state information to the interpreter</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>TerminalExpression</b> -- In sample code: <b style="color:#088;">Expression</b>
+                    <ul>
+                        <li>implements an interpret operation associated with terminal symbols in the grammar</li>
+                        <li>one instance for each terminal expression in the sentence</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>NonTerminalExpression</b> -- In sample code: not used
+                    <ul>
+                        <li>implements an interpret operation associated for non-terminal symbols in the grammar</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+
+        <p class="ptext">
+            The objective of this example is to build an interpreter which translates roman numerals to decimal numbers:
+            for example, XXXVI = 36.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Context</span> object maintains the input (the roman numeral) and the resulting output as it is being parsed and interpreted.
+            The <span class="cd">Expression</span> object represents the nodes in the grammar tree; it supports the <span class="cd">interpret</span> method.
+        </p>
+        <p class="ptext">
+            When running the program, a simple grammar tree is being built
+            which then processes a roman numeral and translates it into a numeric.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Context = function (input) {
+    this.input = input;
+    this.output = 0;
+}
+
+Context.prototype = {
+    startsWith : function (str) {
+        return this.input.substr(0, str.length) === str;
+    }
+}
+
+var Expression = function (name, one, four, five, nine, multiplier) {
+    this.name = name;
+    this.one = one;
+    this.four = four;
+    this.five = five;
+    this.nine = nine;
+    this.multiplier = multiplier;
+}
+
+Expression.prototype = {
+    interpret: function (context) {
+        if (context.input.length == 0) {
+            return;
+        }
+        else if (context.startsWith(this.nine)) {
+            context.output += (9 * this.multiplier);
+            context.input = context.input.substr(2);
+        }
+        else if (context.startsWith(this.four)) {
+            context.output += (4 * this.multiplier);
+            context.input = context.input.substr(2);
+        }
+        else if (context.startsWith(this.five)) {
+            context.output += (5 * this.multiplier);
+            context.input = context.input.substr(1);
+        }
+
+        while (context.startsWith(this.one)) {
+            context.output += (1 * this.multiplier);
+            context.input = context.input.substr(1);
+        }
+    }
+}
+
+
+function run() {
+
+    var roman = "MCMXXVIII"
+    var context = new Context(roman);
+    var tree = [];
+
+    tree.push(new Expression("thousand", "M", " " , " ", " " , 1000));
+    tree.push(new Expression("hundred",  "C", "CD", "D", "CM", 100));
+    tree.push(new Expression("ten",      "X", "XL", "L", "XC", 10));
+    tree.push(new Expression("one",      "I", "IV", "V", "IX", 1));
+
+    for (var i = 0, len = tree.length; i < len; i++) {
+        tree[i].interpret(context);
+    }
+
+    alert(roman + " = " + context.output);
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Context = function (input) {
+                this.input = input;
+                this.output = 0;
+            }
+
+            Context.prototype = {
+                startsWith: function (str) {
+                    return this.input.substr(0, str.length) === str;
+                }
+            }
+
+            var Expression = function (name, one, four, five, nine, multiplier) {
+                this.name = name;
+                this.one = one;
+                this.four = four;
+                this.five = five;
+                this.nine = nine;
+                this.multiplier = multiplier;
+            }
+
+            Expression.prototype = {
+                interpret: function (context) {
+                    if (context.input.length == 0) {
+                        return;
+                    }
+                    else if (context.startsWith(this.nine)) {
+                        context.output += (9 * this.multiplier);
+                        context.input = context.input.substr(2);
+                    }
+                    else if (context.startsWith(this.four)) {
+                        context.output += (4 * this.multiplier);
+                        context.input = context.input.substr(2);
+                    }
+                    else if (context.startsWith(this.five)) {
+                        context.output += (5 * this.multiplier);
+                        context.input = context.input.substr(1);
+                    }
+
+                    while (context.startsWith(this.one)) {
+                        context.output += (1 * this.multiplier);
+                        context.input = context.input.substr(1);
+                    }
+                }
+            }
+
+
+            function run() {
+
+                var roman = "MCMXXVIII"
+                var context = new Context(roman);
+                var tree = [];
+
+                tree.push(new Expression("thousand", "M", " ", " ", " ", 1000));
+                tree.push(new Expression("hundred", "C", "CD", "D", "CM", 100));
+                tree.push(new Expression("ten", "X", "XL", "L", "XC", 10));
+                tree.push(new Expression("one", "I", "IV", "V", "IX", 1));
+
+                for (var i = 0, len = tree.length; i < len; i++) {
+                    tree[i].interpret(context);
+                }
+
+                alert(roman + " = " + context.output);
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Interpreter</span> returns (i.e. reveals) only a single item: the <span class="cd">evaluate</span> method.
+            All other items are kept private in the module: OO encapsulation at its best.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Interpreter = (function () {
+
+    var Context = function (input) {
+        this.input = input;
+        this.output = 0;
+    }
+
+    Context.prototype = {
+        startsWith: function (str) {
+            return this.input.substr(0, str.length) === str;
+        }
+    }
+
+    var Expression = function (name, one, four, five, nine, multiplier) {
+        this.name = name;
+        this.one = one;
+        this.four = four;
+        this.five = five;
+        this.nine = nine;
+        this.multiplier = multiplier;
+    }
+
+    Expression.prototype = {
+        interpret: function (context) {
+            if (context.input.length == 0) {
+                return;
+            }
+            else if (context.startsWith(this.nine)) {
+                context.output += (9 * this.multiplier);
+                context.input = context.input.substr(2);
+            }
+            else if (context.startsWith(this.four)) {
+                context.output += (4 * this.multiplier);
+                context.input = context.input.substr(2);
+            }
+            else if (context.startsWith(this.five)) {
+                context.output += (5 * this.multiplier);
+                context.input = context.input.substr(1);
+            }
+
+            while (context.startsWith(this.one)) {
+                context.output += (1 * this.multiplier);
+                context.input = context.input.substr(1);
+            }
+        }
+    }
+
+    function evaluate(roman) {
+
+        var tree = [];
+        var context = new Context(roman);
+
+        tree.push(new Expression("thousand", "M", " ", " ", " ", 1000));
+        tree.push(new Expression("hundred", "C", "CD", "D", "CM", 100));
+        tree.push(new Expression("ten", "X", "XL", "L", "XC", 10));
+        tree.push(new Expression("one", "I", "IV", "V", "IX", 1));
+
+        for (var i = 0, len = tree.length; i < len; i++) {
+            tree[i].interpret(context);
+        }
+
+        return context.output;
+    }
+
+    return {
+        evaluate: evaluate
+    };
+
+})();
+
+function run() {
+
+    var roman = "MCMXXVIII"
+    var result = Patterns.Classic.Interpreter.evaluate(roman);
+
+    alert(roman + " = " + result);
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Interpreter = (function () {
+
+                var Context = function (input) {
+                    this.input = input;
+                    this.output = 0;
+                }
+
+                Context.prototype = {
+                    startsWith: function (str) {
+                        return this.input.substr(0, str.length) === str;
+                    }
+                }
+
+                var Expression = function (name, one, four, five, nine, multiplier) {
+                    this.name = name;
+                    this.one = one;
+                    this.four = four;
+                    this.five = five;
+                    this.nine = nine;
+                    this.multiplier = multiplier;
+                }
+
+                Expression.prototype = {
+                    interpret: function (context) {
+                        if (context.input.length == 0) {
+                            return;
+                        }
+                        else if (context.startsWith(this.nine)) {
+                            context.output += (9 * this.multiplier);
+                            context.input = context.input.substr(2);
+                        }
+                        else if (context.startsWith(this.four)) {
+                            context.output += (4 * this.multiplier);
+                            context.input = context.input.substr(2);
+                        }
+                        else if (context.startsWith(this.five)) {
+                            context.output += (5 * this.multiplier);
+                            context.input = context.input.substr(1);
+                        }
+
+                        while (context.startsWith(this.one)) {
+                            context.output += (1 * this.multiplier);
+                            context.input = context.input.substr(1);
+                        }
+                    }
+                }
+
+                function evaluate(roman) {
+
+                    var tree = [];
+                    var context = new Context(roman);
+
+                    tree.push(new Expression("thousand", "M", " ", " ", " ", 1000));
+                    tree.push(new Expression("hundred", "C", "CD", "D", "CM", 100));
+                    tree.push(new Expression("ten", "X", "XL", "L", "XC", 10));
+                    tree.push(new Expression("one", "I", "IV", "V", "IX", 1));
+
+                    for (var i = 0, len = tree.length; i < len; i++) {
+                        tree[i].interpret(context);
+                    }
+
+                    return context.output;
+                }
+
+                return {
+                    evaluate: evaluate
+                };
+
+            })();
+
+            function run1() {
+
+                var roman = "MCMXXVIII"
+                var result = Patterns.Classic.Interpreter.evaluate(roman);
+
+                alert(roman + " = " + result);
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/command'>Command</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/iterator'>Iterator</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Zero Timeout";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/zerotimeout">Zero Timeout</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Zero Timeout</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Provides a way to avoid the user interface from freezing up.<br /><br />
+                jQuery uses Timeout values of 0 and 1, both of which have the same effect.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                In the Essential Section of this program we discussed the event loop and the Zero Timeout pattern.
+                This pattern is used to give the event loop time to catch up with pending events in the event queue.
+                It an important pattern because it prevents the user interface from freezing up with long running scripts.
+            </p>
+            <p>
+                jQuery uses this pattern in several places. Here is a code snippet from jQuery's ready method:
+            </p>
+<pre class="prettyprint">
+// Make sure body exists, at least, in case IE gets a little overzealous.
+if ( !document.body ) {
+    return setTimeout( jQuery.ready, 1 );
+}
+// ...
+
+</pre>
+            <p>
+                Another instance in the <span class="cd">jQuery.ready.promise</span> method:
+            </p>
+<pre class="prettyprint">
+if ( document.readyState === "complete" || ( document.readyState !== "loading" && 
+    document.addEventListener ) ) {   
+    // Handle it asynchronously to allow scripts the opportunity to delay ready
+    setTimeout( jQuery.ready, 1 );
+}
+// ...
+
+</pre>
+            <p>
+                And here is a snippet from its Ajax functionality:
+            </p>
+<pre class="prettyprint">
+} else if ( xhr.readyState === 4 ) {
+    // (IE6 & IE7) if it's in cache and has been
+    // retrieved directly we need to fire the callback
+    setTimeout( callback, 0 );
+}
+// ...
+</pre>
+            <p>
+                And finally an asynchronous animation example
+            </p>
+<pre class="prettyprint">
+// Animations created synchronously will run synchronously
+function createFxNow() {
+     setTimeout(function() {
+         fxNow = undefined;
+     }, 0 );
+     return ( fxNow = jQuery.now() );
+}
+
+</pre>
+            <p>
+                In jQuery the Zero Timeout pattern is used to address some specific browser peculiarities as well as assist in asynchronous animations.
+                It is interesting to note that both 0 and 1 millisecond are used for the delay.
+                It really does not make a difference because JavaScript's internal minimum is apparently 4 milliseconds.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/lazyload'>Lazy Load</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/singleton'>Singleton</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

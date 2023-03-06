@@ -1,0 +1,470 @@
+﻿@{
+    ViewBag.Title = "MVVM";
+}
+
+<style type='text/css'>
+    .knockout { padding: 15px; background-color: beige; }
+</style>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modelview">Model View</a></li>
+    <li class="breadcrumb-item"><a href="/modelview/mvvm">MVVM</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>MVVM  &nbsp;- Model View ViewModel</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A further refinement of MVP with the addition of data binding. <br /><br />
+                The Presenter is named ViewModel gets the data from the Model and presents it to the View.
+                Data binding is used to synchronize data changes between the View and the ViewModel. The ViewModel updates the Model as needed.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                MVVM (Model View ViewModel) is a more recent addition to the family of MV patterns.
+                It was first documented by Microsoft in 2005 where it evolved when they began building rich UI applications based on WPF (Windows Presentation Foundation).
+                Several built-in WPF features, including data binding and its commanding architecture, make it highly suitable for MVVM.
+            </p>
+            <p>
+                In addition to WPF and Silverlight, the MVVM pattern also took hold in the Adobe Flex community.
+                More recently, MVVM is making inroads into the JavaScript community with MVVM frameworks like Knockout, Kendo MVVM, and Knockback.
+                We will demonstrate MVVM with Knockout in a few moments.
+            </p>
+            <p>
+                In MVVM, the Controller has been renamed ViewModel, meaning that it exposes the relevant data from the Model to the View. The ViewModel provides 'a View into the Model'.
+            </p>
+            <p>
+                How does MVVM differ from the others?  MVVM continues along the same line as MVP in which there is a clear separation between the presentation (View) and the business logic/behavior (ViewModel).
+                The difference is that MVVM uses <i>data binding</i> between the presentation and the business logic which automates the communication between the two.
+                The diagram below highlights the role of data binding in MVVM:
+            </p>
+            <div style="padding:30px 0 30px 120px;">
+                <img src="/img/diagrams/javascript-mvvm.jpg" alt="" />
+            </div>
+            <p>
+                Data binding is a technique that binds two data sources together and synchronizes them.
+                Say you have a textbox with a name on your page (the View). In your ViewModel you have a data item that stores the value entered in the textbox.
+                Now, if the user changes the name, the data binding mechanism automatically updates the value in the ViewModel.
+                Similarly, when the data item in the ViewModel changes it is automatically carried over to the page via data binding.
+            </p>
+            <p>
+                This example is called 2-way binding because it works in both directions. You may also run into 1-way bindings where the change is unidirectional.
+            </p>
+            <p>
+                Data binding usually involves declarative data binding annotations on the page. We will see examples of this in our implementation example.
+            </p>
+            <p>
+                Another important point about MVVM is that Views and ViewModels are paired, that is, a ViewModel is custom made for a particular View.
+                It is not reusable. Typically, ViewModels hold data that is highly tailored for the presentation requirements on the page.
+                For example, you may have a formatted price field, such as a string with a "$145.22" value (ready to display), whereas in the Model, these are unformatted floating point values.
+                So, each page (or partial page) has its own ViewModel.
+            </p>
+            <p>
+                The ViewModel holds the data while the user is working on a page and it gets continually updated on any changes.
+                But only when it gets notified, usually by a save click, will it update the Model which in turn saves the data to a backend database.
+            </p>
+            <p>
+                MVVM is a very loosely coupled. Unlike the Presenter in the MVP pattern, the ViewModel knows nothing about View or its visual components because this is all handled through data binding.
+            </p>
+            <p>
+                <b class="font-18 open-sans">Implementing MVVM in JavaScript</b><br />
+                The necessary plumbing required for data binding and templating is large. This prevents us from building MVVM from scratch.
+                Instead, we will use Knockout, an open-source framework that follows the MVVM paradigm. It will provide you with a good feel for MVVM.
+            </p>
+            <p>
+                The example is a shopping cart where users can 1) add new products, 2) change quantities, and 3) remove line items.
+                The grand total is maintained during these actions.  Here is a screenshot of the page (you can see it below in action):
+            </p>
+            <div style="padding:30px 0 30px 10px;">
+                <img src="/img/diagrams/javascript-mvvm-screen.jpg" alt="" />
+            </div>
+            <p>
+                Initially the cart will be empty. Clicking the 'Add Product' button will insert a blank row into the cart with dropdown from which a product can be selected.
+                Once selected, the following controls get updated on the same row: the unit price, the quantity, and the subtotal. Also the Total Value on the bottom right will be updated.
+            </p>
+            <p>
+                Changing the quantity will immediately update the Subtotal and Total Value fields.  Clicking on remove will delete the row and the Total Value will be updated as well.
+                Finally, clicking on Checkout will display the data to be sent to the server (in a real app we would first proceed to a checkout/payment page).
+            </p>
+            <p>
+                Here's the HTML markup -- for simplicity styles and class attributes have been removed
+            </p>
+        </div>
+<pre class="prettyprint" style="width:720px;">
+&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Product&lt;/th&gt;
+            &lt;th&gt;Unit Price&lt;/th&gt;
+            &lt;th&gt;Quantity&lt;/th&gt;
+            &lt;th&gt;Subtotal&lt;/th&gt;
+            &lt;th&gt;&nbsp;&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody data-bind='foreach: items'&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                &lt;select data-bind='options: $root.products, optionsText: " name",
+     optionsCaption: "Select..." , value: product'&gt; &lt;/select&gt;
+        &lt;/td&gt;
+        &lt;td data-bind='with: product'&gt;
+        &lt;span data-bind='text: toMoney(price)'&gt; &lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;input data-bind='visible: product,value: quantity,
+        valueUpdate: "afterkeydown"' /&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;span data-bind='visible: product, text: toMoney(subtotal())' &gt; &lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td&gt;
+        &lt;a href='#' data-bind='click: $root.removeItem'&gt;Remove&lt;/a&gt;
+        &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;/tbody&gt;
+        &lt;/table&gt;
+
+        &lt;p&gt;
+        Total value: &lt;span data-bind='text: toMoney(grandTotal())'&gt; &lt;/span&gt;
+        &lt;/p&gt;
+
+        &lt;button data-bind='click: addItem'&gt;Add product&lt;/button&gt;
+        &lt;button data-bind='click: submit'&gt;Checkout&lt;/button&gt;
+
+        </pre>
+        <div class="ptext">
+            <p>
+                It has a &lt;table&gt; that displays the shopping cart, a &lt;span&gt; with the grand total, and two &lt;button&gt;s, one to add a new product,
+                and another to check out the order and complete the transaction.
+                Let's look at this in more detail.
+            </p>
+            <p>
+                By the way, the purpose of the next few paragraphs is not to get into the details of the Knockout declarative data binding syntax, but rather to give you a flavor of building an app following the MVVM architecture.
+            </p>
+            <p>
+                The table has a regular header row. Its body contains several declarative data bindings.  An important attribute in Knockout is <span class="cd">data-bind</span>.
+                It has many options but almost always contains a reference to a property on the ViewModel which it will bind to. Note that we will associate
+                (i.e. apply) the ViewModel with the View which we will see shortly when reviewing the JavaScript code.
+            </p>
+            <p>
+                The table's tbody element has a <span class="cd">data-bind</span> attribute with <span class="cd">'foreach: items'</span>.
+                This tells Knockout to iterate over an array on the ViewModel called items. The items are the line items in the shopping cart.
+            </p>
+            <p>
+                In the first &lt;td&gt; we have a dropdown (&lt;select&gt;) that data-binds to <span class="cd">$root.products</span>. This is a reference to the root object which is the ViewModel;
+                its <span class="cd">products</span> property is an array with all products for sale. The user selected value is stored in a property called <span class="cd">product</span>
+                which is on the current line item (not the ViewModel).
+            </p>
+            <p>
+                The next &lt;td&gt; displays the unit price for the selected product.
+                The <span class="cd">data-bind = 'with: product'</span> sets the context, which is the selected product on the line item.
+                It has a <span class="cd">price</span> property which is bound and formatted on the next line.
+                So, any time a different product is selected, its price changes with it.
+            </p>
+            <p>
+                The following &lt;td&gt; is where the quantity can be selected. It only is visible when a product is selected. Its default value is 1.
+                The user can change this and the binding immediately changes the value in the ViewModel following each key hit, i.e. <span class="cd">"afterkeydown"</span>.
+            </p>
+            <p>
+                The next &lt;td&gt; is a subtotal for the line item. It is a computed value that is only visible when a product is selected.
+                It is bound to a method on the line item object called <span class="cd">subtotal()</span>. Formatting is handled by a utility function called <span class="cd">toMoney</span>.
+            </p>
+            <p>
+                Finally, we have a &lt;td&gt; with a remove link that allows the user to delete the line item from the shopping cart.
+                It is data bound to a <span class="cd">click</span> event which triggers the <span class="cd nobr">$root.removeItem</span> method on the ViewModel which removes the current line item.
+            </p>
+            <p>
+                Below the table the grand total is displayed. It is data bound to <span class="cd">grandtotal()</span> which is a method on the ViewModel.
+            </p>
+            <p>
+                Finally, two buttons have their <span class="cd">click</span> events bound to <span class="cd">addItem</span> and <span class="cd">submit</span> respectively, which are methods on the ViewModel.
+            </p>
+            <p>
+                Next, we'll review the JavaScript code starting with the Model.
+            </p>
+<pre class="prettyprint">
+var Product = function (id, name, price) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+}
+
+var Model = function Model() {
+    this.products = [];
+    this.products.push(new Product(1, "Paper", 4.95));
+    this.products.push(new Product(2, "Scissors", 9.95));
+    this.products.push(new Product(3, "Pencils", 4.98));
+    this.products.push(new Product(4, "Pens", 19.50));
+    this.products.push(new Product(5, "Eraser", 1.50));
+    this.products.push(new Product(6, "Folders", 12.95));
+
+    this.getProducts = function () {
+        return this.products;
+    };
+}
+</pre>
+            <p>
+                There is nothing to indicate that this Model is used in the context of a MVVM project. It is a regular Model object, just like we used in MVC and MVP.
+                It contains an array with all products that users can purchase.
+                Each product has an <span class="cd">id</span>, a <span class="cd">name</span>, and a <span class="cd">price</span>. In most real-world situations this data comes straight from a database.
+            </p>
+            <p>
+                Before moving on to the ViewModel let's first review CartItem which represents a line item in the shopping cart.
+            </p>
+<pre class="prettyprint">
+var CartItem = function () {
+    var self = this;
+
+    this.product = ko.observable();        
+    this.quantity = ko.observable(1);
+
+    this.subtotal = ko.computed(function () {
+        return self.product() ? 
+               self.product().price * parseInt("0" + self.quantity(), 10) :
+               0;
+    });
+};
+</pre>
+            <p>
+                It has all the properties you expect to see in a line item on a shopping cart: a <span class="cd">product</span> (this is an object itself which contains product name and unit price),
+                a <span class="cd">quantity</span>, and a <span class="cd">subtotal</span> value for the line.
+            </p>
+            <p>
+                The <span class="cd">product</span> is a method, an <span class="cd">observable</span> method to be precise. The variable <span class="cd">ko</span> is an instance of the
+                Knockout <i>binding and dependency tracking engine</i>.
+                The <span class="cd">observable</span> method monitors changes in the product and notifies any subscribers that a change has occurred.
+            </p>
+            <p>
+                The <span class="cd">quantity</span> is also an <span class="cd">observable</span> method. Its default value is 1 which is passed as an argument.
+            </p>
+            <p>
+                The <span class="cd">subtotal</span> is a computed value. The callback function passed into <span class="cd">ko.computed</span> computes the subtotal for the line.
+                It automatically re-executes when product or quantity changes occur.
+            </p>
+            <p>
+                We're now ready to review the ViewModel.
+            </p>
+<pre class="prettyprint">
+var ViewModel = function () {
+    var self = this;
+
+    this.products = new Model().getProducts();
+
+    this.items = ko.observableArray([new CartItem()]); 
+
+    this.grandTotal = ko.computed(function () {
+        var total = 0;
+        $.each(self.items(), function () { total += this.subtotal() })
+        return total;
+    });
+
+
+    // Buttons actions 
+    this.addItem = function () {
+        self.items.push(new CartItem())
+    };
+
+    this.removeItem = function (item) {
+        self.items.remove(item)
+    };
+
+    this.submit = function () {
+        var data = $.map(self.items(), function (item) {
+            return item.product() ? {
+                productId: item.product().id,
+                quantity: item.quantity()
+            } : undefined
+        });
+        alert("Info sent to server: " + JSON.stringify(data));
+    };
+};
+
+var toMoney = function (value) {
+    return "$" + value.toFixed(2);
+};
+
+ko.applyBindings(new ViewModel());
+
+</pre>
+            <p>
+                The first thing we do in ViewModel is to ensure that the nested functions will have a correct context by assigning the <span class="cd">this</span> value in a variable called <span class="cd">self</span> which then gets added to the function's closure
+                (alternatively, we could have used <span class="cd">bind(this)</span> on all the methods).
+            </p>
+            <p>
+                The ViewModel assigns the Model's data to variable named <span class="cd">products</span> which, as you may recall, is data bound to the dropdown in the shopping cart.
+            </p>
+            <p>
+                The <span class="cd">items</span> property is an <span class="cd">observableArray</span> of shopping cart line items.
+                It works like observable but tracks changes to the array itself, such as removal and addition of new items.
+                This is the array that the shopping cart iterates over in the <span class="cd">data-bind = "foreach: items"</span> attribute in tbody.
+            </p>
+            <p>
+                The <span class="cd">grandTotal</span> is a computed dependency value that adds up all subtotals for all line items.
+            </p>
+            <p>
+                The <span class="cd">addItem</span> and <span class="cd">removeItem</span> methods add and remove line items from the shopping cart respectively.
+            </p>
+            <p>
+                The <span class="cd">submit</span> method is not involved in data binding. It iterates over the line items and collects the relevant information that can be submitted back to the server in JSON format.
+            </p>
+            <p>
+                A helper function called <span class="cd">toMoney</span> converts values to a monetary format.  And this is all there is to the ViewModel.
+            </p>
+            <p>
+                As a final step we need to associate our ViewModel with the View.  The last line shows how easy this is: simply call <span class="cd">ko.applyBindings</span> with a new instance of the ViewModel.
+                This will start the data binding and data dependency tracking which continues throughout the lifetime of the page.  The shopping cart is now ready for use.
+            </p>
+            <p>
+                The shopping cart below is ready to run.
+            </p>
+            <br />
+
+            <div class='knockout'>
+                MVVM<br />
+                <table style="width:600px;">
+                    <thead>
+                        <tr>
+                            <th style="background-color:#dedebd;width:120px;height:28px;">Product</th>
+                            <th style="background-color:#dedebd;width:120px;">Unit Price</th>
+                            <th style="background-color:#dedebd;width:120px;">Quantity</th>
+                            <th style="background-color:#dedebd;width:120px;">Subtotal</th>
+                            <th style="background-color:#dedebd;width:120px;"> </th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind='foreach: items'>
+                        <tr>
+                            <td style="text-align:center;padding:4px 0px;">
+                                <select style="width:120px;" data-bind='options: $root.products, optionsText: "name", optionsCaption: "Select...", value: product'> </select>
+                            </td>
+                            <td style="text-align:center;" data-bind='with: product'>
+                                <span data-bind='text: toMoney(price)'> </span>
+                            </td>
+                            <td style="text-align:center;">
+                                <input style="width:30px;" data-bind='visible: product, value: quantity, valueUpdate: "afterkeydown"' />
+                            </td>
+                            <td style="text-align:right;">
+                                <span data-bind='visible: product, text: toMoney(subtotal())'> </span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                            <td style="text-align:center;">
+                                <a href='#' data-bind='click: $root.removeItem'>Remove</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table><br />
+                <div style="border-top:1px solid #aaa;padding:15px 0 0 0; font-size:16px; font-weight:bold;">
+                    <div style="text-align:right;width:440px;">Total value: &nbsp;&nbsp;&nbsp;<span data-bind='text: toMoney(grandTotal())'> </span></div>
+                </div>
+                <button data-bind='click: addItem'>Add Product</button>&nbsp;&nbsp;&nbsp;
+                <button data-bind='click: submit'>Checkout</button>
+
+            </div>
+            <br />
+            <p>
+                What is nice about these apps is that they are highly performant.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modelview/mvp'>MVP</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modelview/mv'>MV Frameworks</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var Product = function (id, name, price) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+        }
+
+        var Model = function Model() {
+            this.products = [];
+            this.products.push(new Product(1, "Paper", 4.95));
+            this.products.push(new Product(2, "Scissors", 9.95));
+            this.products.push(new Product(3, "Pencils", 4.98));
+            this.products.push(new Product(4, "Pens", 19.50));
+            this.products.push(new Product(5, "Eraser", 1.50));
+            this.products.push(new Product(6, "Folders", 12.95));
+
+            this.getProducts = function () {
+                return this.products;
+            };
+        }
+
+
+        var CartItem = function () {
+            var self = this;
+
+            this.product = ko.observable();
+            this.quantity = ko.observable(1);
+
+            this.subtotal = ko.computed(function () {
+                return self.product() ? self.product().price * parseInt("0" + self.quantity(), 10) : 0;
+            });
+        };
+
+        var toMoney = function (value) {
+            return "$" + value.toFixed(2);
+        };
+
+        var ViewModel = function () {
+            var self = this;
+
+            this.products = new Model().getProducts();
+
+            this.items = ko.observableArray([new CartItem()]);
+
+            this.grandTotal = ko.computed(function () {
+                var total = 0;
+                $.each(self.items(), function () { total += this.subtotal() })
+                return total;
+            });
+
+
+            // Buttons actions
+            this.addItem = function () {
+                self.items.push(new CartItem())
+            };
+
+            this.removeItem = function (item) {
+                self.items.remove(item)
+            };
+
+            this.submit = function () {
+                var data = $.map(self.items(), function (item) {
+                    return item.product() ? {
+                        productId: item.product().id,
+                        quantity: item.quantity()
+                    } : undefined
+                });
+                alert("Info sent to server: " + JSON.stringify(data));
+            };
+        };
+
+        ko.applyBindings(new ViewModel());
+
+    </script>
+}

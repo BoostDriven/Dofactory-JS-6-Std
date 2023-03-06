@@ -1,0 +1,481 @@
+﻿@{
+    ViewBag.Title = "Memento";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/memento">Memento</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Memento</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
+            </p>
+
+            <partial name="_UsageLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Memento pattern provides temporary storage as well as restoration of an object. The mechanism in which you store the object’s state depends on the required duration of persistence, which may vary.
+        </p>
+        <p class="ptext">
+            You could view a database as an implementation of the Memento design pattern in which objects are persisted and restored.
+            However, the most common reason for using this pattern is to capture a snapshot of an object’s state so that any subsequent changes can be undone easily if necessary.
+        </p>
+        <p class="ptext">
+            Essentially, a Memento is a small repository that stores an object’s state. Scenarios in which you may want to restore an object into a state that existed previously include:
+            saving and restoring the state of a player in a computer game or the implementation of an undo operation in a database.
+        </p>
+        <p class="ptext">
+            In JavaScript Mementos are easily implemented  by serializing and de-serializing objects with JSON.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-memento.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Originator</b> -- In sample code: <b style="color:#088;">Person</b>
+                    <ul>
+                        <li>implements interface to create and restore mementos of itself <br />&nbsp;&nbsp;&nbsp;&nbsp;-- in sample code: hydrate and dehydrate</li>
+                        <li>the object which state is temporary being saved and restored</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Memento</b> -- In sample code: JSON representation of Person
+                    <ul>
+                        <li>internal state of the Originator object in some storage format</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>CareTaker</b> -- In sample code: <b style="color:#088;">CareTaker</b>
+                    <ul>
+                        <li>responsible for storing mementos</li>
+                        <li>just a repository; does not make changes to mementos</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            The sample code creates two persons named Mike and John are created using the <span class="cd">Person</span> constructor function.
+            Next, their mementos are created which are maintained by the <span class="cd">CareTaker</span> object.
+        </p>
+        <p class="ptext">
+            We assign Mike and John bogus names before restoring them from their mementos.
+            Following the restoration we confirm that the person objects are back to their original state with valid names.
+        </p>
+        <p class="ptext">
+            The Memento pattern itself with CareTaker etc. is rarely used in JavaScript.
+            However, JSON is a highly effective data format that is extremely useful in many different data exchange scenarios.
+        </p>
+
+
+        <br />
+<pre class="prettyprint">
+var Person = function (name, street, city, state) {
+    this.name = name;
+    this.street = street;
+    this.city = city;
+    this.state = state;
+}
+
+Person.prototype = {
+    hydrate: function () {
+
+        var memento = JSON.stringify(this);
+        return memento;
+    },
+    dehydrate: function (memento) {
+
+        var m = JSON.parse(memento);
+        for (var prop in m) this[prop] = m[prop];
+    }
+}
+
+var CareTaker = function () {
+
+    this.mementos = {};
+
+    this.add = function (key, memento) {
+        this.mementos[key] = memento;
+    },
+    this.get = function (key) {
+        return this.mementos[key];
+    }
+}
+
+function run() {
+
+    var mike = new Person("Mike Foley", "1112 Main", "Dallas", "TX");
+    var john = new Person("John Wang", "48th Street", "San Jose", "CA");
+
+    var caretaker = new CareTaker();
+
+    // save state
+
+    caretaker.add(1, mike.hydrate());
+    caretaker.add(2, john.hydrate());
+
+    // mess up their names
+
+    mike.name = "King Kong";
+    john.name = "Superman";
+
+    // restore original state
+
+    mike.dehydrate(caretaker.get(1));
+    john.dehydrate(caretaker.get(2));
+
+    log.add(mike.name);
+    log.add(john.name);
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Person = function (name, street, city, state) {
+                this.name = name;
+                this.street = street;
+                this.city = city;
+                this.state = state;
+            }
+
+            Person.prototype = {
+                hydrate: function () {
+
+                    var memento = JSON.stringify(this);
+                    return memento;
+                },
+                dehydrate: function (memento) {
+
+                    var m = JSON.parse(memento);
+                    for (var prop in m) this[prop] = m[prop];
+                }
+            }
+
+            var CareTaker = function () {
+
+                this.mementos = {};
+
+                this.add = function (key, memento) {
+                    this.mementos[key] = memento;
+                },
+                    this.get = function (key) {
+                        return this.mementos[key];
+                    }
+            }
+
+            function run() {
+
+                var mike = new Person("Mike Foley", "1112 Main", "Dallas", "TX");
+                var john = new Person("John Wang", "48th Street", "San Jose", "CA");
+
+                var caretaker = new CareTaker();
+
+                // save state
+
+                caretaker.add(1, mike.hydrate());
+                caretaker.add(2, john.hydrate());
+
+                // mess up their names
+
+                mike.name = "King Kong";
+                john.name = "Superman";
+
+                // restore original state
+
+                mike.dehydrate(caretaker.get(1));
+                john.dehydrate(caretaker.get(2));
+
+                log.add(mike.name);
+                log.add(john.name);
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Memento</span> returns (i.e. reveals) only a single item: the <span class="cd">makeHydratable</span> method.
+        </p>
+        <p class="ptext">
+            In this implementation there is no need for a Caretaker; we simply added the hydrated Memento dynamically to an object.
+            Then in the dehydrate method, the values are simply written back to the instance itself.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Memento = (function () {
+
+    var hydratable = {
+        hydrate: function () {
+            this.memento = JSON.stringify(this);
+        },
+        dehydrate: function () {
+
+            if (this.memento) {
+                var m = JSON.parse(this.memento);
+                for (var prop in m) this[prop] = m[prop];
+
+                this.memento = null;
+            }
+        },
+
+        memento: null
+    }
+
+    var makeHydratable = function (obj) {
+        for (var prop in hydratable) {
+            obj[prop] = hydratable[prop];
+        }
+        return obj;
+    };
+
+    return {
+        makeHydratable: makeHydratable
+    }
+
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+function run() {
+
+    var Person = function (name, street, city, state) {
+        this.name = name;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+    }
+
+    var mike = new Person("Mike Foley", "1112 Main", "Dallas", "TX");
+    var john = new Person("John Wang", "48th Street", "San Jose", "CA");
+
+    Patterns.Classic.Memento.makeHydratable(mike);
+    Patterns.Classic.Memento.makeHydratable(john);
+
+    // save state
+
+    mike.hydrate();
+    john.hydrate();
+
+    // mess up their names
+
+    mike.name = "King Kong";
+    john.name = "Superman";
+
+    // restore original state
+
+    mike.dehydrate();
+    john.dehydrate();
+
+    log.add(mike.name);
+    log.add(john.name);
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Memento = (function () {
+
+                var hydratable = {
+                    hydrate: function () {
+                        this.memento = JSON.stringify(this);
+                    },
+                    dehydrate: function () {
+
+                        if (this.memento) {
+                            var m = JSON.parse(this.memento);
+                            for (var prop in m) this[prop] = m[prop];
+
+                            this.memento = null;
+                        }
+                    },
+
+                    memento: null
+                }
+
+                var makeHydratable = function (obj) {
+                    for (var prop in hydratable) {
+                        obj[prop] = hydratable[prop];
+                    }
+                    return obj;
+                };
+
+                return {
+                    makeHydratable: makeHydratable
+                }
+
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+            function run1() {
+
+                var Person = function (name, street, city, state) {
+                    this.name = name;
+                    this.street = street;
+                    this.city = city;
+                    this.state = state;
+                }
+
+                var mike = new Person("Mike Foley", "1112 Main", "Dallas", "TX");
+                var john = new Person("John Wang", "48th Street", "San Jose", "CA");
+
+                Patterns.Classic.Memento.makeHydratable(mike);
+                Patterns.Classic.Memento.makeHydratable(john);
+
+                // save state
+
+                mike.hydrate();
+                john.hydrate();
+
+                // mess up their names
+
+                mike.name = "King Kong";
+                john.name = "Superman";
+
+                // restore original state
+
+                mike.dehydrate();
+                john.dehydrate();
+
+                log.add(mike.name);
+                log.add(john.name);
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/mediator'>Mediator</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/observer'>Observer</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+

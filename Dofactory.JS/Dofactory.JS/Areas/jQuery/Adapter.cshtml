@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Adapter";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/adapter">Adapter</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Adapter</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Matches interfaces of different objects.<br /><br />
+                jQuery uses the Adapter pattern to support backward compatibility to older APIs.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Adapter pattern translates an object's interface (its properties and methods) to another interface.
+                Adapters allow programming components to work together that otherwise wouldn't because of mismatched interfaces.
+                The Adapter pattern is also referred to as the Wrapper Pattern.
+            </p>
+            <p>
+                In jQuery you attach an event handler to click, mouseover, keypress, focus, resize, scroll and other events like this:
+            </p>
+<pre class="prettyprint">
+$("#div").click(function() { alert("hello"); };
+
+$("#name").focus(function() { alert("name please"); };
+</pre>
+            <p>
+                These are shorthand methods for the more generic <span class="cd">bind</span> method, which is used like this:
+            </p>
+<pre class="prettyprint">
+$("#div").bind("click", function() { alert("hello"); };
+
+$("#name").bind("focus", function() { alert("name please"); };
+
+</pre>
+            <p>
+                In older versions of jQuery all shorthand methods were mapped to bind or trigger methods:
+            </p>
+<pre class="prettyprint">
+function click (fn) {
+    return fn ? this.bind(name, fn) : this.trigger(name);
+}
+
+</pre>
+            <p>
+                This code shows that if an event handler (<span class="cd">fn</span>) is provided it is bound, but if none is provided it triggers the specific event.
+                This mapping of shortcut methods to the more generic bind method is the Adapter Pattern in action.
+            </p>
+            <p>
+                This functionality continuous to be supported, but in recent versions two new methods <span class="cd">on</span> an <span class="cd">off</span> were introduced.
+                They attach and detach event handlers respectively.  The two methods unify all good practices of event handling and allow you to write nice tidy code.
+                It is used just like the bind method above:
+            </p>
+<pre class="prettyprint">
+$("#div").on("click", function() { alert("hello"); };
+
+$("#div").on("focus", function() { alert("name please"); };
+    
+</pre>
+            <p>
+                Again the Adapter Pattern translates the call from <span class="cd">bind</span> to <span class="cd">on</span>.
+                Here is a glimpse into jQuery's source which shows how this is done:
+            </p>
+<pre class="prettyprint">
+jQuery.each( (
+  "blur focus focusin focusout load resize scroll unload click dblclick " +
+  "mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+  "change select submit keydown keypress keyup error contextmenu")
+   .split(" "), 
+    function( i, name ) {
+        // Handle event binding
+        jQuery.fn[ name ] = function( data, fn ) {
+            if ( fn == null ) {                   // argument switching
+                fn = data;
+                data = null;
+            }
+
+            return arguments.length > 0 ?
+                this.on( name, null, data, fn ) :
+                this.trigger( name );
+       };
+});
+
+</pre>
+            <p>
+                This code iterates over an array of shorthand method names and adds each one to jQuery.fn.
+                They are mapped to either the on method or the trigger method depending on the arguments passed (trigger, as the name implies, triggers the event).
+                Notice also that argument switching (function overload idiom) is used in these convenience methods.
+            </p>
+            <p>
+                Here is another jQuery Adapter in action. This time with the important ajax method:
+            </p>
+<pre class="prettyprint">
+ajax: function( url, options ) {
+    // If url is an object, simulate pre-1.5 signature
+    if ( typeof url === "object" ) {
+        options = url;
+        url = undefined;
+    }
+    // ...
+}
+
+</pre>
+            <p>
+                This method is adapted to support/simulate older versions of the API.
+                It does this through argument switching which allows it to support the current API and the older API.
+                The fact that this is all handled in a single function is rather unusual.
+            </p>
+        </div>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/facade'>Façade</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/plugin'>jQuery Plugins</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

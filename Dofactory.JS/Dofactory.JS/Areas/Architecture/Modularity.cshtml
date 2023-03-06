@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Modularity";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/architecture">Architecture</a></li>
+    <li class="breadcrumb-item"><a href="/architecture/modularity">Modularity</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Modularity</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Partitioning your code base in standalone, independent units.<br /><br />
+                Large JavaScript applications are easier to manage and maintain when they are modular.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                When an application is said to be modular, it means that it has well-defined units of functionality are relatively independent from each other (that is, they are loosely coupled).
+                Suppose you have an app that maintains Employee data.  You may see modules like Employees, Admin, Reporting, and some cross-cutting modules, such as, Ajax, Security, and Utils
+                (note: cross-cutting means they affect all areas in the app).  Modularity is beneficial because it brings clarity to your code base; the programs are easier to understand,
+                easier to test, and easier to maintain.
+            </p>
+            <p>
+                Most languages allow you to organize a large body of code in modular units. JavaScript does not natively support this, but the Module pattern allows us to organize the
+                code into clearly defined units called modules. Usually there is one module per file.
+            </p>
+            <p>
+                The next step is the ability to import these modules where necessary. Most languages support native syntax for this, such as, <span class="cd">import</span>, <span class="cd">using</span>, or <span class="cd">require</span>.
+                JavaScript does not have this and there is no easy way to import modules and help with the dependency management of these modules.
+            </p>
+            <p>
+                The ES6 (EcmaScript 6) proposal addresses the problem head-on with a new module system and the addition of these keywords:
+                <span class="cd">module</span>, <span class="cd">export</span>, and <span class="cd">import</span>.  Unfortunately, it will take some time before JavaScript
+                developers are generally coding against the new ES6 standard.
+            </p>
+            <p>
+                In the meantime, many developers building large systems use an alternative called <i>AMD</i> (Asynchronous Modular Definition). AMD is a protocol: its goal is to provide a
+                modular development API that allows JavaScript to define modules and their dependencies that can be loaded asynchronously (notice how script loading comes into play again).
+            </p>
+            <p>
+                In the next section we will review the AMD format specification as well as the most popular open-source tool that implements it: <i>Require.js</i>.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/architecture/scriptloading'>Script Loading</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture/amdrequire'>AMD & Require.js</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,492 @@
+﻿@{
+    ViewBag.Title = "Parial";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/partial">Partial</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Partial</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Techniques to load or run constructs only partially:<br />
+                &nbsp;&nbsp;-&nbsp; partial functions: pre-run parts of a function <br />
+                &nbsp;&nbsp;-&nbsp; partial objects: split objects over multiple files
+            </p>
+
+            <partial name="_UsageMediumLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                The Partial pattern in JavaScript comes in 2 flavors: <i>Partial Functions</i> and <i>Partial Objects</i>.
+                Partial Functions allow you to pre-run parts of a function by returning a so-called partial function. This partial function offers reusability and increased performance.
+                The Partial Object Pattern is about organizing your object code over separate files so that 1) multiple developers can work on an object at the same time, or
+                2) to allow for code generation and have an object part (i.e. file) that cannot be changed and a part that allows customization.
+                We also have Partial Modules, but these have already been discussed under the Module pattern.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Partial Function Pattern</b><br />
+                The Partial Function pattern is also referred to as Partial Application (as in applying, or invoking, a function). A related term is <i>currying</i> which we will also look at.
+            </p>
+            <p>
+                In JavaScript you can invoke, meaning execute, a function. Another term used in functional languages is you <i>apply</i> a function.
+                As you know, JavaScript does have a built-in <span class="cd">apply</span> method which invokes a function with two parameters:
+                the first one will be bound to <span class="cd">this</span> and the
+                second one is an array of parameters that will be 'applied' to the function.
+            </p>
+            <p>
+                <i>Function Application</i> simply means that you are applying parameters to a function.
+                Partial Application occurs when you apply a partial set of parameters to a function.
+                In the latter scenario the function remembers the first set of arguments and when called a second time it appends the new ones to the first ones.
+                This is implemented by a function returning a function and using closures. Let's look at an example:
+            </p>
+<pre class="prettyprint">
+function concat(first, last) {
+    if (typeof last === "undefined") {
+        return function (last) {             // partial function 
+            return first + " " + last;
+        };
+    }
+    return first + " " + last;
+}
+
+var mary = concat("Mary", "Milliken");      // full application
+alert(mary);                                // => Mary Milliken
+
+var john = concat("John");                  // partial application
+var jones = john("Jones");
+var sellers = john("Watson");
+
+alert(jones);                               // => John Jones
+alert(sellers);                             // => John Watson
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 3 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    function concat(first, last) {
+                        if (typeof last === "undefined") {
+                            return function (last) {             // partial function
+                                return first + " " + last;
+                            };
+                        }
+                        return first + " " + last;
+                    }
+
+                    var mary = concat("Mary", "Milliken");      // full application
+                    alert(mary);                                // => Mary Milliken
+
+                    var john = concat("John");                  // partial application
+                    var jones = john("Jones");
+                    var sellers = john("Watson");
+
+                    alert(jones);                               // => John Jones
+                    alert(sellers);                             // => John Watson
+                }
+
+            </script>
+            <br /><br />
+            <p>
+                The function <span class="cd">concat</span> concatenates first and last names together.  It can be called with one or two parameters.
+                When called with two parameters it returns first and last concatenated. However, if only the first name is provided it returns a 'transformed' function that remembers the first name
+                by storing the argument in its closure (recall that local variables <i>and</i> arguments are saved in a function's closure).  This transformed function is the partial function.
+            </p>
+            <p>
+                Running <span class="cd">concat</span> with two arguments executes as expected, returning the string "Mary Milliken".
+                When running <span class="cd">concat</span> with one argument a partial function is returned which remembers the first name "John".
+                We then call the partial function, named <span class="cd">john</span>, with only a last name.
+                This returns the original first name concatenated to the last name, i.e. John Jones and John Watson in the example.
+            </p>
+            <p>
+                This process of transforming one function to another is called <i>currying</i> (named after a mathematician by name of Haskell Curry).
+                Partial functions and currying are useful when you find yourself calling the same function over and over with the same arguments.
+                It is also useful if the first half of the function requires heavy duty processing of which the results can be saved for all subsequent calls.
+                Here is an example of the last situation where we cache a dataset that is retrieved from the server only once:
+            </p>
+<pre class="prettyprint">
+function retrieve(query, id) {
+
+    if (typeof id === "undefined") {
+        var cache = server(query);
+        return function (id) {      // partial function
+            return cache[id];
+        };
+    }
+    return server(query)[id];       // return for 'full' function 
+
+    function server(query) {        // helper, simulates database access
+       var items = {};
+       items[0] = "Moe";
+       items[1] = "Larry";
+       items[2] = "Curly";
+       return items;
+    }
+}
+
+alert(retrieve("stooges", 2));      // => Curly (no caching)
+
+var partial = retrieve("stooges");    
+
+alert(partial(0));         // => Moe
+alert(partial(1));         // => Larry
+alert(partial(2));         // => Curly
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 4 alert boxes.</i>
+            <script type="text/javascript">
+                function run3() {
+                    function retrieve(query, id) {
+
+                        if (typeof id === "undefined") {
+                            var cache = server(query);
+                            return function (id) {    // partial function
+                                return cache[id];
+                            };
+                        }
+                        return server(query)[id];     // return for 'full' function
+
+                        function server(query) {      // helper, simulates database access
+                            var items = {};
+                            items[0] = "Moe";
+                            items[1] = "Larry";
+                            items[2] = "Curly";
+                            return items;
+                        }
+                    }
+
+                    alert(retrieve("stooges", 2));      // => Curly (no caching)
+
+                    var partial = retrieve("stooges");
+
+                    alert(partial(0));         // => Moe
+                    alert(partial(1));         // => Larry
+                    alert(partial(2));         // => Curly
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                The function named <span class="cd">retrieve</span> returns a partial function if called with just one argument (the query).
+                If so, it calls the <span class="cd">server</span> method, which simulates a server call that retrieves data from a database and stores the results in a local cache.
+                The <span class="cd">cache</span> variable is an object which holds name/value pairs of the 3 Stooges. The cache is stored in the closure.
+                The partial function returns the name of the stooge that matches the id value.
+            </p>
+            <p>
+                Immediately after the <span class="cd">retrieve</span> function declaration we call retrieve with 2 parameters.
+                This will perform a regular retrieve, meaning it retrieves the data from the (simulated) server and returns the requested stooge.
+                This is rather inefficient because for each call the server needs to be accessed and a full set of stooge records is retrieved.
+                Only one of those is returned. The partial approach is far more efficient and effective.
+            </p>
+            <p>
+                When initially called with just the <span class="cd">query</span> argument, the function retrieves the data from the server, stores it in the cache, and returns a partial function that uses the cached values.
+                Any subsequent call on the partial method simply pulls the appropriate record out of cache and returns it.
+                We could do this trick for multiple data sets by creating partial functions for different queries.
+            </p>
+            <p>
+                The examples above are custom partial functions that work well for a particular scenario.
+                Is there a way that partial functionality can be made more generic, one that remembers a first batch of parameters and then merges it with a second batch in the transformed function?
+                The answer is yes, and here is how:
+            </p>
+<pre class="prettyprint">
+function makePartial(fn) { 
+    return partial.apply(this, 
+        [].concat.apply([fn, this], 
+            [].slice.call(arguments, 1)));            // 1st batch of arguments
+    function partial (fn, scope) {
+        var args = [].slice.call(arguments, 2);       // 2nd batch of arguments 
+        return function () { 
+            return fn.apply(scope, 
+                [].concat.apply(args, arguments));    // all arguments
+        }; 
+    }
+}
+
+
+</pre>
+            <p>
+                Notice that we use [] in several places. It is an array literal which creates an array instance when called.
+                Replacing [] with Array.prototype would make it a bit more efficient but at the cost of readability which is why we choose to use [].
+            </p>
+            <p>
+                Granted the above code is dense, but here it goes.  The <span class="cd">makePartial</span> function accepts a function (<span class="cd">fn</span>)
+                and any number of additional arguments (the 1st batch).
+                Note that the additional arguments are not shown as parameters in the function declaration but are visible in the built-in arguments object.
+                Next, <span class="cd">makePartial</span> returns a partial function that will accept additional arguments (the 2nd batch). The first batch and function (<span class="cd">fn</span>) is stored in the closure.
+                When the user calls this partial function, it merges the first batch of arguments with the second batch and invokes the function passed in originally.
+            </p>
+            <p>
+                Let's see an example of how it is used.
+            </p>
+<pre class="prettyprint">
+function add(v, w, x, y, z) { 
+    return v + w + x + y + z;   
+}
+
+var add3 = makePartial(add, 2, 2, 10);
+
+var total = add3(10, 6);
+alert(total);                  // => 30
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run6();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run6() {
+
+                    function makePartial(fn) {
+                        return partial.apply(this,
+                            [].concat.apply([fn, this],
+                                [].slice.call(arguments, 1)));            // 1st batch of arguments
+                        function partial(fn, scope) {
+                            var args = [].slice.call(arguments, 2);       // 2nd batch of arguments
+                            return function () {
+                                return fn.apply(scope,
+                                    [].concat.apply(args, arguments));    // all arguments
+                            };
+                        }
+                    }
+
+                    function add(v, w, x, y, z) {
+                        return v + w + x + y + z;
+                    }
+
+                    var add3 = makePartial(add, 2, 2, 10);
+
+                    var total = add3(10, 6);
+                    alert(total);                  // => 30
+                }
+            </script>
+            <br /><br />
+            <p>
+                The function <span class="cd">add</span> accepts 5 values and adds these together.
+                The variable <span class="cd">add3</span> is a partial function that already knows 3 of the 5 argument values.
+                When invoking <span class="cd">add3</span> you pass the 2 remaining arguments and the total gets returned.
+            </p>
+            <br />
+            <p>
+                <b  class="open-sans font-18">Partial Object Pattern</b><br />
+                Next, let's look at partial objects, which, by the way, is unrelated to partial functions.
+                A common problem with larger JavaScript projects is that multiple developers will work on the same object concurrently.
+                The Partial object pattern alleviates this problem by allowing the object's code to be split over multiple files,
+                each file holding only part of the object (i.e. partial object).
+            </p>
+            <p>There are different options to build Partial Objects. Here is one way:</p>
+            <p><i>File 1</i></p>
+<pre class="prettyprint">
+function Customer(name, street, /* ... */ ) {
+    this.name = name;
+    this.street = street;
+    //...
+}
+
+</pre>
+            <p><i>File 2</i></p>
+<pre class="prettyprint">
+Customer.prototype.validate( /* ... */ )
+   // ...
+}
+
+Customer.prototype.insert( /* ... */ )
+   // ...
+}
+
+Customer.prototype.update( /* ... */ )
+   // ...
+}
+
+
+</pre>
+            <p><i>File 3</i></p>
+<pre class="prettyprint">
+Customer.prototype.checkCredit( /* ... */ )
+   // ...
+}
+
+Customer.prototype.sendInvoice( /* ... */ )
+   // ...
+}
+
+Customer.prototype.acceptPayment( /* ... */ )
+   // ...
+}
+
+</pre>
+            <p>
+                The customer object has been spread over 3 files, organized by functional area.
+                At runtime, when all files are brought together and are loaded you can use the customer object like any regular object:
+            </p>
+<pre class="prettyprint">
+var customer = new Customer("IBM", "123 Main Highway", ...);
+
+customer.sendInvoice("$4,000", ...);
+
+</pre>
+            <p>
+                Another area where partial objects may be helpful is in code generation scenarios.
+                This technique is frequently used in .NET which supports true partial classes, that is, a single class can be spread out by multiple partial classes in different files.
+                .NET code-generators often use classes that are made available as two partial classes.
+                One partial class contains core functionality and should not be touched by developers.
+                The other partial class offers extension points where developers can add their custom code.
+                The first one is created by the code generator and overwritten when the code generator runs again (for example to reflect data model changes).
+                However, the second one is never overwritten by the code-generator and should only be touched by the developers.
+            </p>
+            <p>
+                These extension points in .NET can be in the form of event handlers or partial methods (not related to JavaScript Partial Functions).
+                At compile time the two partials are merged to form a single class which runs and behaves like a normal class.
+            </p>
+            <p>
+                This approach works really well. The question is can we do something similar in JavaScript? The answer is yes.  Let's see how.
+            </p>
+            <p><i>File 1. -- code generated</i></p>
+<pre class="prettyprint">
+var ClickableControl = function () {
+
+    var handlers = [];
+
+    this.register = function (handler) {
+        handlers.push(handler);
+    }
+
+    this.click = function (x, y) {
+        for (var i = 0, len = handlers.length; i < len; i++) {
+            handlers[i].apply(this,[x,y]);
+        }
+    }
+}
+
+var control = new ClickableControl();
+
+</pre>
+            <p><i>File 2. -- hand coded</i></p>
+<pre class="prettyprint">
+function showClick (x,y) {
+    alert("Location: " + x + ", " + y);
+}
+
+control.register(showClick);
+
+</pre>
+            <p>Here is a user or browser generated event </p>
+<pre class="prettyprint">
+control.click(250, 120);    // => Location 250, 120
+control.click(248, 123);    // => Location 248, 123
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+
+                    var ClickableControl = function () {
+
+                        var handlers = [];
+
+                        this.register = function (handler) {
+                            handlers.push(handler);
+                        }
+
+                        this.click = function (x, y) {
+                            for (var i = 0, len = handlers.length; i < len; i++) {
+                                handlers[i].apply(this, [x, y]);
+                            }
+                        }
+                    }
+
+                    var control = new ClickableControl();
+
+                    function showClick(x, y) {
+                        alert("Location: " + x + ", " + y);
+                    }
+
+                    control.register(showClick);
+
+                    control.click(250, 120);    // => Location 250, 120
+                    control.click(248, 123);    // => Location 248, 123
+                }
+            </script>
+            <br /><br />
+            <p>
+                If you have already read the Classic Patterns section, you may recognize the Observer Pattern or callback pattern in this example.
+                File 1 defines a clickable control that allows registration for click handlers.
+                The click handlers are provided in File 2 which is hand coded. When the app generated clicks, all registered click handlers are invoked one after the other.
+                This example shows we are able to make a clean separation of the 'code-generated' control (File 1) and the custom event handlers (File 2).
+            </p>
+            <p>
+                As far as code-generation this example is a bit contrived, but it conveys the general idea of separating objects in non-changeable and changeable files.
+                This separation is not limited to events; it is perfectly fine to use what almost seems like 'abstract' methods.
+                An example of where this is used is Backbone, a popular open source MVC framework (discussed in the Model View Patterns section).
+                Backbone provides a base Model object that can be extended with a custom object like so:
+            </p>
+<pre class="prettyprint">
+var car = Backbone.Model.extend({
+
+    urlRoot: "cars",
+
+    initialize: function () {
+        alert("I am a car");
+    },
+
+    defaults: {
+        id: 0,
+        model: "",
+        make: "",
+        year: "",
+        description: ""
+    }
+});
+
+</pre>
+            <p>
+                Backbone.Model provides the base functionality (in this case Model behavior in a MVC context) and offers a series of properties and methods that can be overridden with custom code.
+                For example, it has an empty <span class="cd">initialize</span> method on its prototype, but it will invoke the overridden one if present.
+                It checks whether <span class="cd">urlRoot</span> is defined and has a value, and similarly for <span class="cd">defaults</span>.
+            </p>
+            <p>
+                Backbone is not code generated but it provides predefined hooks to extend the standard object.
+                It is not far-fetched to think of the Model being code generated which then provides the hooks that can be added.
+                These hooks are added in a different file, that is, the partial object.
+            </p>
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/multiton'>Multiton</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

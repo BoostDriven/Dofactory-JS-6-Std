@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/introduction">Introduction</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Introduction</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Introduction to the JavaScript Classic Patterns.<br /><br />
+                The Gang-of-Four patterns are referred to as the Classic patterns.
+                Many of these are highly relevant to JavaScript, whereas others are less so.
+            </p>
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                We refer to the Gang-of-Four patterns as the Classic patterns. They were first published in 1995 which is interesting because this was the same year that
+                JavaScript was first released. However, the two (GoF and JavaScript) did not see eye to eye for about a decade. Only when JavaScript became more popular and
+                widely used (in particular when Web 2.0 and Ajax were all the rage) started there to be an interest in GoF and patterns in general in the JavaScript world.
+            </p>
+            <p>
+                The Gang of Four (GoF) patterns are generally considered the foundation for all other patterns.
+                Many of these are relevant and applicable to JavaScript, but others less so. Why are some not relevant?
+                It is because JavaScript is a highly flexible language which allows runtime changes of objects, including the addition, removal, and change of the object's properties and methods.
+                This flexibility is essentially what some classic patterns are aiming for, but since this is already built into the language itself, those patterns are not relevant.
+            </p>
+            <p>
+                The GoF listed 23 patterns. In this section we will review each of these.
+                Each pattern includes a description including a diagram (semi-UML), a traditional code implementation,
+                and a JavaScript optimized code implementation.  Let's get started with the first pattern which is Abstract Factory.
+            </p>
+          
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic'>Back to List</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/builder'>Builder</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

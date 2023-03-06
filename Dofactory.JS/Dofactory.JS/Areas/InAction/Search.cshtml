@@ -1,0 +1,263 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/inaction">Patterns in Action</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/search">Search</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Search</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A search app displaying a list of results.
+            </p>
+            <br />
+            <a class="btn btn-red" href='/inaction/searchapp'>Launch App</a>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div id="text" class="col-8">
+        <h3>Description</h3>
+        <br />
+        <div class="ptext">
+
+            <p>
+                Search is important to most web apps. If you have a database with more than, say 100 records, you will want to consider some search, and possibly sort and filter, facility on your site.
+                Since our app has no access to a real server, we will be using a Mock server that returns a random number of records generated with the help of a quote from Cicero, a Roman philosopher.
+            </p>
+            <p>
+                The page has two &lt;script&gt; templates. The <span class="cd">search-results-template</span>
+                renders all search results and the
+                <span class="cd">search-result-template</span> renders an individual record.  Just as we did in the <span class="cd">DataEntry</span>
+                example, the template token
+                markers were changed from <span class="cd">&lt;% = &nbsp; %&gt;</span> to double braces <span class="cd">{{</span> and <span class="cd">}}</span> using a simple <span class="cd">_.templateSettings</span> call.
+            </p>
+            <p>
+                The Search app code is below:
+            </p>
+            <div class="row">
+<pre class="prettyprint span12">
+var Patterns = {
+    // ** namespace pattern
+    namespace: function (name) {
+
+        // ** single var pattern
+        var parts = name.split(".");
+        var ns = this;
+
+        // ** iterator pattern
+        for (var i = 0, len = parts.length; i < len; i++) {
+
+            // ** || idiom
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+// ** namespace pattern 
+// ** revealing module pattern
+// ** singleton pattern
+Patterns.namespace("InAction").Search = (function () {
+
+    // change template token markers to use double curly braces (just like Mustache):
+    _.templateSettings = {
+        interpolate: /\{\{(.+?)\}\}/g,
+        evaluate: /\{\{(.+?)\}\}/g
+    };
+
+    // ** extend pattern
+    // ** option hash idiom
+    var Book = Backbone.Model.extend({
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    var Books = Backbone.Collection.extend({
+        model: Book,
+        url: "search/:q"
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    var Views = Backbone.View.extend({
+
+        // ** chaining pattern
+        template: _.template($('#search-results-template').html()),
+        el: $("#searchresults"),
+
+        // ** init pattern
+        initialize: function (obj) {
+            this.query = obj.query;
+
+            this.books = new Books();
+            // ** observer pattern
+            this.books.on('update', this.render, this); // will trigger render
+            this.books.fetch({ data: { q: this.query } });
+        },
+
+        render: function (eventName) {
+            this.$el.empty();
+            // ** iterator pattern
+            this.books.each(function (book) {
+                this.$el.append(new View({ model: book }).render().el);
+            }, this);
+
+            return this;
+        }
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    var View = Backbone.View.extend({
+        // ** chaining pattern
+        template: _.template($('#search-result-template').html()),
+
+        render: function (eventName) {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    // Random text helpers
+
+    var randomInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // cicero: used in random string generator
+    var cicero = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+    var ciceroLen = cicero.length;
+
+    // server Mock
+    fauxServer.addRoute("searchBook", "search/:q", "GET", function (context) {
+            
+        var q = context.data.q;
+        var count = randomInt(6, 35);
+
+        var array = [];
+
+        // ** iterator pattern
+        for (var i = 0; i < count; i++) {
+            var from = randomInt(1, ciceroLen - 31);
+            var to = from + randomInt(10, 30);
+            var append = cicero.substring(from, to).replace(/^\s+|\s+$/g, ''); // sub and trim
+            array.push({ id: i, title: q + " " + append })
+        }
+
+        context.data = array;
+        return context.data;
+    });
+
+    var start = function () {
+
+        // focus on search text box and hook up enter keydown event
+        // ** chaining pattern
+        $("#search").focus().keydown(function (event) {  
+            if (event.keyCode == 13) {
+                $("#searchbutton").click();
+            }
+        });
+
+        // button click triggers search
+        // ** observer pattern
+        $("#searchbutton").on('click', function () {
+            var q = $("#search").val();
+            if (q) {
+                new Views({ query: q });
+            } else {
+                alert("Please enter a search string");
+                $("#search").focus();
+            }
+        });
+
+        // ** observer pattern
+        $("#reset").on('mousedown', function () {
+            // ** chaining pattern
+            $("#search").val("").focus();
+            $("#searchresults").empty();
+        });
+    }
+
+    return { start: start };
+}());
+    
+$(function () {
+
+    // ** facade pattern
+    Patterns.InAction.Search.start();
+});
+</pre>
+            </div>
+            <p>
+                The patterns and idioms used in this code are:
+            </p>
+            <ul>
+                <li>|| and && idiom</li>
+                <li>Option Hash idiom</li>
+                <li>Namespace pattern</li>
+                <li>Single var pattern</li>
+                <li>Module pattern </li>
+                <li>Extend pattern</li>
+                <li>Init pattern</li>
+                <li>Chaining pattern</li>
+                <li>Iterator pattern</li>
+                <li>Singleton pattern</li>
+                <li>Observer pattern</li>
+                <li>Façade pattern</li>
+            </ul>
+            <p>
+                All of these patterns have already been described in the previous examples.
+                This shows that the same patterns are commonly used over and over again.
+                Once you develop the skills to write patterns they will become second nature, almost as if they were native to
+                the JavaScript language.
+            </p>
+            <br />
+            <p>
+                <a href='/inaction/searchapp' class="btn btn-red">Launch App</a>
+            </p>
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/inaction/dataentry'>Data Entry</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/inaction/pagination'>Pagination</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

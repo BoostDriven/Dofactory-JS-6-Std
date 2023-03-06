@@ -1,0 +1,217 @@
+﻿@{
+    ViewBag.Title = "Search app";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/inaction">Patterns in Action</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/search">Search</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/searchapp">App</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-9">
+        <h2>Search App</h2>
+    </div>
+    <div class="col-2 text-right">
+        <a class="btn btn-red" href='/inaction/search'>Close App</a>
+    </div>
+</div>
+
+<br />
+<br />
+
+<div class="d-flex">
+    <div class="pt-11">
+        <div>Enter criteria</div>
+    </div>
+    <div class="pl-15">
+        <div class="input-append" style="margin: 5px 0 0 0;">
+            <input type="text" class="form-control" id="search">
+        </div>
+    </div>
+    <div class="pl-20 pt-5"><button id="searchbutton" class="btn btn-green">Search</button></div>
+    <div class="pl-10 pt-5"><button id="reset" class="btn btn-outline-green">Reset</button></div>
+    <div class="pl-20 pt-12">To search hit enter or click search button</div>
+</div>
+
+<div class="row">
+    <div class="col-8">
+        <hr />
+        <div class="pl-10" id="searchresults"></div>
+    </div>
+</div>
+
+<script type="text/template" id="search-results-template">
+    <div id="books"></div>
+</script>
+<script type="text/template" id="search-result-template">
+    <div class="row">
+        <div class="col-7" style="padding:8px;"><img src="/img/details.gif" alt="" />&nbsp;&nbsp; {{ title }}</div>
+    </div>
+</script>
+
+<br />
+<br />
+<br />
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var Patterns = {
+            // ** namespace pattern
+            namespace: function (name) {
+
+                // ** single var pattern
+                var parts = name.split(".");
+                var ns = this;
+
+                // ** iterator pattern
+                for (var i = 0, len = parts.length; i < len; i++) {
+
+                    // ** || idiom
+                    ns[parts[i]] = ns[parts[i]] || {};
+                    ns = ns[parts[i]];
+                }
+
+                return ns;
+            }
+        };
+
+        // ** namespace pattern
+        // ** revealing module pattern
+        // ** singleton pattern
+        Patterns.namespace("InAction").Search = (function () {
+
+            // change template token markers to use double curly braces (just like Mustache):
+            _.templateSettings = {
+                interpolate: /\{\{(.+?)\}\}/g,
+                evaluate: /\{\{(.+?)\}\}/g
+            };
+
+            // ** extend pattern
+            // ** option hash idiom
+            var Book = Backbone.Model.extend({
+            });
+
+            // ** extend pattern
+            // ** option hash idiom
+            var Books = Backbone.Collection.extend({
+                model: Book,
+                url: "search/:q"
+            });
+
+            // ** extend pattern
+            // ** option hash idiom
+            var Views = Backbone.View.extend({
+
+                // ** chaining pattern
+                template: _.template($('#search-results-template').html()),
+                el: $("#searchresults"),
+
+                // ** init pattern
+                initialize: function (obj) {
+                    this.query = obj.query;
+
+                    this.books = new Books();
+                    // ** observer pattern
+                    this.books.on('update', this.render, this); // will trigger render
+                    this.books.fetch({ data: { q: this.query } });
+                },
+
+                render: function (eventName) {
+                   
+                    this.$el.empty();
+                    // ** iterator pattern
+                    this.books.each(function (book) {
+                        this.$el.append(new View({ model: book }).render().el);
+                    }, this);
+
+                    return this;
+                }
+            });
+
+            // ** extend pattern
+            // ** option hash idiom
+            var View = Backbone.View.extend({
+                // ** chaining pattern
+                template: _.template($('#search-result-template').html()),
+
+                render: function (eventName) {
+                    this.$el.html(this.template(this.model.toJSON()));
+                    return this;
+                }
+            });
+
+            // Random text helpers
+
+            var randomInt = function (min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            // cicero: used in random string generator
+            var cicero = "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
+            var ciceroLen = cicero.length;
+
+            // server Mock
+            fauxServer.addRoute("searchBook", "search/:q", "GET", function (context) {
+
+                var q = context.data.q;
+                var count = randomInt(6, 35);
+
+                var array = [];
+
+                // ** iterator pattern
+                for (var i = 0; i < count; i++) {
+                    var from = randomInt(1, ciceroLen - 31);
+                    var to = from + randomInt(10, 30);
+                    var append = cicero.substring(from, to).replace(/^\s+|\s+$/g, ''); // sub and trim
+                    array.push({ id: i, title: q + " " + append })
+                }
+
+                context.data = array;
+                return context.data;
+            });
+
+            var start = function () {
+
+                // focus on search text box and hook up enter keydown event
+                // ** chaining pattern
+                $("#search").focus().keydown(function (event) {
+                    if (event.keyCode == 13) {
+                        $("#searchbutton").click();
+                    }
+                });
+
+                // button click triggers search
+                // ** observer pattern
+                $("#searchbutton").on('click', function () {
+                    var q = $("#search").val();
+                    if (q) {
+                        new Views({ query: q });
+                    } else {
+                        alert("Please enter a search string");
+                        $("#search").focus();
+                    }
+                });
+
+                // ** observer pattern
+                $("#reset").on('click', function () {
+                    // ** chaining pattern
+                    $("#search").val("").focus();
+                    $("#searchresults").empty();
+                });
+            }
+
+            return { start: start };
+        }());
+
+        $(function () {
+
+            // ** facade pattern
+            Patterns.InAction.Search.start();
+        });
+
+    </script>
+}

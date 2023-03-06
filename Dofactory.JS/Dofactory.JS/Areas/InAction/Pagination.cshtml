@@ -1,0 +1,305 @@
+﻿@{
+    ViewBag.Title = "Pagination";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/inaction">Patterns in Action</a></li>
+    <li class="breadcrumb-item"><a href="/inaction/pagination">Pagination</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Pagination</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A pagination app that pages through images of art.
+            </p>
+            <br />
+            <a class="btn btn-red" href='/inaction/paginationapp'>Launch App</a>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div id="text" class="col-8">
+        <h3>Pagination</h3>
+        <br />
+        <div class="ptext">
+
+            <p>
+                Most websites offer some form of pagination. There is a limit how many records can be displayed on a single page and breaking the record set up in pages makes a lot of sense.
+                This pagination sample displays 9 well-known paintings per page.  There are 3 pages total.
+            </p>
+            <p>
+                Like the previous examples this one uses Backbone, underscore templating (with changed template token markers), in-page templates (using &lt;script&gt; tags),
+                and a Mock server.   The two script templates are named <span class="cd">pictures-template</span> and <span class="cd">picture-template</span> respectively.
+            </p>
+            <p>
+                Here is the pagination code:
+            </p>
+            <div class="row">
+<pre class="prettyprint span12">
+var Patterns = {
+    // ** namespace pattern
+    namespace: function (name) {
+        // ** single var pattern
+        var parts = name.split(".");
+        var ns = this;
+
+        // ** iterator pattern
+        for (var i = 0, len = parts.length; i < len; i++) {
+            // ** || idiomT
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+// ** namespace pattern 
+// ** revealing module pattern
+// ** singleton pattern
+Patterns.namespace("InAction").Pagination = (function () {
+
+    // ** namespace pattern
+    var Models = {};
+    var Views = {};
+    var Routers = {};
+
+    // Change template token markers to {{ and }} 
+    _.templateSettings = {
+        interpolate: /\{\{(.+?)\}\}/g,
+        evaluate: /\{\{(.+?)\}\}/g
+    };
+
+    // ** extend pattern
+    Routers.Router = Backbone.Router.extend({
+
+        // ** init pattern
+        initialize: function (options) {
+            this.el = options.el;
+        },
+        routes: {
+            "": "paginate",
+            ":page": "paginate"           
+        },
+        paginate: function (page) {
+
+            // ** truthy/falsy idiom 
+            var p = page ? parseInt(page, 10) : 1;
+                
+            // ** chaining pattern
+            this.el.html(new Views.Pagination({ page: p }).el);
+            this.el.append(new Views.Pictures({ page: p }).el);
+            this.el.append(new Views.Pagination({ page: p }).el);
+        }
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    Models.Picture = Backbone.Model.extend({
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    Models.Pictures = Backbone.Collection.extend({
+        model: Models.Picture,
+        url: "pagination"
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    Views.Pictures = Backbone.View.extend({
+            
+        tagName: "ul",
+        className: "thumbnails",
+
+        // ** init pattern
+        initialize: function (options) {
+            this.page = options.page;
+                
+            this.collection = new Models.Pictures();
+            this.collection.bind("update", this.render, this);
+            this.collection.fetch({ data: { page: this.page } });
+        },
+        render: function () {
+                
+            // ** iterator pattern
+            this.collection.each(function (picture) {
+                var view = new Views.Picture({ model: picture });
+                this.$el.append(view.render().el);
+            }, this);
+
+            return this;
+        }
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    Views.Picture = Backbone.View.extend({
+            
+        tagName: "li",
+        template: _.template($('#picture-template').html()),
+
+        render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    // ** extend pattern
+    // ** option hash idiom
+    Views.Pagination = Backbone.View.extend({
+
+        tagName: "div",   // this is default
+            
+        className: "pagination pagination-centered",
+        // ** init pattern
+        initialize: function (options) {
+            this.page = options.page;
+            this.render();
+        },
+
+        render: function () {
+               
+            var pageCount = Math.ceil(pictures.length / 9);
+            this.$el.css("padding-right", "100px");
+                
+            this.$el.append("<ul>");
+            // ** iterator pattern
+            for (var i = 0; i < pageCount; i++) {
+                $('ul', this.el).append("&lt;li " + ((i + 1) === this.options.page ? " class='active'" : "") + 
+                                        "&gt;&lt;a href='#" + (i + 1) + "'&gt;" + (i + 1) + "&lt;/a&gt;&lt;/li&gt;");
+            }
+            this.$el.append("</ul>");
+
+
+            return this;
+        }
+    });
+
+    var pictures = [
+        { id: 1, picture: "1a.jpg", title: "Painting 1" },
+        { id: 2, picture: "2a.jpg", title: "Painting 2" },
+        { id: 3, picture: "3a.jpg", title: "Painting 3" },
+        { id: 4, picture: "4a.jpg", title: "Painting 4" },
+        { id: 5, picture: "5a.jpg", title: "Painting 5" },
+        { id: 6, picture: "6a.jpg", title: "Painting 6" },
+        { id: 7, picture: "7a.jpg", title: "Painting 7" },
+        { id: 8, picture: "8a.jpg", title: "Painting 8" },
+        { id: 9, picture: "9a.jpg", title: "Painting 9" },
+        { id: 10, picture: "10a.jpg", title: "Painting 10" },
+        { id: 11, picture: "11a.jpg", title: "Painting 11" },
+        { id: 12, picture: "12a.jpg", title: "Painting 12" },
+        { id: 13, picture: "13a.jpg", title: "Painting 13" },
+        { id: 14, picture: "14a.jpg", title: "Painting 14" },
+        { id: 15, picture: "15a.jpg", title: "Painting 15" },
+        { id: 16, picture: "16a.jpg", title: "Painting 16" },
+        { id: 17, picture: "17a.jpg", title: "Painting 17" },
+        { id: 18, picture: "18a.jpg", title: "Painting 18" },
+        { id: 19, picture: "19a.jpg", title: "Painting 19" },
+        { id: 20, picture: "20a.jpg", title: "Painting 20" },
+        { id: 21, picture: "21a.jpg", title: "Painting 21" },
+        { id: 22, picture: "22a.jpg", title: "Painting 22" },
+        { id: 23, picture: "23a.jpg", title: "Painting 23" },
+        { id: 24, picture: "24a.jpg", title: "Painting 24" },
+        { id: 25, picture: "25a.jpg", title: "Painting 25" }
+    ];
+
+    // server Mock
+    fauxServer.addRoute("picturesPage", "pagination", "GET", function (context) {
+
+        // ** single var pattern
+        var pageSize = 9;
+        var start = (context.data.page - 1) * pageSize + 1;
+        var finish = Math.min(start + pageSize, pictures.length + 1);
+
+        context.data = _.filter(pictures, function (item) {
+            var index = parseInt(item.id, 10);
+            return (index >= start && index < finish);
+        });
+            
+        return context.data;
+    });
+
+    // Startup code
+    var start = function () {
+        var router = new Routers.Router({ el: $("#pictures-content") });
+        Backbone.history.start();
+    }
+
+    return {
+        start: start
+    };
+})();
+
+
+$(function () {
+
+    // ** facade pattern
+    Patterns.InAction.Pagination.start();
+});
+</pre>
+            </div>
+            <p>
+                The idioms and patterns used in this example are:
+            </p>
+            <ul>
+                <li>Truthy/falsy idiom</li>
+                <li>|| and && idiom</li>
+                <li>Option Hash idiom</li>
+                <li>Namespace pattern</li>
+                <li>Single var pattern</li>
+                <li>Module pattern </li>
+                <li>Extend pattern</li>
+                <li>Init pattern</li>
+                <li>Chaining pattern</li>
+                <li>Iterator pattern</li>
+                <li>Singleton pattern</li>
+                <li>Observer pattern</li>
+                <li>Façade pattern</li>
+            </ul>
+            <p>
+                Each page makes a mocked Ajax server call and gets a number of pictures returned. Depending on how users use the app, you may consider caching the pictures
+                already returned to the client. This could be implemented using the Lazy Load pattern. To keep things simple this is not implemented in this example
+                but wouldn't be hard to add.
+            </p>
+
+            <br />
+            <p>
+                <a class="btn btn-red" href='/inaction/paginationapp'>Launch App</a>
+            </p>
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans"  href='/inaction/search'>Search</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/rockstar'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

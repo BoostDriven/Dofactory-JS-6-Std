@@ -1,0 +1,633 @@
+﻿@{
+    ViewBag.Title = "Constructor";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/constructor">Constructor</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Constructor</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            Alternative ways to create new object instances.
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+
+            <p>
+                The <i>Constructor pattern</i> refers to the process of creating new object instances in JavaScript.
+                There are different ways of doing this and it is important to understand the different options.
+            </p>
+            <p>
+                If you are coming from a class-based language you're familiar with creating objects by calling a class constructor with the <span class="cd">new</span> operator.
+                JavaScript does not support classes, but it does have a new operator. Calling <span class="cd">new</span> with a constructor function will return a newly created object instance, like this:
+            </p>
+<pre class="prettyprint">
+var obj = new Object();           // new operator
+</pre>
+            <p>
+                This creates an empty object which doesn't do very much. To create more interesting and useful objects we need to add properties and methods.
+                JavaScript is a dynamic language that allows us to create an empty object and subsequently add object members by using the dot operator:
+            </p>
+<pre class="prettyprint">
+var obj = new Object();
+obj.name = "Anthony Miller";
+obj.hello = function () { alert("hello"); }
+
+</pre>
+            <p>
+                Alternatively, we can use the [] operator.
+            </p>
+<pre class="prettyprint">
+var obj = new Object();
+obj["name"] = "Anthony Miller";
+obj["hello"] = function () { alert("hello"); };
+
+</pre>
+            <p>
+                For objects with many properties this can become rather tedious. A more compact way of doing this is with object literals which are object definitions surrounded by curly braces.
+                Let's start off with a basic example. Here we create an empty person object:
+            </p>
+<pre class="prettyprint">
+var person = {};      // object literal notation
+</pre>
+            <p>
+                Next we'll create a more interesting object with a property and a method in a single statement:
+            </p>
+<pre class="prettyprint">
+var person = {
+   name: "Anthony Miller",
+   say: function () { alert(this.name); }
+};
+
+person.say();       // => Anthony Miller
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var person = {
+                        name: "Anthony Miller",
+                        say: function () { alert(this.name); }
+                    };
+
+                    person.say();       // => Anthony Miller
+                }
+            </script>
+            <br /><br />
+            <p>
+                This object has two members: a property called name and a method called say (by the way: a method is a function that is part of an object). The say method displays the person's name.
+            </p>
+            <p>
+                Object literal notation is frequently used by JavaScript developers.  However, as used above, the object literal is not reusable.
+                Constructor functions were designed to be reusable and are discussed next.
+            </p>
+            <p>
+                The Object constructor function is native to JavaScript and allows you to create empty objects.
+                It is rarely used, but you can create custom constructor functions that are used extensively in JavaScript.  Here is an example:
+            </p>
+<pre class="prettyprint">
+function Person() {
+    this.name = "Nelly Jones";
+    this.say = function () { alert(this.name); }; 
+}
+
+var person = new Person();
+person.say();               // => Nelly Jones
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run2() {
+                    function Person() {
+                        this.name = "Nelly Jones";
+                        this.say = function () { alert(this.name); };
+                    }
+
+                    var person = new Person();
+                    person.say();               // => Nelly Jones
+                }
+            </script>
+            <br /><br />
+            <p>
+                This creates a person object with hardcoded property values.
+                A more flexible and reusable approach is to create a constructor function that takes an argument with which the name is initialized:
+            </p>
+<pre class="prettyprint">
+function Person(name) {
+    this.name = name;
+    this.say = function () { alert(this.name); }; 
+}
+
+var anthony = new Person("Anthony Miller");
+var celeste = new Person("Celeste Diaz");
+
+anthony.say();               // => Anthony Miller
+celeste.say();               // => Celeste Diaz
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run3() {
+                    function Person(name) {
+                        this.name = name;
+                        this.say = function () { alert(this.name); };
+                    }
+
+                    var anthony = new Person("Anthony Miller");
+                    var celeste = new Person("Celeste Diaz");
+
+                    anthony.say();               // => Anthony Miller
+                    celeste.say();               // => Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                The '<span class="cd">this</span>' keyword in the function body is bound to the object that is being created and is called the <i>context</i> of the function.
+                We now have a truly reusable constructor function which allows us to create many new instances without much effort.
+            </p>
+            <p>
+                Alternatively, we can create an anonymous constructor function and assign it to a variable, like so:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    this.name = name;
+    this.say = function () { alert(this.name); }; 
+}
+var anthony = new Person("Anthony Miller");
+var celeste = new Person("Celeste Diaz");
+
+anthony.say();               // => Anthony Miller
+celeste.say();               // => Celeste Diaz
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+                    var Person = function (name) {
+                        this.name = name;
+                        this.say = function () { alert(this.name); };
+                    }
+                    var anthony = new Person("Anthony Miller");
+                    var celeste = new Person("Celeste Diaz");
+
+                    anthony.say();               // => Anthony Miller
+                    celeste.say();               // => Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                The function does not have a name (it is anonymous) and is assigned to a variable as if it were a primitive value or object type.
+                This is not far off, because, in fact, functions are true objects. They come with properties and methods just like objects.
+                This is why they are referred to as <i>function objects</i>.
+            </p>
+            <p>
+                Whether you use a named function or an anonymous function that you assign to a variable makes no difference in how you use it.
+                Either way, you use the <span class="cd">new</span> operator followed by the function name or the variable name.
+            </p>
+            <p>
+                However, there is a slight difference when debugging. Since an anonymous function has no name there is no way for the debugger to reference or search for it.
+                For this reason, some developers prefer named functions over anonymous functions.
+            </p>
+            <p>
+                By convention the name of a constructor function starts with an <i>uppercase</i> letter.  All other functions start with lowercase.
+                This is merely a convention but a very important one. Here is why. Let's say you forget to include the new keyword when creating new persons, like this:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    this.name = name;
+    this.say = function () { alert(this.name) }; 
+}
+
+var anthony = Person("Anthony Miller");   // missing new
+var celeste = Person("Celeste Diaz");     // missing new
+
+</pre>
+            <p>
+                There will be no warning and initially the program seems to run fine, but after a while you start to see errors.
+                What happens when you omit the <span class="cd">new</span> keyword is that the '<span class="cd">this</span>' reference
+                does not get bound to the current object but to the global object instead (window in browsers).
+            </p>
+            <p>
+                JavaScript, being a dynamic language, will happily create the name property and the say function on the global object without warning,
+                but now all persons are starting to overwrite each other's name.
+            </p>
+            <p>
+                The problem is that these bugs can be very difficult to find. Other than visual inspection (i.e., a developer staring at the code) there
+                is no good way to discover the source of the problem. Having a constructor function with an upper case letter is a useful hint to developers that a new prefix is required.
+            </p>
+            <p>
+                EcmaScript 5 addresses the problem. When in strict mode (<span class="cd">"use strict";</span>) the keyword <span class="cd">this</span> will no longer reference the global object.
+                But what if you are not able to use the ES5 standard yet?  Fortunately, there is a simple way to defensively code against forgetting the <span class="cd">new</span> prefix:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    if (!(this instanceof Person)) { 
+       return new Person(name); 
+    }
+
+    this.name = name;
+    this.say = function () {alert(this.name);}; 
+}
+var anthony = Person("Anthony Miller");    // missing new
+var celeste = Person("Celeste Diaz");      // missing new
+
+anthony.say();       // => Anthony Miller
+celeste.say();       // => Celeste Diaz
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run8();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run8() {
+                    var Person = function (name) {
+                        if (!(this instanceof Person)) {
+                            return new Person(name);
+                        }
+
+                        this.name = name;
+                        this.say = function () { alert(this.name); };
+                    }
+                    var anthony = Person("Anthony Miller");
+                    var celeste = Person("Celeste Diaz");
+
+                    anthony.say();       // => Anthony Miller
+                    celeste.say();       // => Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                In this example, the constructor function checks if <span class="cd">this</span> is of type Person.
+                If it is not, then that means that <span class="cd">this</span> was omitted and it will immediately correct the situation by calling the constructor function prefixed with <span class="cd">this</span>.
+                The overhead of the if-statement is minimal, and it can avoid late night debugging sessions in the office.
+            </p>
+            <p>
+                Constructor functions implicitly return the object referenced by <span class="cd">this</span>. There is no need to include a return statement.
+                However, you can return your own objects if you prefer:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    var that = {};
+    that.name = name; 
+    that.say = function () {alert(this.name);}
+    return that;
+};
+</pre>
+            <p>
+                Please note: the variable <span class="cd">that</span> is not a keyword, just an alternative for <span class="cd">this</span>.
+                You can write the above code more succinctly by returning an object literal without the need for a <span class="cd">that</span> variable:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    return {
+        name: name,
+        say: function () {alert(this.name);}
+    };
+}
+
+</pre>
+            <p>
+                This is a frequently used style as it allows the creation of private variables.
+                Classically trained developers are used to access modifiers: private, protected, and public, but JavaScript does not support these.
+                Fortunately, you can create private variables following this approach:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    
+    var privateName = name;    // private 
+
+    return {
+        say: function () { alert(privateName); }
+    };
+}
+
+var anthony = new Person("Anthony Miller");
+var celeste = new Person("Celeste Diaz");
+
+anthony.say();                                 // Anthony Miller
+celeste.say();                                 // Celeste Diaz
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run10();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run10() {
+                    var Person = function (name) {
+
+                        var privateName = name;    // private
+
+                        return {
+                            say: function () { alert(privateName); }
+                        };
+                    }
+
+                    var anthony = new Person("Anthony Miller");
+                    var celeste = new Person("Celeste Diaz");
+
+                    anthony.say();                                 // Anthony Miller
+                    celeste.say();                                 // Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                The incoming name argument is assigned to local variable named privateName.  Notice that the say method now displays privateName.
+                Although JavaScript does not natively support private members (or any other access modifier), this variable is truly private and not accessible from anywhere outside the function body.
+            </p>
+            <p>
+                You may be wondering what the value of privateName will be after the constructor is called, for example, when the say() method displays its value. Rest assured it is the original value when the object was created.
+                The value will be maintained during the lifetime of the object. You can see that this is the case with anthony and celeste.
+            </p>
+            <p>
+                What is at work here is an important concept in JavaScript called a <i>closure</i>.  When instantiating an object with a constructor function the internal values are wrapped
+                into a closure and stay into existence until the object goes out of scope and gets garbage collected.
+            </p>
+            <p>
+                By the way, argument values are also part of a function's closure.  In the above case, the closure maintains the values of two variables: name and privateName.
+                So, if name is part of the closure, then there is no need to assign the argument to a local value; correct?  Yes, that is indeed correct. Look at the following code:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    return {
+        say: function () { alert(name); }
+    };
+}
+
+var anthony = Person("Anthony Miller");
+var celeste = Person("Celeste Diaz");
+
+anthony.say();                                 // Anthony Miller
+celeste.say();                                 // Celeste Diaz
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run11();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run11() {
+                    var Person = function (name) {
+                        return {
+                            say: function () { alert(name); }
+                        };
+                    }
+
+                    var anthony = Person("Anthony Miller");
+                    var celeste = Person("Celeste Diaz");
+
+                    anthony.say();                                 // Anthony Miller
+                    celeste.say();                                 // Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                As you can see this works the same as the prior example that used privateName.
+            </p>
+            <p>
+                You can also change argument values and they will still be maintained by the closure.
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    return {
+        setName: function (n) {name = n;},
+        getName: function () {return name;},
+        say: function () {alert(name);}
+    };
+}
+
+var person = Person("Superman");
+person.say();                                 // => Superman
+
+person.setName("King Kong");
+person.say();                                 // => King Kong
+    
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run12();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run12() {
+                    var Person = function (name) {
+                        return {
+                            setName: function (n) { name = n; },
+                            getName: function () { return name; },
+                            say: function () { alert(name); }
+                        };
+                    }
+
+                    var person = Person("Superman");
+                    person.say();                                 // => Superman
+
+                    person.setName("King Kong");
+                    person.say();                                 // => King Kong
+                }
+            </script>
+            <br /><br />
+            <p>
+                Works like a charm.
+            </p>
+            <p>
+                Building private functions is also a breeze with closures:
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+     
+    var privateName = name;                          // private 
+    var privateLength = function () {                // private
+        return privateName.length; 
+    };   
+
+    return {
+        name: privateName,                           // public
+        nameLength: privateLength,                   // public
+        say: function () { alert(privateName); }     // public
+    };
+}
+</pre>
+            <p>
+                The function <span class="cd">privateLength</span> is private.  Everything that is returned is public.
+                Notice that a person's public properties and methods have full access to its private variables and functions (and arguments),
+                even beyond the creation stage; again, this is courtesy of the closure that was constructed for us.
+            </p>
+            <p>
+                Rather than returning an object using an object literal we can also return a function (actually a <i>function literal</i>).
+                Just like the object literal the returned function also has full access to any private variable or function in the surrounding constructor function.
+            </p>
+<pre class="prettyprint">
+var Person = function (name) {
+    
+    var privateName = name;                                // private
+    var privateLength = function () {                      // private
+        return privateName.length;                         
+    };  
+
+    return function (name) {
+        this.name = name,                                  // public
+        this.nameLength = privateLength,                   // public
+        this.say = function () { alert(privateName); }     // public
+    };
+}
+</pre>
+            <br />
+            <p>
+                The constructor functions we've looked at so far have both properties and methods defined in their function body.
+                Each object instance that we create has a full set of properties and methods.
+            </p>
+            <p>
+                We can limit the memory of each instance by having all instances share their methods.
+                We do this by moving the methods out to the function's prototype.  Each instance will have full access to these methods through their prototype properties.
+                Here is the original code with methods in the function body.
+            </p>
+<pre class="prettyprint">
+function Person(name) {
+    this.name = name;
+    this.say = function () { alert(this.name); }; 
+}
+
+</pre>
+            <p>
+                And here is the same with the say method moved to its prototype
+            </p>
+<pre class="prettyprint">
+function Person(name) {
+    this.name = name;
+}
+Person.prototype.say = function () {
+    alert(this.name);
+}
+
+var anthony = new Person("Anthony Miller");
+var celeste = new Person("Celeste Diaz");
+
+anthony.say();                                 // Anthony Miller
+celeste.say();                                 // Celeste Diaz
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run12();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run12() {
+                    function Person(name) {
+                        this.name = name;
+                    }
+                    Person.prototype.say = function () {
+                        alert(this.name);
+                    }
+
+                    var anthony = new Person("Anthony Miller");
+                    var celeste = new Person("Celeste Diaz");
+
+                    anthony.say();                                 // Anthony Miller
+                    celeste.say();                                 // Celeste Diaz
+                }
+            </script>
+            <br /><br />
+            <p>
+                The prototype method displays the name of the person and is shared by both instances.
+                This shows that the prototype function, although shared, has full access to each objects' properties through <span class="cd">this</span> which is bound to the current object.
+            </p>
+            <p>
+                Following the construction of an object you can have follow-up step called <i>initialization</i>. Essentially, object initialization is a way to complete an object's initialization.
+                Some popular Model-View frameworks use this pattern, notably Backbone and Ember. They let you create new objects by extending their framework objects.
+                Then the framework will call an init or initialize method giving the object the opportunity to complete the initialization process.  Here is an example:
+            </p>
+<pre class="prettyprint">
+function Person() {
+    this.name = "";
+    this.say = function () { alert(this.name); };
+
+    this.age = 0;
+    this.profession = "None";
+
+    this.init = function (options) {                // initializer
+        this.name = options.name;
+        this.age = options.age;
+        this.profession = options.profession;
+        this.showAge = function () {
+            alert(this.age);
+        };
+    };
+}
+
+var person = new Person();
+person.init( {name: "Al", age: 33, profession: "JS Geek"} );    
+
+person.say();                // John
+person.showAge();            // 33
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run13();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run13() {
+
+                    function Person() {
+                        this.name = "";
+                        this.say = function () { alert(this.name); };
+
+                        this.age = 0;
+                        this.profession = "None";
+
+                        this.init = function (options) {                // initializer
+                            this.name = options.name;
+                            this.age = options.age;
+                            this.profession = options.profession;
+                            this.showAge = function () {
+                                alert(this.age);
+                            };
+                        };
+                    }
+
+                    var person = new Person();
+                    person.init({ name: "Al", age: 33, profession: "JS Geek" });
+
+                    person.say();                // John
+                    person.showAge();            // 33
+                }
+            </script>
+            <br /><br />
+            <p>
+                This example is a bit contrived but hopefully you get the idea. The init method may accept options that configure the
+                object, or it is a place where relationships are established with other objects in the app.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/introduction'>Introduction</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/namespace'>Namespace</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

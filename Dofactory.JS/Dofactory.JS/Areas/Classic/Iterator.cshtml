@@ -1,0 +1,453 @@
+﻿@{
+    ViewBag.Title = "Iterator";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/iterator">Iterator</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Iterator</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Iterator pattern allows clients to effectively loop over a collection of objects
+        </p>
+        <p class="ptext">
+            A common programming task is to traverse and manipulate a collection of objects.
+            These collections may be stored as an array or perhaps something more complex, such as a tree or graph structure.
+            In addition, you may need to access the items in the collection in a certain order, such as, front to back, back to front,
+            depth first (as in tree searches), skip evenly numbered objects, etc.
+        </p>
+        <p class="ptext">
+            The Iterator design pattern solves this problem by separating the collection of objects from the traversal
+            of these objects by implementing a specialized iterator.
+        </p>
+        <p class="ptext">
+            Today, many languages have Iterators built-in by supporting 'for-each'-type constructs and IEnumerable and IEnumerator interfaces.
+            However, JavaScript only supports basic looping in the form of
+            <span class="cd">for</span>, <span class="cd">for-in</span>, <span class="cd">while</span>, and <span class="cd">do while</span> statements.
+        </p>
+        <p class="ptext">
+            The Iterator pattern allows JavaScript developers to design looping constructs that are far more flexible and sophisticated.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-iterator.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: the run() function
+                    <ul>
+                        <li>references and invokes Iterator with collection of objects</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Iterator</b> -- In sample code: <b style="color:#088;">Iterator</b>
+                    <ul>
+                        <li>implements iterator interface with methods first(), next(), etc</li>
+                        <li>keeps track of current position when traversing collection</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Items</b> -- In sample code: <b style="color:#088;">Items</b>
+                    <ul>
+                        <li>individual objects of the collection being traversed</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            The <span class="cd">Iterator</span> object maintains a reference to the collection and the current position.
+            It also implements the 'standard' Iterator interface with methods like:
+            <span class="cd">first</span>, <span class="cd">next</span>, <span class="cd">hasNext</span>, <span class="cd">reset</span>, and <span class="cd">each</span>.
+        </p>
+        <p class="ptext">
+            Two looping methods are used: a built-in <span class="cd">for</span> loop and a
+            newly created <span class="cd">each</span> method. The <span class="cd">for</span> loop uses the <span class="cd">first</span>, <span class="cd">hasNext</span>, and <span class="cd">next</span>
+            methods to control the iteration.
+            The <span class="cd">each</span> method does internally exactly the same (i.e. runs a for loop),
+            but to the client the syntax has been greatly simplified.
+        </p>
+
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Iterator = function(items) {
+    this.index = 0;
+    this.items = items;
+}
+
+Iterator.prototype = {
+    first: function() {
+        this.reset();
+        return this.next();
+    },
+    next: function() {
+        return this.items[this.index++];
+    },
+    hasNext: function() {
+        return this.index <= this.items.length;
+    },
+    reset: function() {
+        this.index = 0;
+    },
+    each: function(callback) {
+        for (var item = this.first(); this.hasNext(); 
+                                      item = this.next()) {
+            callback(item);
+        }
+    }
+}
+
+// log helper
+var log = (function() {
+    var log = "";
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var items = ["one", 2, "circle", true, "Applepie"];
+    var iter = new Iterator(items);
+
+    // using for loop
+
+    for (var item = iter.first(); iter.hasNext(); 
+                                  item = iter.next()) {
+        log.add(item);
+    }
+
+    log.add("");
+
+    // using Iterator's each method
+
+    iter.each(function(item) {
+        log.add(item);
+    });
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Iterator = function (items) {
+                this.index = 0;
+                this.items = items;
+            }
+
+            Iterator.prototype = {
+                first: function () {
+                    this.reset();
+                    return this.next();
+                },
+                next: function () {
+                    return this.items[this.index++];
+                },
+                hasNext: function () {
+                    return this.index <= this.items.length;
+                },
+                reset: function () {
+                    this.index = 0;
+                },
+                each: function (callback) {
+                    for (var item = this.first(); this.hasNext(); item = this.next()) {
+                        callback(item);
+                    }
+                }
+            }
+
+            function run() {
+
+                var items = ["one", 2, "circle", true, "Applepie"];
+                var iter = new Iterator(items);
+
+                // using for loop
+
+                for (var item = iter.first(); iter.hasNext(); item = iter.next()) {
+                    log.add(item);
+                }
+
+                log.add("");
+
+                // using Iterator's each method
+
+                iter.each(function (item) {
+                    log.add(item);
+                });
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Iterator</span> returns (i.e. reveals) only a single item: the <span class="cd">Iterator</span> and by association its prototype object.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Iterator = (function () {
+
+    var Iterator = function (items) {
+        this.index = 0;
+        this.items = items;
+    }
+
+    Iterator.prototype = {
+        first: function () {
+            this.reset();
+            return this.next();
+        },
+        next: function () {
+            return this.items[this.index++];
+        },
+        hasNext: function () {
+            return this.index <= this.items.length;
+        },
+        reset: function () {
+            this.index = 0;
+        },
+        each: function (callback) {
+            for (var item = this.first(); this.hasNext(); 
+                                          item = this.next()) {
+                callback(item);
+            }
+        }
+    }
+
+    return {
+        Iterator: Iterator
+    }
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var items = ["one", 2, "circle", true, "Applepie"];
+    var iter = new Patterns.Classic.Iterator.Iterator(items);
+
+    // using for loop
+
+    for (var item = iter.first(); iter.hasNext(); 
+                                  item = iter.next()) {
+        log.add(item);
+    }
+
+    log.add("");
+
+    // using Iterator's each method
+
+    iter.each(function (item) {
+        log.add(item);
+    });
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Iterator = (function () {
+
+                var Iterator = function (items) {
+                    this.index = 0;
+                    this.items = items;
+                }
+
+                Iterator.prototype = {
+                    first: function () {
+                        this.reset();
+                        return this.next();
+                    },
+                    next: function () {
+                        return this.items[this.index++];
+                    },
+                    hasNext: function () {
+                        return this.index <= this.items.length;
+                    },
+                    reset: function () {
+                        this.index = 0;
+                    },
+                    each: function (callback) {
+                        for (var item = this.first(); this.hasNext(); item = this.next()) {
+                            callback(item);
+                        }
+                    }
+                }
+
+                return {
+                    Iterator: Iterator
+                }
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+
+                var items = ["one", 2, "circle", true, "Applepie"];
+                var iter = new Patterns.Classic.Iterator.Iterator(items);
+
+                // using for loop
+
+                for (var item = iter.first(); iter.hasNext(); item = iter.next()) {
+                    log.add(item);
+                }
+
+                log.add("");
+
+                // using Iterator's each method
+
+                iter.each(function (item) {
+                    log.add(item);
+                });
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/interpreter'>Interpreter</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/mediator'>Mediator</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+

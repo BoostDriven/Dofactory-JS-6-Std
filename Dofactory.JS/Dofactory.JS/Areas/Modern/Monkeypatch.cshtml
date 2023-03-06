@@ -1,0 +1,355 @@
+﻿@{
+    ViewBag.Title = "Monkeypatch";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/monkeypatch">Monkeypatch</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Monkeypatch</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Changes an object without affecting the original code.
+            </p>
+
+            <partial name="_UsageMediumLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                The Monkeypatch pattern allows you to modify code at runtime without changing the original source code.
+                The use of this pattern is somewhat controversial, but it can be very helpful in situations where you need to correct errors in 3rd party controls or libraries
+                until a fix becomes available (and at that point you can remove your Monkeypatch).  Monkeypatch is also referred to as <i>Duck Punching</i>.
+            </p>
+            <p>
+                How is monkey patching implemented? Actually, it is fairly simple: it works by replacing existing properties or methods on an object.
+                Let's look at an example. We have a <span class="cd">person</span> object that has a <span class="cd">say</span> method which displays its name and age.
+                The developer wants to make the person appear a few years younger and decides to monkey patch the <span class="cd">say</span> method:
+            </p>
+<pre class="prettyprint">
+var person = { 
+    name: "Kevin",
+    age: 39,
+    say: function () {
+        alert(this.name + ", " + this.age + " years old");
+    }
+};
+
+person.say();   // => Kevin, 39 years old
+
+// monkey patching say
+
+person.say = function () {
+    var younger = this.age - 5;
+    alert(this.name + ", " + younger + " years old");
+}; 
+
+person.say();   // => Kevin, 34 years old
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var person = {
+                        name: "Kevin",
+                        age: 39,
+                        say: function () {
+                            alert(this.name + ", " + this.age + " years old");
+                        }
+                    };
+
+                    person.say();   // => Kevin, 39 years old
+
+                    // monkey patching say
+
+                    person.say = function () {
+                        var younger = this.age - 5;
+                        alert(this.name + ", " + younger + " years old");
+                    };
+
+                    person.say();   // => Kevin, 34 years old
+                }
+            </script>
+            <br /><br />
+            <p>
+                Because of the dynamic nature of JavaScript there is nothing that prevents developers from overwriting or modifying public members on an existing object.
+            </p>
+            <p>
+                In the above example we wholesale replaced the original <span class="cd">say</span> with a new definition.
+                What is more common though is that the original method needs a slight adjustment possibly just before and after the method execution without changing the original functionality.
+                Here is one way to handle this situation:
+            </p>
+<pre class="prettyprint">
+var person = { 
+    name: "Kevin",
+    age: 39,
+    say: function () {
+        alert(this.name + ", " + this.age + " years old");
+    }
+};
+
+person.say();   // => Kevin, 39 years old
+
+// monkey patching say 
+
+var oldSay = person.say;
+
+person.say = function () {
+    this.age -= 5;
+    oldSay.call(this);
+    this.age += 5;
+};
+
+person.say();   // => Kevin, 34 years old
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run2() {
+                    var person = {
+                        name: "Kevin",
+                        age: 39,
+                        say: function () {
+                            alert(this.name + ", " + this.age + " years old");
+                        }
+                    };
+
+                    person.say();   // => Kevin, 39 years old
+
+                    // monkey patching say
+
+                    var oldSay = person.say;
+
+                    person.say = function () {
+                        this.age -= 5;
+                        oldSay.call(this);
+                        this.age += 5;
+                    };
+
+                    person.say();   // => Kevin, 34 years old
+                }
+            </script>
+            <br /><br />
+            <p>
+                First, the original <span class="cd">say</span> method is saved off into a variable.  Next, the <span class="cd">person.say</span> method is redefined in which
+                the age is adjusted just before calling the original method and then restored to its original value.
+            </p>
+            <p>
+                The above code adds a variable to the global namespace which we usually try to avoid.
+                We can correct this by wrapping the monkey patch in an immediate function.
+                Its closure will hold a reference to the original method which is accessible to the redefined <span class="cd">person.say</span> method.  Here is what this looks like:
+            </p>
+<pre class="prettyprint">
+var person = { 
+    name: "Kevin",
+    age: 39,
+    say: function () {
+        alert(this.name + ", " + this.age + " years old");
+    }
+};
+
+person.say();   // => Kevin, 39 years old
+
+// monkey patching say with immediate function
+
+(function () {
+
+     var oldSay = person.say;
+
+     person.say = function () {
+         this.age -= 5;
+         oldSay.call(this);
+         this.age += 5;
+     };
+})();
+
+person.say();   // => Kevin, 34 years old
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run3() {
+                    var person = {
+                        name: "Kevin",
+                        age: 39,
+                        say: function () {
+                            alert(this.name + ", " + this.age + " years old");
+                        }
+                    };
+
+                    person.say();   // => Kevin, 39 years old
+
+                    // monkey patching say with immediate function
+
+                    (function () {
+
+                        var oldSay = person.say;
+
+                        person.say = function () {
+                            this.age -= 5;
+                            oldSay.call(this);
+                            this.age += 5;
+                        };
+                    })();
+
+                    person.say();   // => Kevin, 34 years old
+                }
+            </script>
+            <br /><br />
+            <p>
+                That looks good. The function is redefined within an immediate function and its closure maintains a local variable called <span class="cd">oldSay</span> which gets assigned to the original <span class="cd">say</span> method.
+                We were able to inject pre-processing and post-processing functionality surrounding the original <span class="cd">say</span> method call.
+            </p>
+            <p>
+                Did you notice that the source code of the <span class="cd">person</span> object (in this case the object literal at the top of the code snippet) was not touched at all?
+                And, yet, we were able to alter its functionality. This is the Monkeypatch pattern in all its glory.
+                It's a powerful pattern that allows developers to make runtime changes to any object, whether you own it or not.
+            </p>
+            <p>
+                What if, in the above example, the method was defined on the object's prototype rather than on the object itself?
+                In that case we are not really overwriting the original but masking it instead. Remember that the JavaScript engine searches the prototype chain
+                starting at the object itself until if finds the requested member.
+            </p>
+            <p>
+                However, you can also monkey patch the prototype object so that the change applies to all instances that share the same prototype object.  Here is what this looks like:
+            </p>
+<pre class="prettyprint">
+var Person = function (name, age) { 
+    this.name = name;
+    this.age = age; 
+};
+
+Person.prototype.say = function () {
+    alert(this.name + ", " + this.age + " years old");
+}
+
+var kevin = new Person("Kevin", 39);
+var sonya = new Person("Sonya", 50);
+
+kevin.say();   // => Kevin, 39 years old
+sonya.say();   // => Sonya, 50 years old
+
+// monkey patching prototype object 
+
+(function () {
+
+     var oldSay = Person.prototype.say;
+
+     Person.prototype.say = function () {
+         this.age -= 5;
+         oldSay.call(this);
+         this.age += 5;
+     };
+})();
+
+kevin.say();   // => Kevin, 34 years old
+sonya.say();   // => Sonya, 45 years old
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 4 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+                    var Person = function (name, age) {
+                        this.name = name;
+                        this.age = age;
+                    };
+
+                    Person.prototype.say = function () {
+                        alert(this.name + ", " + this.age + " years old");
+                    }
+
+                    var kevin = new Person("Kevin", 39);
+                    var sonya = new Person("Sonya", 50);
+
+                    kevin.say();   // => Kevin, 39 years old
+                    sonya.say();   // => Sonya, 50 years old
+
+                    // monkey patching prototype object
+
+                    (function () {
+
+                        var oldSay = Person.prototype.say;
+
+                        Person.prototype.say = function () {
+                            this.age -= 5;
+                            oldSay.call(this);
+                            this.age += 5;
+                        };
+                    })();
+
+                    kevin.say();   // => Kevin, 34 years old
+                    sonya.say();   // => Sonya, 45 years old
+                }
+            </script>
+            <br /><br />
+            <p>
+                Instead of an object literal we now have a <span class="cd">Person</span> constructor function. We create two persons.
+                Their <span class="cd">say</span> method is defined on the prototype object.  By monkey patching the method on the prototype we affect all person instances.
+                Both Kevin and Sonya appear 5 years younger than they are.
+            </p>
+            <p>
+                Again, this is a powerful pattern, but it is not without its perils. If you are not clear about the intricacies of the original code, you may unintentionally
+                introduce bugs that affect other parts of the application. It gets worse when multiple patches are applied as they tend to interact in unpredictable, combinatorial ways.
+            </p>
+            <p>
+                It has been said that with the C language you can shoot yourself in the foot.
+                With C++ you can shoot your leg off.  With JavaScript and monkey patching you can blow yourself up and the whole team with it.
+                Clearly with all this power comes great responsibility.
+            </p>
+            <p>
+                In reality monkey patching is not a widely used practice in JavaScript (at least for now).
+                Remember, monkey patching can be applied to built-in objects as well, so you have the ability to redefine the language's core features turning it
+                into a different language altogether with a its own syntax. In other languages, such as Ruby and Python, dynamic extensions of core classes
+                (i.e. monkey patching) is more commonly used. There are developers in those communities that are pushing back hard, stating that monkey patching is 'destroying the language'.
+            </p>
+            <p>
+                Some language purists will tell you that monkey patching is a hack that should never be allowed.
+                However, it can be a valuable tool to temporarily correct bugs in 3rd party components or libraries over which you have no direct control.
+                It is better to use it sparingly and when you do, be very careful, document it well, and share this information with your team.
+                Then, as soon as a fix becomes available you immediately remove it.  Fortunately, removing monkey patches is very easy.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/mixin'>Mixin</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/lazyload'>Lazy Load</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

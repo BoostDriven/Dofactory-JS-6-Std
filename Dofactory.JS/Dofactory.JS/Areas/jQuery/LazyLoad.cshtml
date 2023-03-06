@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Lazy Load";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/lazyLoad">Lazy Load</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Lazy Load</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Creates data or code items only when absolutely necessary.<br /><br />
+                jQuery uses the Lazy Load pattern in subtle ways.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Lazy Load Pattern loads objects only when absolutely necessary. Its goal is to conserve memory and CPU cycles.
+                jQuery uses this pattern in small ways.  Here is a snippet from jQuery:
+            </p>
+
+<pre class="prettyprint">
+// not intended for public consumption.
+// generates a queueHooks object, or returns the current one.
+_queueHooks: function( elem, type ) {
+    var key = type + "queueHooks";
+    return jQuery._data( elem, key ) || jQuery._data( elem, key, {
+        empty: jQuery.Callbacks("once memory").add(function() {
+        jQuery.removeData( elem, type + "queue", true );
+        jQuery.removeData( elem, key, true );
+     })
+});
+
+</pre>
+            <p>
+                This method is for private use only as indicated by its comment and the underscore (_) prefix which indicates that the variable or method is private.
+            </p>
+            <p>
+                The comments hint at the lazy loading aspect of the method: generate the object or if it exists return the current one.
+                The return statement returns the result of jQuery._data and if that one does not exist (i.e. is falsy) then go off and create a new instance.
+                This is a subtle use of Lazy Load.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/namespace'>Namespace</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/zerotimeout'>Zero Timeout</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

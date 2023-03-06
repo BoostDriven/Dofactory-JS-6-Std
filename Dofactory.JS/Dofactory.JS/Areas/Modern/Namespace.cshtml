@@ -1,0 +1,400 @@
+﻿@{
+    ViewBag.Title = "Namespace";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/namespace">Namespace</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Namespace</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            Creates a structure to avoid name collisions.
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+
+            <p>
+                When you declare variables and functions in your JavaScript file, they end up in the global object space (the global object called 'window' in the browser).
+                These variables and functions become properties and methods on the global object. Built-in functions, such as,
+                <span class="cd">alert</span>, <span class="cd">confirm</span>, and <span class="cd">eval</span> are all functions on the global object.
+            </p>
+            <p>
+                As you know, using global variables and functions is not a good way to organize your code. Consider the following example:
+            </p>
+<pre class="prettyprint">
+var i, j, k;
+var total, name;
+
+function add(x, y) { /* ... */ }
+
+function sort(array) { /* ... */ }
+function length(str) { /* ... */ }
+</pre>
+            <p>
+                What happens is that all variables and functions are added to the global object (or global namespace) creating the risk of name collision.
+                Name collision occurs when variables or functions are added to the global object with the same name, essentially overwriting each other. Let's look at an example.
+            </p>
+            <p>
+                Suppose you have a global variable named <span class="cd">animationRate</span> in your code and everything works fine.
+                Then you add a third-party animation library on the same page and, unbeknownst to you, this library uses a global variable with the same name.
+                Now your code and this library are reading and writing the same variable resulting in unpredictable results.
+            </p>
+            <p>
+                If you have animations on your page the name animationRate seems pretty common, so that is a name to avoid when making it globally available.
+                Our previous code example is even worse: the names <span class="cd">i</span>, <span class="cd">j</span>, <span class="cd">k</span>, <span class="cd">total</span>, and <span class="cd">name</span>
+                are all very common, as are the function names: <span class="cd">add</span>, <span class="cd">sort</span>, <span class="cd">length</span>, etc.
+                The risk of name collision is very high in these cases.  This scattering of names into the global object space is called <i>namespace pollution</i>.
+            </p>
+            <p>
+                The trouble with collision bugs like the animationRate example is that they are extremely hard to find, especially because you don't know what goes on in the third-party library.
+                Perhaps this library is minified which makes it just about impossible to explore the code.
+            </p>
+            <p>
+                Other languages have solved the problem of name collision by using namespaces.
+                Namespaces allow variables and functions to exist in their own (named) scope and thus avoiding collisions.
+                JavaScript does not natively support namespaces, but fortunately we have the Namespace pattern coming to our rescue.
+            </p>
+            <p>
+                The Namespace pattern allows developers to create a single global object that contains the entire body of code for your application.
+                Usually this global object has a unique name such as a company name, a project name, or a domain name.
+                This will avoid clashes with any other libraries or JavaScript controls that may be used on the same page. In our example we will use MyFramework.
+            </p>
+            <p>
+                Here is the same code as before, but now placed into its own namespace.
+            </p>
+<pre class="prettyprint">
+var MyFramework = {};
+var MyFramework.i, MyFramework.j, MyFramework.k;
+var MyFramework.total, MyFramework.name;
+
+function MyFramework.add(x, y) { /* ... */ }
+
+function MyFramework.sort(array) { /* ... */ }
+function MyFramework.length(str) { /* ... */ }
+
+</pre>
+            <p>
+                The only name added to the global object is <span class="cd">MyFramework</span>. Everything is prefixed with our framework's name and there is little risk of
+                anyone stepping on our variables or functions.
+                A whole lot better. Unfortunately, the solution is not perfect because when the project gets large with many properties and method names, we will start polluting our own namespace again.
+            </p>
+            <p>
+                This is easily corrected by further partitioning <span class="cd">MyFramework</span> into smaller sub-namespaces, for example <span class="cd">MyFramework.Utils.Dom</span>,
+                <span class="cd">MyFramework.Utils.Event</span>, and <span class="cd">MyFramework.Animation</span>.
+            </p>
+            <p>
+                We can create these namespaces as object literals, like so:
+            </p>
+<pre class="prettyprint">
+var MyFramework = {};
+var MyFramework.Utils = {};
+var MyFramework.Utils.Dom = {};
+var MyFramework.Utils.Events = {};
+var MyFramework.Animation = {};
+
+</pre>
+            <p>
+                You can do the same in a single statement using object literal notation:
+            </p>
+<pre class="prettyprint">
+var MyFramework = {
+    Utils: {
+        Dom : { },
+        Event: { }
+    },
+    Animation: { }
+};
+</pre>
+            <p>
+                The actual application code for each namespace can be added inline, but this becomes unwieldy very quickly:
+            </p>
+<pre class="prettyprint">
+var MyFramework = {
+        Utils: {
+            Dom : {
+              // Dom code here ...    
+            },
+            Event: {
+              // Event code here ...
+            }
+        },
+        Animation: {
+            // Animation code here ...
+        }   
+        // MyFramework code here ...       
+};
+</pre>
+            <p>
+                At some point when a program becomes large and complex you will need to partition your namespace file into smaller files.
+                But then, who manages the namespaces?  Simply creating a new namespaces at the top of each file is risky because it may already exist and you would end up overwriting the code.
+            </p>
+            <p>
+                Consider the following statement:
+            </p>
+<pre class="prettyprint">
+var MyFramework = {};
+</pre>
+            <p>
+                Having this in multiple files will result in errors.  You could include it in each file but before creating the namespace you check if it already exists. In JavaScript you can do this like so:
+            </p>
+<pre class="prettyprint">
+var MyFramework = MyFramework || {};
+</pre>
+            <p>
+                If MyFramework is undefined it creates a new empty object, otherwise it simply reassigns it to itself.  You can do this at the beginning of each file for each namespace:
+            </p>
+<pre class="prettyprint">
+var MyFramework = MyFramework || {};
+var MyFramework.Utils = MyFramework.Utils || {};
+var MyFramework.Utils.Dom = MyFramework.Utils.Dom || {};
+var MyFramework.Utils.Events = MyFramework.Utils.Events || {};
+var MyFramework.Animation = MyFramework.Animation || {};
+
+</pre>
+            <p>
+                This works well, but it seems a bit too repetitive. It can be further improved with a function that builds nested namespaces.
+                It is nondestructive, meaning it is careful not to create namespaces that already exist.
+                The name of this function is: namespace.  It exists on the root object of your namespace hierarchy.
+            </p>
+            <p>
+                Below is the code for the Namespace Pattern:
+            </p>
+<pre class="prettyprint">
+var MyFramework = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+</pre>
+            <p>
+                The <span class="cd">namespace</span> method accepts a single argument which is the fully qualified namespace and returns a reference to the namespace object.
+                Typically, it is used at the beginning of each file declaring its own namespace:
+            </p>
+<pre class="prettyprint">
+var dom = MyFramework.namespace("MyFramework.Utils.Dom");
+</pre>
+            <p>
+                The namespace method is a member of <span class="cd">MyFramework</span> so <span class="cd">MyFramework</span> must already exist.
+                This means that the first part of the argument is redundant.  You can shorten the passed in name accordingly:
+            </p>
+<pre class="prettyprint">
+var dom = MyFramework.namespace("Utils.Dom");
+</pre>
+            <p>
+                With this reference to you can start building out your code base:
+            </p>
+<pre class="prettyprint">
+var dom = MyFramework.namespace("Utils.Dom");
+dom.getFonts = function () { /* ... */ };
+dom.count = 0; 
+
+alert(dom === MyFramework.Utils.Dom);            // => true
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var MyFramework = {
+                        namespace: function (name) {
+                            var parts = name.split(".");
+                            var ns = this;
+
+                            for (var i = 0, len = parts.length; i < len; i++) {
+                                ns[parts[i]] = ns[parts[i]] || {};
+                                ns = ns[parts[i]];
+                            }
+
+                            return ns;
+                        }
+                    };
+
+                    var dom = MyFramework.namespace("Utils.Dom");
+                    dom.getFonts = function () { /* ... */ };
+                    dom.count = 0;
+
+                    alert(dom === MyFramework.Utils.Dom);            // => true
+                }
+            </script>
+            <br /><br />
+            <p>
+                In the above example the variable dom is an alias for MyFramework.Util.Dom. It shortens the code but it gets added to the global object (which is what we tried to avoid with building our own namespace).
+                You can avoid this by adding the code immediately to the namespace returned by the namespace method, like so:
+            </p>
+<pre class="prettyprint">
+MyFramework.namespace("Utils").Dom = {
+   getFonts: function () { /* ... */ },
+   divCount: 0 
+
+};
+
+</pre>
+            <p>
+                Finally, to add even more flexibility you can assign an <i>immediate anonymous function</i> and keep variables and methods private by using the function <i>closure</i>, like so:
+            </p>
+<pre class="prettyprint">
+MyFramework.namespace("Utils").Dom = (function () {
+
+   var count = 0; 
+   var privateVariable = 10;
+   var getFonts = function () { /* ... */ };
+
+   return {
+       getFonts: getFonts,
+       count: count
+   };
+
+})();
+
+</pre>
+            <p>
+                The details of immediate anonymous functions and closures are discussed in the next section which presents the Module pattern; they will not be discussed here.
+            </p>
+            <p>
+                The beauty of the approach above is that all variables are private by default. Only the ones that are returned are publicly available.
+            </p>
+            <p>
+                Just so you are aware: the above pattern is used extensively by the JavaScript optimized Gang-of-Four patterns in our Classic patterns section as well as the Patterns in Action section.
+            </p>
+            <p>
+                <b class="open-sans font-18">Bookmarklet pattern</b><br />
+                So far, we have seen how to build applications that uses just single global object, the root namespace.
+                Is it possible to bring this down to zero global objects, in other words, leave no global traces at all?   The answer is yes, but only in limited circumstances
+                where the code is self-contained and not used by anyone else.
+            </p>
+            <p>
+                This is the case with <i>bookmarklets</i> (the word is a combination of bookmark and applet). Bookmarklets are JavaScript code snippets that are usually
+                designed for one-off functionality on a web page.  They have zero global footprint and are implemented as anonymous immediate functions:
+            </p>
+<pre class="prettyprint">
+(function (win) {
+
+    var doc = win.document;
+    var nav = win.navigation;
+
+    // ... 
+
+})(this);
+
+</pre>
+            <p>
+                This function executes only once and immediately when the JavaScript engine encounters it.
+                Since no outside references exist, a bookmarklet cannot be used or extended from the outside world.
+                As long as the bookmarklets do not create any global variables or objects they truly have a zero-footprint.
+                Bookmarklets are frequently used to perform one-time initialization of all unobtrusive JavaScript code on a web page.
+            </p>
+            <p>
+                Here is a simple, but complete, example which can be bookmarked:
+            </p>
+<pre class="prettyprint">
+&lt;a href="javascript:(function (){window.open('http://www.live.com');})();"&gt;Live&lt;/a&gt;
+</pre>
+            <p>
+                Alternatively, you can separate the JavaScript from HTML, like so:
+            </p>
+            <p>
+                <i>HTML:</i>
+            </p>
+<pre class="prettyprint">
+&lt;a id="golive"&gt;Live&lt;/a&gt;
+</pre>
+            <p>
+                <i>JavaScript:</i>
+            </p>
+<pre class="prettyprint">
+&lt;script type="text/javascript"&gt;
+  $(function () {
+    $("#golive").attr("href",      
+      "javascript:(function (){window.open('http://www.live.com');})();"); 
+  });
+&lt;/script&gt;
+</pre>
+            <p>
+                The Bookmarklet Pattern looks a lot like the Module pattern which is discussed in the next section.
+            </p>
+            <p>
+                The Namespace pattern is used by most JavaScript libraries and frameworks.
+                An example is jQuery which adds jQuery to the global namespace.
+                They also offer an alias for jQuery, which is $, to help shorten the code required to write jQuery selectors. So, both jQuery and $ are added to the global object.
+            </p>
+            <p>
+                The problem is that other libraries also use $ as their identifier. Examples include Prototype and Mootools.
+                So, if a developer uses both jQuery and Mootools on a single page, they will encounter problems dues to the name collision.
+            </p>
+            <p>
+                Fortunately, most library authors have agreed to a convention that allows you to determine what $ refers to in your code.
+                Each library supports a <span class="cd">noConflict()</span> method which gives control of the global alias variable ($ in this case) back to anyone who wants to use it. Here is an example:
+            </p>
+<pre class="prettyprint">
+&lt;script type="text/javascript" src="prototype.js"&gt;&lt;script&gt;
+&lt;script type="text/javascript" src="jquery.js"&gt;&lt;script&gt;
+&lt;script type="text/javascript"&gt;
+
+    // jQuery gives control of $ back to prototype.js
+    $.noConflict();
+
+    // Code that uses prototype.js $ can follow here.
+
+    // You can continue using jQuery like so
+    jQuery("div").css("color", "red");
+
+&lt;/script&gt;
+</pre>
+            <p>
+                This is very helpful as it allows us to use any combination of libraries on a single page.
+            </p>
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/constructor'>Constructor</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/module'>Module</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

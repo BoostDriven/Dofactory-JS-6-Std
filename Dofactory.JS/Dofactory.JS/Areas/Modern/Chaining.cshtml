@@ -1,0 +1,258 @@
+﻿@{
+    ViewBag.Title = "Chaining";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/chaining">Chaining</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Chaining</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            Enables calling multiple methods on a single object.
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                The Chaining Pattern enables calling multiple methods on a single object by stringing them together in a single statement, just like a chain.
+                The result is a more concise coding style. Here is an example:
+            </p>
+<pre class="prettyprint">
+var obj = object.method1("arg1").method2("arg2").method3("arg3");
+</pre>
+            <p>
+                The equivalent code, without chaining requires several lines of code with intermediate variables. It would look like this:
+            </p>
+<pre class="prettyprint">
+var obj1 = object.method1("arg1");
+var obj2 = obj1.method2("arg2");
+var obj = obj2.method3("arg3");
+
+</pre>
+            <p>
+                How do you make methods chainable?  Actually, it is simple: just return the internal <span class="cd">this</span> variable, i.e. the current object the method is working on; like so:
+            </p>
+<pre class="prettyprint">
+function func(arg) {
+
+    // do something ...
+
+    return this;
+}
+
+</pre>
+            <p>
+                Let's look at an example:
+            </p>
+<pre class="prettyprint">
+function Calculator(start) {
+    
+    var total = start || 0;
+
+    this.add = function (x) { total +=x; return this; };
+    this.sub = function (x) { total -=x; return this; };
+    this.mul = function (x) { total *=x; return this; };
+    this.div = function (x) { total /=x; return this; };
+
+    this.get = function () { return total; };
+}
+
+
+</pre>
+            <p>
+                Notice that each calculator operation returns <span class="cd">this</span>. This allows us to chain the operations together in a single statement.
+            </p>
+<pre class="prettyprint">
+var calculator = new Calculator(10).add(8).div(2).mul(4).sub(30).add(100);   
+
+alert("value = " + calculator.get());    // => value = 106
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run0();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run0() {
+                    function Calculator(start) {
+
+                        var total = start || 0;
+
+                        this.add = function (x) { total += x; return this; };
+                        this.sub = function (x) { total -= x; return this; };
+                        this.mul = function (x) { total *= x; return this; };
+                        this.div = function (x) { total /= x; return this; };
+
+                        this.get = function () { return total; };
+                    }
+
+                    var calculator = new Calculator(10).add(8).div(2).mul(4).sub(30).add(100);
+
+                    alert("value = " + calculator.get());    // => value = 106
+                }
+            </script>
+            <br /><br />
+            <p>
+                When a method does not have an obvious return value you should consider returning <span class="cd">this</span>.
+                If it is never used it will be harmless, but it will allow clients of the method to combine it together with other methods in a single concise (i.e. chained) statement.
+            </p>
+            <p>
+                A disadvantage of chaining is that it makes debugging harder.
+                If an error occurs in any of your chained methods the debugger will inform you of the line in which the error occurs but not the method in which it failed.
+                To dig deeper, you may need to unchain and create temporary variable assignments for each method to be able to pinpoint the failing method.
+            </p>
+            <p>
+                Some developers refer to chaining as <i>fluent interfaces</i>, which is just another term for the Chaining Pattern.
+            </p>
+            <p>
+                Chaining is a widely used pattern. The most popular JavaScript library, which is jQuery, uses it extensively.  Consider the following HTML markup and jQuery code:
+            </p>
+<pre class="prettyprint">
+&lt;div id="thediv"&gt;
+   &lt;table&gt;
+      &lt;tr>&lt;td class="col">&lt;/td>&lt;tr&gt;
+      &lt;tr>&lt;td class="col">&lt;td>&lt;/tr&gt;
+    &lt;table&gt;
+&lt;/div&gt;
+
+$("#thediv")
+    .find("table .col")
+    .removeClass(".col")
+    .css("background", "purple")
+    .css("color", "white")
+    .append("<span>purple here</span>");
+
+</pre>
+            <table>
+                <tr>
+                    <td style="width:120px; vertical-align:top;">
+                        <button class="btn btn-green" onclick="run();return false">Run</button>
+                    </td>
+                    <td>
+                        <div id="thediv">
+                            <table>
+                                <tr><td class="col"></td></tr>
+                                <tr><td class="col"></td></tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <script type="text/javascript">
+                function run() {
+                    $("#thediv")
+                        .find("table .col")
+                        .removeClass(".col")
+                        .css("background", "purple")
+                        .css("color", "white")
+                        .html("<span>purple here</span>");
+                }
+
+            </script>
+            <br />
+            <p>
+                This is an example of jQuery chaining. In a single statement the jQuery selector selects all divs on the page;
+                then for each div it finds tables with elements that have class='col'. Next it changes their background to purple, their color to white, and appends text to the element.
+                If you run the code you will see the results above.
+            </p>
+            <p>
+                This jQuery example demonstrates that with chaining you can write amazingly compact and concise code.
+                Another benefit to jQuery is that the selector, i.e. the $("div") part in the above code, is executed only once.
+                This is significant as the selector is almost always the slowest part of a jQuery statement because it needs to search the entire page.
+            </p>
+            <p>
+                Adding custom chainable methods to jQuery is remarkably easy.
+                Of course, it must return <span class="cd">this</span>, which in jQuery is the element that it just worked on.
+                In the code below we are adding a custom turnBlue method to jQuery:
+            </p>
+<pre class="prettyprint">
+$.fn.turnBlue = function () {
+     return $(this).css("background", "blue");
+};
+
+</pre>
+            <p>
+                You can now include turnBlue in any jQuery chaining statement.  Here is an example:
+            </p>
+<pre class="prettyprint">
+&lt;div id="myDiv" style="background:yellow;width:50px;height:50px;"&gt;&lt;/div&gt;
+
+$("#myDiv").css("border", "solid 10px red")
+           .turnBlue()
+           .animate({ "width": "400px" }, 1000);
+
+</pre>
+            <table>
+                <tr>
+                    <td style="width:150px; vertical-align:top;">
+                        <button class="btn btn-sm btn-outline-green" onclick="run1();return false">Run</button>
+                        <button class="btn btn-sm btn-outline-green" onclick="run2();return false">Reset</button>
+                    </td>
+                    <td>
+                        <div id="myDiv" style="background:yellow;width:50px;height:50px;"></div>
+                    </td>
+                </tr>
+            </table>
+
+
+            <script type="text/javascript">
+                function run1() {
+                    $.fn.turnBlue = function () {
+                        return $(this).css("background", "blue");
+                    };
+
+                    $("#myDiv").css("border", "solid 10px red")
+                        .turnBlue()
+                        .animate({ "width": "400px" }, 1000);
+                }
+                function run2() {
+                    $("#myDiv").css("border", "solid 0px red").css("background", "yellow").css("width", "50px");
+                }
+            </script>
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/module'>Module</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/invocation'>Invocation</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

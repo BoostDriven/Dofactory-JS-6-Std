@@ -1,0 +1,609 @@
+﻿@{
+    ViewBag.Title = "Prototypes in JavaScript";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/prototypes">Prototypes</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Prototypes in JavaScript</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                An in-depth look into Prototypes and Prototypal Inheritance in JavaScript.
+            </p>
+            <p>
+                Mastering prototypes and prototype-based inheritance is
+                essential to understanding JavaScript.
+                Here we will take a deep dive in exploring prototypes.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials: A deep dive</h3>
+        <br />
+        <div class="pl-md-40">
+
+
+            <p>
+                No other feature of JavaScript has created as much confusion as prototypes.
+                The area that seems to cause the most trouble is creating new object instances using constructor functions.
+                Indeed, it is confusing if you consider that a constructor function object has a prototype and a constructor, and the new object
+                also has a prototype that gets assigned from the constructor function.
+            </p>
+            <p>
+                Mastering prototypes and prototype-based inheritance is essential to understanding JavaScript. In this section, we suggest you forget everything you knew about prototypes
+                and we will guide you step by step in building up solid foundation that you can use in your own projects.  So here it goes.
+            </p>
+            <p>
+                <b class="open-sans font-18">What is a prototype?</b> <br />
+                A prototype is a regular object from which other objects inherit properties.
+                Each object has an internal <span class="cd">prototype</span> property that points to a prototype object from which it inherits all members (properties and methods).
+                Consider the following code:
+            </p>
+<pre class="prettyprint">
+var Car = function () { };
+
+Car.prototype = { make: "Mercedes" };
+
+var toyota = new Car();
+var mercedes = new Car();
+
+alert(toyota.make);             // => Mercedes
+alert(mercedes.make);           // => Mercedes
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var Car = function () { };
+
+                    Car.prototype = { make: "Mercedes" };
+
+                    var toyota = new Car();
+                    var mercedes = new Car();
+
+                    alert(toyota.make);             // => Mercedes
+                    alert(mercedes.make);           // => Mercedes
+
+                }
+            </script>
+
+            <br /><br />
+            <p>
+                We have a <span class="cd">Car</span> constructor function and a prototype with a property called <span class="cd">make</span> with a default value Mercedes.
+                Two car instances are created: <span class="cd">toyota</span> and <span class="cd">mercedes</span>.
+                Their <span class="cd">make</span> property is shared and the value is Mercedes as expected.  This is called <i>prototypal inheritance</i>.
+            </p>
+            <p>
+                Next we change the <span class="cd">make</span> value on <span class="cd">toyota</span>:
+            </p>
+<pre class="prettyprint">
+var Car = function () { };
+
+Car.prototype = { make: "Mercedes" };
+
+var toyota = new Car();
+var mercedes = new Car();
+
+toyota.make = "Toyota";
+
+alert(toyota.make);             // => Toyota
+alert(mercedes.make);           // => Mercedes
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run2() {
+                    var Car = function () { };
+
+                    Car.prototype = { make: "Mercedes" };
+
+                    var toyota = new Car();
+                    var mercedes = new Car();
+
+                    toyota.make = "Toyota";
+
+                    alert(toyota.make);             // => Toyota
+                    alert(mercedes.make);           // => Mercedes
+                }
+            </script>
+            <br /><br />
+            <p>
+                It shows that <span class="cd">make</span> is Toyota for <span class="cd">toyota</span> and Mercedes for <span class="cd">mercedes</span>.
+                To some developers this comes as a surprise. They expected the <span class="cd">make</span> value on the prototype to change, but that is not the case.
+                JavaScript only follows the prototype chain when <i>getting</i> a value, not when <i>setting</i> a value. This is an important distinction.
+                When setting a value and the property does not exist on the object itself, it simply creates the property.
+                Now that <span class="cd">toyota</span> has a <span class="cd">make</span> property is shadows (or hides) the prototype value for <span class="cd">make</span>.
+            </p>
+            <p>
+                Let's get back to prototypes and the inheritance chain.
+                What exactly are prototype objects?  In fact, there is nothing special about prototype objects; any object that is not a primitive (number, string, Boolean, null, or undefined)
+                can be a prototype object.
+                Here is a diagram that shows the prototype chain for the above example:
+            </p>
+            <p>
+                <span class="cd">toyota</span> (instance) &rarr;  <span class="cd">Car.prototype</span>  &rarr;  <span class="cd">Object.prototype</span> &rarr;  undefined
+            </p>
+            <p>
+                The <span class="cd">toyota</span> object instance starts on the left.  It points to the <span class="cd">Car.prototype</span> object in the middle.
+                The prototype object itself is an object and therefore has its own prototype. This prototype is the default object, called <span class="cd">Object.prototype</span>,
+                which is at the root of all inheritance chains. The default prototype itself does not have a prototype and is undefined.
+            </p>
+            <p>
+                Let's look at some simple code.
+            </p>
+<pre class="prettyprint">
+var document = {};
+
+alert(document.prototype);      // => undefined
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run3() {
+                    var document = {};
+
+                    alert(document.prototype);      // => undefined
+                }
+            </script>
+            <br /><br />
+            <p>
+                Notice that the <span class="nobr cd">document.prototype</span> is undefined. How is this possible? We just said that each object has a prototype and our very first object already doesn't have one?
+                This is a major source of confusion.  The reason is that the true prototype reference is an internal property called [[Prototype]] which is not directly accessible from your code.
+            </p>
+            <p>
+                <b class="open-sans font-18">[[Prototype]] and __proto__</b><br />
+                To get to this internal property, ES5 (EcmaScript 5) offers a standard accessor method: <span class="nobr cd">Object.getPrototypeOf(object)</span>. This is available in all modern browsers.
+                In addition, all browsers, except IE 9 and below, also offer a non-standard accessor named __proto__. If none of these work you can still get to the prototype
+                object via the prototype property on the object's constructor.  Let's explain all this with some code:
+            </p>
+<pre class="prettyprint">
+var document = {};
+
+// ES5 (all modern browsers)
+alert(Object.getPrototypeOf(document));  // => [object Object]
+
+// not available in IE9 and below
+alert(document.__proto__);               // => [object Object] 
+
+// availabe in all browsers
+alert(document.constructor.prototype);   // => [object Object] 
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 3 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+                    var document = {};
+
+                    // ES5 (all modern browsers)
+                    alert(Object.getPrototypeOf(document));  // => [object Object]
+
+                    // not available in IE9 and below
+                    alert(document.__proto__);               // => [object Object]
+
+                    // availabe in all browsers
+                    alert(document.constructor.prototype);   // => [object Object]
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                This shows the three ways to get to the internal prototype property.
+                By the way, the constructor property on the last line will be explained shortly. This code confirms that document indeed has a prototype object.
+            </p>
+            <p>
+                You may be wondering why there is no <span class="cd">document.prototype</span> property in the above example.
+                The answer is that it is best to forget everything you knew about the prototype property.
+                There are no properties named prototype, <b>except</b> in constructor functions.
+                It's a little broader than that: only function objects have prototype properties, but no other objects.
+            </p>
+            <p>
+                The following is important: The prototype property of a constructor function is the prototype that will be assigned as the prototype to all newly created objects.
+                Constructor functions have a prototype property, but it is only used to assign a prototype to a newly created object.
+                A constructor function is an object itself, so it must have its own prototype, that is, [[Prototype]] or __proto__.
+                This is correct, but don't confuse it with the one named <span class="cd">prototype</span>.
+            </p>
+            <p>
+                The code below demonstrates that the prototype property of a constructor function is a genuine object, unlike undefined as we saw before in our document object:
+            </p>
+<pre class="prettyprint">
+var Document = function () {};  // Constructor function
+
+alert(Document.prototype);      // => [object Object]
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run5();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run5() {
+                    var Document = function () { };  // Constructor function
+
+                    alert(Document.prototype);      // => [object Object]
+
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                As we mentioned before, this prototype will be assigned as the prototype to all instances that are created by the constructor.
+                These prototype objects can be customized with properties and methods, like so (you should already be familiar with this style of code):
+            </p>
+<pre class="prettyprint">
+var Document = function () {
+    this.type = "unknown";
+};
+
+Document.prototype.say = function () {
+    alert("Type: " + this.type);
+};
+
+var doc = new Document();
+doc.type = "pdf";
+doc.say();                     // => Type: pdf
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run6();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run6() {
+                    var Document = function () {
+                        this.type = "unknown";
+                    };
+
+                    Document.prototype.say = function () {
+                        alert("Type: " + this.type);
+                    };
+
+                    var doc = new Document();
+                    doc.type = "pdf";
+                    doc.say();                     // => Type: pdf
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                Alternatively, you can assign an object literal (frequently with multiple methods and properties) to a prototype:
+            </p>
+<pre class="prettyprint">
+var Document = function () {
+    this.type = "unknown";
+};
+
+Document.prototype = {              // object literal
+    say: function () {
+        alert("Type: " + this.type);
+    }
+};
+
+var doc = new Document();
+doc.type = "pdf";
+doc.say();                         // => Type: pdf
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run7();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run7() {
+                    var Document = function () {
+                        this.type = "unknown";
+                    };
+
+                    Document.prototype = {              // object literal
+                        say: function () {
+                            alert("Type: " + this.type);
+                        }
+                    };
+
+                    var doc = new Document();
+                    doc.type = "pdf";
+                    doc.say();                     // => Type: pdf
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                Again, the prototype property has nothing do with the function's actual prototype.
+                We will refer to an object's true prototype property as __proto__ which works in all browsers, except in IE.  By the way, __proto__ will be standard in ES6 (EcmaScript 6).
+                Here we confirm that __proto__ and 'prototype' are indeed different (be sure not to run this in IE):
+            </p>
+<pre class="prettyprint">
+var Employee = function () {
+    this.name = "unknown";
+};
+
+alert(Employee.prototype == Employee.__proto__);       // => false
+alert(Employee.__proto__ == Function.prototype);       // => true
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var Employee = function () {
+                        this.name = "unknown";
+                    };
+
+                    alert(Employee.prototype == Employee.__proto__);       // => false
+                    alert(Employee.__proto__ == Function.prototype);       // => true
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                What is this <span class="cd">Function.prototype</span> on the last line?  It is the default prototype object for all function objects.
+                Similarly, the default prototype object for all objects is <span class="cd">Object.prototype</span>. <span class="cd">Object.prototype</span> is a root object of all objects in JavaScript.
+            </p>
+            <p>
+                <span class="cd">Function.prototype</span> is the prototype for all functions.  <span class="cd">Function.prototype</span>'s prototype is <span class="cd">Object.prototype</span>
+                which we referred to as the root object before. Next we have a diagram that depicts these relationships for the following JavaScript code:
+            </p>
+<pre class="prettyprint">
+function Employee() { };
+
+var object = new Object();
+var employee = new Employee();
+
+</pre>
+        </div>
+        <div style="padding: 30px 0 60px 0px;">
+            <img src="/img/diagrams/javascript-prototypes1.jpg" alt="" />
+        </div>
+
+        <div class="pl-md-40">
+            <p>
+                The orange ovals are object instances; the blue shapes are prototype objects, and the green boxes are function objects.
+                In this diagram we only show the true prototype relationships, represented by the __proto__ properties (i.e. [[Prototype]] in ES5) that each object has.
+            </p>
+            <p>
+                At the top we have <span class="cd">Object</span> which is a built-in constructor function that creates objects.
+                At the bottom we have a custom <span class="cd">Employee</span> constructor function that creates employee objects.
+                In the middle we have an object instance that was created with <span class="cd">new Object()</span>
+                and below that one an employee instance which was created with <span class="cd">new Employee()</span>.
+            </p>
+            <p>
+                Function objects and object instances are objects meaning they should all have prototypes.
+                You can confirm this in the diagram that this is indeed the case.  All four (the two green and orange shapes) point to a blue prototype shape.
+                The prototypes themselves are objects too and therefore they also have their own prototypes.
+                Again, you can confirm this in the diagram.  The one exception is the root object (<span class="cd">Object.prototype</span>) which has a __proto__ value of undefined.
+                Actually, each browser is different: it is <span class="cd">undefined</span> in IE, <span class="cd">function () {}</span> in Firefox, and <span class="cd">function Empty() {}</span> in Chrome.
+            </p>
+            <p>
+                The prototype for all function objects (built-in and custom) is <span class="cd">Function.prototype</span>.
+                The diagram shows that both functions (<span class="cd">Object</span> and <span class="cd">Employee</span>) have <span class="cd">Function.prototype</span> as their prototype.
+                <span class="cd">Function.prototype</span>, in turn, has <span class="cd">Object.prototype</span> as its prototype.
+            </p>
+            <p>
+                The employee instance has as its prototype <span class="cd">Employee.prototype</span> which in turn has <span class="cd">Object.prototype</span> as its prototype.
+                The instance named <span class="cd">object</span> just has <span class="cd">Object.prototype</span> as its prototype.
+            </p>
+            <p>
+                Our diagram shows a total of 4 prototype chains, all ending with the root object, i.e. <span class="nobr cd">Object.prototype</span>.  They are:
+            </p>
+            <p>
+                function Object &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; Function.prototype &nbsp;&nbsp;&rarr; Object.prototype<br />
+                function Employee &nbsp;&rarr; Function prototype &nbsp;&nbsp;&rarr; Object.prototype<br />
+                object instance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Object.prototype<br />
+                employee instance &nbsp;&rarr; Employee prototype &rarr; Object prototype<br />
+            </p>
+            <br />
+            <p>
+                With the diagram at hand and a better understanding of the prototype chain let's run a few quick tests:
+            </p>
+<pre class="prettyprint">
+function Employee() { };
+
+var object = new Object();
+var employee = new Employee();
+
+alert(Employee.__proto__ === Object.__proto__);                // => true
+alert(object.__proto__   === Function.prototype.__proto__);    // => true
+alert(Object.__proto__);          // => undefined or Empty() or function()
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run8();return false">Run</a>&nbsp;&nbsp; <i>Displays 3 alert boxes.</i>
+            <script type="text/javascript">
+                function run8() {
+                    function Employee() { };
+
+                    var object = new Object();
+                    var employee = new Employee();
+
+                    alert(Employee.__proto__ === Object.__proto__);                // => true
+                    alert(object.__proto__ === Function.prototype.__proto__);      // => true
+                    alert(Object.__proto__);           // => undefined or Empty() or function()
+                }
+            </script>
+            <br /><br />
+            <p>
+                This confirms what we see in the diagram.  Again, the terminating __proto__ value, as shown in the last statement, may return a different value in different browsers.
+            </p>
+            <p>
+                So far, we have only looked at the __proto__ properties which reference the true objects in the prototype chain.
+                Next, we are going to introduce the <span class="cd">prototype</span> property which is the source of so much confusion.
+                To re-iterate: the prototype property only exists on functions and constructor functions and they use this object as the prototype for all instances that it will create.   Here it is in the diagram.
+            </p>
+        </div>
+        <div style="padding: 30px 0 60px 0px;">
+            <img src="/img/diagrams/javascript-prototypes2.jpg" alt="" />
+        </div>
+
+        <div class="pl-md-40">
+            <p>
+                The prototype references are depicted as red dotted lines.  We only have two functions so there are only two red prototype references.
+                These are the prototypes of the objects that are created by the function which is easy to see in the diagram.
+            </p>
+            <p>
+                The function <span class="cd">Object</span> has a prototype of <span class="cd">Object.prototype</span>, which is indeed the __proto__ for the orange object instance.
+                Likewise, the function <span class="cd">Employee</span> has a prototype of <span class="cd">Employee.prototype</span> which is the __proto__ for the orange employee instance.
+            </p>
+            <p>
+                Hopefully it is clear now that a function's 'prototype' is very different from '__proto__'.  They serve totally different purposes.  Let's confirm all the above with some code:
+            </p>
+<pre class="prettyprint">
+function Employee() { };
+
+var object = new Object();
+var employee = new Employee();
+
+alert(object.__proto__ === Object.prototype);                // => true
+alert(employee.__proto__ === Employee.prototype);            // => true
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run9();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run9() {
+                    function Employee() { };
+
+                    var object = new Object();
+                    var employee = new Employee();
+
+                    alert(object.__proto__ === Object.prototype);                // => true
+                    alert(employee.__proto__ === Employee.prototype);            // => true
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                Indeed, this confirms what we see in the diagram.
+            </p>
+            <p>
+                <b class="open-sans font-18">Constructor</b><br />
+                Finally, there is the constructor property which we saw at the beginning of this section. This property sits on prototype objects that were created by constructor functions.
+                It simply points back to the function that created it.   Here is the diagram for it:
+            </p>
+        </div>
+        <div style="padding: 30px 0 60px 0px;">
+            <img src="/img/diagrams/javascript-prototypes3.jpg" alt="" />
+        </div>
+
+        <div class="pl-md-40">
+            <p>
+                The constructor references are depicted as green dotted arrows.
+                They emanate from prototype objects pointing to the function objects that created them.
+                Notice that prototype and constructor references come in bi-directional pairs.
+                The constructor function objects have a prototype reference to their prototype objects and the prototype objects have a constructor reference back to the function that created them.
+                The constructor references help JavaScript in identifying the type of an instance, for example the <span class="cd">instanceof</span> operator (see below).
+                It allows the <span class="cd">employee</span> object to determine that it is an <span class="cd">Employee</span>.
+            </p>
+            <p>
+                We can run some confirmation tests:
+            </p>
+<pre class="prettyprint">
+function Employee() { };
+
+var object = new Object();
+var employee = new Employee();
+
+alert(object.constructor === Object);                // => true
+alert(employee.constructor === Employee);            // => true
+
+alert(employee.__proto__ === Employee.prototype);    // => true
+alert(Employee.prototype.constructor === Employee);  // => true
+alert(employee instanceof Employee);                 // => true
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run10();return false">Run</a>&nbsp;&nbsp; <i>Displays 5 alert boxes.</i>
+            <script type="text/javascript">
+                function run10() {
+                    function Employee() { };
+
+                    var object = new Object();
+                    var employee = new Employee();
+
+                    alert(object.constructor === Object);                // => true
+                    alert(employee.constructor === Employee);            // => true
+
+                    alert(employee.__proto__ === Employee.prototype);    // => true
+                    alert(Employee.prototype.constructor === Employee);  // => true
+                    alert(employee instanceof Employee);                 // => true
+
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                If you look carefully at the previous diagram you may see that something is missing.
+                We mentioned that prototype objects have a constructor property, but the built-in <span class="cd">Function.prototype</span> does not appear to have one.
+                In reality it does: there is a built-in function called <span class="cd">Function</span>.  Here is the complete picture:
+            </p>
+
+        </div>
+        <div style="padding: 30px 0 60px 0px;">
+            <img src="/img/diagrams/javascript-prototypes4.jpg" alt="" />
+        </div>
+
+        <div class="pl-md-40">
+            <p>
+                The function named <span class="cd">Function</span> (at the bottom of the diagram) is the constructor function for <span class="cd">Function.prototype</span>. Here is another test:
+            </p>
+<pre class="prettyprint">
+function Employee() { };
+
+var object = new Object();
+var employee = new Employee();
+
+alert(Function.prototype.constructor === Function);     // => true
+alert(Function.constructor === Function);               // => true
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run11();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run11() {
+                    function Employee() { };
+
+                    var object = new Object();
+                    var employee = new Employee();
+
+                    alert(Function.prototype.constructor === Function);     // => true
+                    alert(Function.constructor === Function);               // => true
+                }
+            </script>
+            <br /><br />
+            <p>
+                This is kind of interesting: <span class="cd">Function</span> is its own constructor!
+                Furthermore, you may recognize that the last two statements are exactly the same.
+                The only difference is that with the last statement JavaScript has to do a little more work in finding out that constructor is not a property on <span class="cd">Function</span> itself, but on its prototype.
+            </p>
+            <p>
+                Let's recap what we have seen so far. Each object has a prototype from which it inherits properties and methods.
+                An internal property named [[Prototype]] references the prototype.
+                In all browsers, except IE, this property is called __proto__ and this is how we referred to it in our discussion.
+                Only function objects have a property named <span class="cd">prototype</span>; no other object has this.
+                Constructor functions use the <span class="cd">prototype</span> property to assign prototypes to newly created objects.
+            </p>
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/eventloop'>The Event Loop</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/essentials/crackingidioms'>Cracking JavaScript Idioms</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,567 @@
+﻿@{
+    ViewBag.Title = "Command";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/command">Command</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Command</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Command pattern encapsulates actions as objects.
+            Command objects allow for loosely coupled systems by separating the objects that issue a request from the objects that actually process the request.
+            These requests are called events and the code that processes the requests are called event handlers.
+        </p>
+        <p class="ptext">
+            Suppose you are building an application that supports the Cut, Copy, and Paste clipboard actions.
+            These actions can be triggered in different ways throughout the app: by a menu system, a context menu (e.g. by right clicking on a textbox), or by a keyboard shortcut.
+        </p>
+        <p class="ptext">
+            Command objects allow you to centralize the processing of these actions, one for each operation. So, you need only
+            one Command for processing all Cut requests, one for all Copy requests, and one for all Paste requests.
+        </p>
+        <p class="ptext">
+            Because commands centralize all processing, they are also frequently involved in handling Undo functionality for the entire application.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-command.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: the run() function
+                    <ul>
+                        <li>references the Receiver object</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Receiver</b> -- In sample code: <b style="color:#088;">Calculator</b>
+                    <ul>
+                        <li>knows how to carry out the operation associated with the command</li>
+                        <li>(optionally) maintains a history of executed commands</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Command</b> -- In sample code: <b style="color:#088;">Command</b>
+                    <ul>
+                        <li>maintains information about the action to be taken</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Invoker</b> -- In our sample code: the user pushing the buttons
+                    <ul>
+                        <li>asks to carry out the request</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            In our example we have a calculator with 4 basic operations: <span class="cd">add</span>, <span class="cd">subtract</span>, <span class="cd">multiply</span>
+            and <span class="cd">divide</span>. Each operation is encapsulated by a <span class="cd">Command</span> object.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Calculator</span> maintains a stack of commands. Each new command is executed and pushed onto the stack.
+            When an <span class="cd">undo</span> request arrives, it simply pops the last command from the stack and executes the reverse action.
+        </p>
+        <p class="ptext">
+            JavaScript's function objects (and callbacks) are native command objects.
+            They can be passed around like objects; in fact, they are true objects.
+            To learn more about JavaScript's eventing system and how callbacks work please review the Modern Patterns section.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+function add(x, y) { return x + y; }
+function sub(x, y) { return x - y; }
+function mul(x, y) { return x * y; }
+function div(x, y) { return x / y; }
+
+var Command = function (execute, undo, value) {
+    this.execute = execute;
+    this.undo = undo;
+    this.value = value;
+}
+
+var AddCommand = function (value) {
+    return new Command(add, sub, value);
+};
+
+var SubCommand = function (value) {
+    return new Command(sub, add, value);
+};
+
+var MulCommand = function (value) {
+    return new Command(mul, div, value);
+};
+
+var DivCommand = function (value) {
+    return new Command(div, mul, value);
+};
+
+var Calculator = function () {
+    var current = 0;
+    var commands = [];
+
+    function action(command) {
+        var name = command.execute.toString().substr(9, 3);
+        return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    return {
+        execute: function (command) {
+
+            current = command.execute(current, command.value);
+            commands.push(command);
+
+            log.add(action(command) + ": " + command.value);
+        },
+        undo: function () {
+            var command = commands.pop();
+            current = command.undo(current, command.value);
+
+            log.add("Undo " + action(command) + ": " + command.value);
+        },
+        getCurrentValue: function () {
+            return current;
+        }
+    }
+}
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var calculator = new Calculator();
+
+    // issue commands
+    calculator.execute(new AddCommand(100));
+    calculator.execute(new SubCommand(24));
+    calculator.execute(new MulCommand(6));
+    calculator.execute(new DivCommand(2));
+
+    // reverse last two commands
+    calculator.undo();
+    calculator.undo();
+
+    log.add("\nValue: " + calculator.getCurrentValue());
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            function add(x, y) { return x + y; }
+            function sub(x, y) { return x - y; }
+            function mul(x, y) { return x * y; }
+            function div(x, y) { return x / y; }
+
+            var Command = function (execute, undo, value) {
+                this.execute = execute;
+                this.undo = undo;
+                this.value = value;
+            }
+
+            var AddCommand = function (value) {
+                return new Command(add, sub, value);
+            };
+
+            var SubCommand = function (value) {
+                return new Command(sub, add, value);
+            };
+
+            var MulCommand = function (value) {
+                return new Command(mul, div, value);
+            };
+
+            var DivCommand = function (value) {
+                return new Command(div, mul, value);
+            };
+
+            var Calculator = function () {
+                var current = 0;
+                var commands = [];
+
+                function action(command) {
+                    var name = command.execute.toString().substr(9, 3);
+                    return name.charAt(0).toUpperCase() + name.slice(1);
+                }
+
+                return {
+                    execute: function (command) {
+
+                        current = command.execute(current, command.value);
+                        commands.push(command);
+
+                        log.add(action(command) + ": " + command.value);
+                    },
+                    undo: function () {
+                        var command = commands.pop();
+                        current = command.undo(current, command.value);
+
+                        log.add("Undo " + action(command) + ": " + command.value);
+                    },
+                    getCurrentValue: function () {
+                        return current;
+                    }
+                }
+            }
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run() {
+
+                var calculator = new Calculator();
+
+                // issue commands
+                calculator.execute(new AddCommand(100));
+                calculator.execute(new SubCommand(24));
+                calculator.execute(new MulCommand(6));
+                calculator.execute(new DivCommand(2));
+
+                // reverse last two commands
+                calculator.undo();
+                calculator.undo();
+
+                log.add("\nValue: " + calculator.getCurrentValue());
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Command</span> returns (i.e. reveals) five public items: <span class="cd">AddCommand</span>,
+            <span class="cd">SubCommand</span>, <span class="cd">MulCommand</span>, <span class="cd">DivCommand</span> and the <span class="cd">Calculator</span> constructor function.
+            All other items are kept private in the module.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+        <pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Command = (function () {
+
+    function add(x, y) { return x + y; }
+    function sub(x, y) { return x - y; }
+    function mul(x, y) { return x * y; }
+    function div(x, y) { return x / y; }
+
+    var Command = function (execute, undo, value) {
+        this.execute = execute;
+        this.undo = undo;
+        this.value = value;
+    }
+
+    return {
+        AddCommand: function (value) {
+            return new Command(add, sub, value);
+        },
+
+        SubCommand: function (value) {
+            return new Command(sub, add, value);
+        },
+
+        MulCommand: function (value) {
+            return new Command(mul, div, value);
+        },
+
+        DivCommand: function (value) {
+            return new Command(div, mul, value);
+        },
+
+        Calculator: function () {
+            var current = 0;
+            var commands = [];
+
+            function action(command) {
+                var name = command.execute.toString().substr(9, 3);
+                return name.charAt(0).toUpperCase() + name.slice(1);
+            }
+
+            return {
+                execute: function (command) {
+
+                    current = command.execute(current, command.value);
+                    commands.push(command);
+
+                    log.add(action(command) + ": " + command.value);
+                },
+                undo: function () {
+                    var command = commands.pop();
+                    current = command.undo(current, command.value);
+
+                    log.add("Undo " + action(command) + ": " + command.value);
+                },
+                getCurrentValue: function () {
+                    return current;
+                }
+            }
+        }
+    };
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var command = Patterns.Classic.Command;
+
+    var calculator = new command.Calculator();
+
+    // issue commands
+    calculator.execute(new command.AddCommand(100));
+    calculator.execute(new command.SubCommand(24));
+    calculator.execute(new command.MulCommand(6));
+    calculator.execute(new command.DivCommand(2));
+
+    // reverse last two commands
+    calculator.undo();
+    calculator.undo();
+
+    log.add("\nValue: " + calculator.getCurrentValue());
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Command = (function () {
+
+                function add(x, y) { return x + y; }
+                function sub(x, y) { return x - y; }
+                function mul(x, y) { return x * y; }
+                function div(x, y) { return x / y; }
+
+                var Command = function (execute, undo, value) {
+                    this.execute = execute;
+                    this.undo = undo;
+                    this.value = value;
+                }
+
+                return {
+                    AddCommand: function (value) {
+                        return new Command(add, sub, value);
+                    },
+
+                    SubCommand: function (value) {
+                        return new Command(sub, add, value);
+                    },
+
+                    MulCommand: function (value) {
+                        return new Command(mul, div, value);
+                    },
+
+                    DivCommand: function (value) {
+                        return new Command(div, mul, value);
+                    },
+
+                    Calculator: function () {
+                        var current = 0;
+                        var commands = [];
+
+                        function action(command) {
+                            var name = command.execute.toString().substr(9, 3);
+                            return name.charAt(0).toUpperCase() + name.slice(1);
+                        }
+
+                        return {
+                            execute: function (command) {
+
+                                current = command.execute(current, command.value);
+                                commands.push(command);
+
+                                log.add(action(command) + ": " + command.value);
+                            },
+                            undo: function () {
+                                var command = commands.pop();
+                                current = command.undo(current, command.value);
+
+                                log.add("Undo " + action(command) + ": " + command.value);
+                            },
+                            getCurrentValue: function () {
+                                return current;
+                            }
+                        }
+                    }
+                };
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+
+                var command = Patterns.Classic.Command;
+
+                var calculator = new command.Calculator();
+
+                // issue commands
+                calculator.execute(new command.AddCommand(100));
+                calculator.execute(new command.SubCommand(24));
+                calculator.execute(new command.MulCommand(6));
+                calculator.execute(new command.DivCommand(2));
+
+                // reverse last two commands
+                calculator.undo();
+                calculator.undo();
+
+                log.add("\nValue: " + calculator.getCurrentValue());
+
+                log.show();
+            }
+
+        </script>
+
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/chain'>Chain of Responsibility</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/interpreter'>Interpreter</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

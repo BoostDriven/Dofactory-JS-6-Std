@@ -1,0 +1,573 @@
+﻿@{
+    ViewBag.Title = "The event loop";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/essentials">Essentials</a></li>
+    <li class="breadcrumb-item"><a href="/essentials/eventloop">Event Loop</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>The Event Loop</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                An in-depth look into the single-threaded JavaScript event loop.
+            </p>
+            <p>
+                Writing effective JavaScript code requires a good understanding of the Event Loop and its components.
+                Here we take a deep dive exploring this area.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-7">
+        <h3>Essentials : A deep dive</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                If you have ever written a GUI (graphical user interface) desktop application, you will know what it means to write an event-driven program.
+                Event-driven means that event handlers (functions) are getting triggered by events that occur in the window or the application.
+                Examples of these events include mouse move, mouse click, typing on a keyboard, window resize, etc.
+            </p>
+            <p>
+                Some JavaScript developers don't realize this but writing web apps involves the exact same event-driven paradigm.
+                The code responds to a variety of events, such as, load, click, and submit. Internally, the browser manages an event loop which fetches events from an event queue.
+                In this section we will take a deep dive into these concepts because it is important that you understand the event model to be able to write effective code.
+                If not, you may end up with non-responsive pages that will potentially drive your users crazy.
+            </p>
+            <p>
+                JavaScript's eventing system is best explained with a diagram which you see below:
+            </p>
+            <div style="padding:24px 0 24px 10px;">
+                <img src="/img/diagrams/javascript-eventloop.jpg" alt="" />
+            </div>
+            <p>
+                The general flow in this diagram is from the top-left to the bottom-right. There are 4 main parts to the system:
+                1) events, 2) the event queue, 3) the event loop, and 4) event handlers (also called listeners).
+            </p>
+            <p>
+                This runs internally in the browser and as a JavaScript developer your direct interaction with these parts is fairly limited.
+                All you are doing is writing the event handlers at the very bottom and hooking these up with certain events; the rest is managed by the browser.
+            </p>
+            <p>
+                Let’s start by reviewing the events. Events are actions that the browser will respond to.  Three main types of events are:
+            </p>
+            <ul>
+                <li>Keyboard events, when the user presses keys on the keyboard</li>
+                <li>Mouse events, when the user moves or clicks the mouse</li>
+                <li>Network events, when, for example, an Ajax calls returns</li>
+            </ul>
+            <p>
+                All these events get placed into a queue which is called the Event Queue. This queue is FIFO (First In, First Out),
+                meaning, the event that arrived first will also be processed first.  FIFO queues work just like lines in a bank; you file at the end of the line and wait for
+                the other patrons in front of you to be serviced until it is your turn.
+            </p>
+            <p>
+                Next comes the Event Loop; when an event arrives at the front of the queue, the event loop takes the event off the queue and checks if an Event Handler
+                is available to process the event.  If there is none it will simply ignore the event and look for the next Event in the queue
+                (as an example, many mouse move events are generated and placed on the queue, but frequently there is no handler for these).
+                However, if there is a handler (i.e. function) then it invokes it and the loop waits until it is done processing.
+            </p>
+            <p>
+                During the time that the handler executes the event loop can’t do anything but wait.
+                Only when the handler is finished will it give control back the event loop which, in turn, will cycle back to the queue and look for the next event.
+            </p>
+            <p>
+                The loop in the browser is <i>single-threaded</i>. This means that at any point in time only a single item can execute; there will never be a situation
+                where two or more event handlers execute at the same time.  This single-threaded loop is also referred to as the <i>UI thread</i>, i.e. <i>User Interface thread</i>.
+            </p>
+            <p>
+                The advantage of having a single-threaded event loop is that they are relatively easy to program whereas multi-threaded programs are much more difficult
+                (more difficult to debug rather). However, a disadvantage of single threaded UIs is that it is easy to block the browser event loop resulting in
+                the appearance of frozen pages that do not respond to user actions anymore. The user may click on page elements or type on the keyboard, but nothing happens.
+                This creates a terrible user experience and should be avoided at all cost.
+            </p>
+            <p>
+                Here is a simple example of that scenario. Say you have some code that needs to execute immediately after the page loads.  You include the following code:
+            </p>
+<pre class="prettyprint">
+&lt;body onload="loaded();"&gt;
+</pre>
+            <p>
+                And here is the JavaScript function which takes 5 seconds to execute:
+            </p>
+<pre class="prettyprint">
+&lt;script type="text/javascript"&gt;
+    function loaded() {
+        // takes 5 seconds to process 
+    }
+&lt;/script&gt;
+</pre>
+            <p>
+                Let's see how the event loop processes the above code.  When the page is done loading a load event is added to the queue.
+                Once that event reaches the front of the queue, the event loop will pull it off the queue and find that an event handler named <span class="cd">loaded</span> is registered to handle the event.
+                The event loop gives control to <span class="cd">loaded</span> which then starts executing. The problem is that it takes a long time (5 seconds) to complete.
+            </p>
+            <p>
+                The page is fully rendered and as far as the user is concerned ready to go.
+                They starts clicking on the page to be able to enter some data.  However, nothing happens. All the actions that the user just took are, in fact, placed as events in the queue,
+                but the event loop cannot process them because it is still waiting for the <span class="cd">loaded</span> function to complete.
+            </p>
+            <p>
+                This clearly demonstrates that writing long running functions is not the way to go.
+                In JavaScript you should always write handlers that are succinct and very efficient at what they do.
+                Always keep this in mind when composing your scripts.
+            </p>
+            <p>
+                The reality is that some functions just take time. For example, calling into remote servers may take a couple seconds before they respond.
+                In situations like these you use a technique called <i>asynchronous callbacks</i> which is explained shortly.
+            </p>
+            <p>
+                First, we'll look at another example. Say you have the following markup on your page.
+            </p>
+<pre class="prettyprint">
+&lt;a id="link" href="#" onclick="alert('Hello');return false;"&gt;say hello&lt;/a&gt;
+</pre>
+            <p>
+                The <span class="cd">onclick</span> tag indicates to the browser that if the user clicks on the link that you wish to process the event handler.
+                By the way, the <span class="cd">return false;</span> stops the browser from continuing with the standard action, which is to follow the href link.
+                This particular handler is inline, but it is better to separate these out, like so:
+            </p>
+<pre class="prettyprint">
+&lt;a id="link" href="#" onclick="clickHandler();"&gt;say hello&lt;/a&gt;
+
+&lt;script type="text/javascript"&gt;
+
+    function clickHandler () {
+        alert('hello');
+        return false;
+    }
+&lt;/scipt&gt;
+</pre>
+            <p>
+                This is preferred over embedding JavaScript code in the HTML markup. According to the principle of <i>Unobtrusive JavaScript</i> and layering it would even be better to
+                remove the onclick tag from the HTML altogether.  You can then hook up the event handler in your code, like so:
+            </p>
+<pre class="prettyprint">
+&lt;a id="link" href="#"&gt;say hello&lt;/a&gt;
+
+&lt;script type="text/javascript"&gt;
+
+    var element = document.getElementById("link");
+    element.addEventListener("click", clickHandler);    
+
+    function clickHandler (e) {
+        alert('hello');                        // => hello
+        alert(e.screenX + ", " + e.screenY);   // => 445, 542
+        alert(e.shiftKey + ", " + e.altKey);   // => false, false
+        alert(this.id);                        // => link
+        return false;
+    }
+&lt;/script&gt;
+
+</pre>
+
+            Test it by clicking here:&nbsp;&nbsp;  <a id="link" href="javascript:void(0);" class="btn btn-outline-green">say hello</a>&nbsp;&nbsp; <i>Displays 4 alert boxes.</i>
+
+            <br /><br />
+            <p>
+                Three quick points we like to make: 1) the <span class="cd">addEventListener</span> is not available in older versions of IE (version 8 and below);
+                you can use <span class="cd">attachEvent</span> which is very similar, 2) this kind of code is better handled with jQuery, and 3) registering event handlers with an event
+                is an implementation of the Observer pattern, which is discussed in the Classic Patterns section.
+            </p>
+            <p>
+                Going back to the code, separating the JavaScript out from HTML is good practice because of the Unobtrusive JavaScript principle.
+                But there are additional advantages. The <span class="cd">onclick</span> tag allows a single function assignment, whereas <span class="cd">addEventListener</span>, as its name implies,
+                allows multiple click handlers for the same HTML element. Another advantage is that the handler will receive an event argument which has all
+                the details of the event, such as the x and y location of the mouse cursor and whether the shiftKey and/or altKey were pressed.
+                Finally, the event handler's context (the <span class="cd">this</span> value) is set to the HTML element where the event originated which is very helpful.
+            </p>
+            <p>
+                When the user clicks on the link, the click event gets added to the event queue.  Once it reaches the front of the queue, the event loop pulls it off the queue
+                and determines that one or more event handlers are available for the event and it hands control over to these handlers which then start executing.
+            </p>
+            <p>
+                As mentioned, handlers that register themselves with <span class="cd">addEventListener</span> receive an event specific event argument and the <span class="cd">this</span>
+                value is set to the HTML element where the event occurred.
+                If you're familiar with the built-in <span class="cd">apply</span> or <span class="cd">call</span> methods, you will understand that this is
+                how the event loop invokes the handlers (note: the Apply Invocation pattern is discussed in the Modern Patterns section).
+            </p>
+
+            <p>
+                <b class="font-18 open-sans fw-light-bold">Callbacks</b><br />
+                Event handlers are also referred to as <i>callbacks</i>.  Callbacks are function references that are passed around to other functions which will call these function
+                references back (i.e. execute the function) at the appropriate time.
+            </p>
+            <p>
+                Callbacks are an important concept in JavaScript and their use is not limited to event handlers. You can write custom functions that accept callbacks which they can invoke. Here is an example:
+            </p>
+<pre class="prettyprint">
+function mathematics(x, y, callback) {
+    return callback(x,y);
+}
+
+function add(x,y) { alert(x + y); }
+function multiply(x,y) { alert(x * y); }
+
+mathematics(3, 5, add);          // => 8
+mathematics(3, 5, multiply);     // => 15
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="Dofactory.Local.Page.run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+
+            <br /><br />
+            <p>
+                Here we are passing two callbacks, <span class="cd">add</span> and <span class="cd">multiply</span>, into <span class="cd">mathematics</span>.
+                There they get invoked with the <span class="cd">()</span> operator which also passes in the <span class="cd">x</span> and <span class="cd">y</span> values.
+                Essentially these are plug and play functions (which is the Strategy Design Pattern).
+                A built-in JavaScript example is the <span class="cd">Array.sort</span> method which accepts a callback that does the comparison of two array elements.
+                Here is some example code that demonstrates it in action:
+            </p>
+<pre class="prettyprint">
+var arr = [23, 4, 99, 15];
+arr.sort();            
+alert(arr);                 // => [15, 23, 4, 99] – not good
+
+function compare(x,y) {     // callback
+    return x - y;
+}
+
+arr.sort(compare);     
+alert(arr);                 // => [4, 15, 23, 99]
+
+// or inline
+arr.sort(function (x,y) {      
+    return x - y;
+});
+
+alert(arr);                 // => [4, 15, 23, 99]
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="Dofactory.Local.Page.run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 3 alert boxes.</i>
+            <br /><br />
+            <p>The first sort is not what we need.  It sorts the numbers as strings and they are not in numeric order.  </p>
+            <p>
+                The <span class="cd">compare</span> callback is called by the Array for each pair of numbers in the array that need comparison.
+                If the returned value is positive the numbers will be reversed; if zero the numbers are equal, and if positive the order is correct.
+                Simply subtracting <span class="cd">y</span> from <span class="cd">x</span> will create the above comparisons.  The callback is passed into <span class="cd">sort</span> and the result is a perfectly sorted array.
+            </p>
+            <p>
+                The last statement shows a common shorthand; the <span class="cd">compare</span> function is passed inline, directly as an argument into the <span class="cd">sort</span> method.
+            </p>
+
+            <p>
+                <b class="font-18 open-sans fw-light-bold">Asynchronous callbacks</b><br />
+                Earlier we mentioned <i>asynchronous callbacks</i>. This is a technique that prevents long running functions from blocking the UI.
+                They are an important tool in the toolbox of every JavaScript developer.
+                Asynchronous callbacks are callback functions that are invoked asynchronously, meaning at a later time.
+            </p>
+            <p>
+                As an example, JavaScript has a built-in function called <span class="cd">setTimeout</span> that allows callbacks to be called asynchronously after a given number of seconds:
+            </p>
+<pre class="prettyprint">
+function say() {
+    alert("Hello");
+}
+
+setTimeout(say, 2000);           //=> after 2 seconds: Hello
+
+console.log("I am here");        //=> immediately: I am here
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="Dofactory.Local.Page.run3();return false">Run</a> &nbsp;&nbsp; <i><span class="text-danger">After 2 seconds</span> displays 1 alert box.</i>
+
+            <br /><br />
+            <p>
+                As an aside, we use <span class="cd">console.log</span> in the last statement rather than <span class="cd">alert</span> because it is non-blocking.
+                Most browsers support <span class="cd">console.log</span> which writes to the JavaScript console. Open your console, run the code and see for yourself.
+            </p>
+            <p>
+                When running the above snippet, we will see "I am here" (on the console) before "Hello".
+                The <span class="cd">setTimeout</span> method schedules the callback for execution with a delay of 2 seconds and then returns immediately allowing the next line to execute.
+                After a 2 second delay the <span class="cd">say</span> callback method gets called.  This demonstrates that the invocation of <span class="cd">say</span> does not block the UI thread
+                and is therefore an asynchronous callback.
+            </p>
+            <p>
+                How does the JavaScript engine accomplish this? It turns out that <span class="cd">setTimeout</span> simply places the execution event on the event queue.
+                It informs the queue that this event has to wait for 2 seconds before it can be pulled off the queue by the event loop.
+                After two seconds the execution event sits at the front of the queue, the event loop picks it up and starts executing the requested <span class="cd">say</span> function.
+            </p>
+            <p>
+                <b class="open-sans font-18">Zero Timeout pattern</b><br />
+                Long running JavaScript scripts can cause the browser to freeze up or result in the dreaded "Script is taking too long" message.
+            </p>
+            <p>
+                In situations like this <span class="cd">setTimeout</span> with zero delay may be of help.
+                Calling <span class="cd">setTimeout</span> with no delay is called the <i>Zero Timeout pattern</i>.
+                It allows you to break up long running JavaScript functions in smaller pieces.  By breaking it up, you are giving the browser and the event loop some breathing room,
+                allowing it to catch up with whatever it needs to do.
+            </p>
+            <p>
+                We are discussing the Zero Timeout pattern here because it relates to the event loop. However, strictly speaking if falls under the Modern Patterns category.
+            </p>
+            <p>
+                The Zero Timeout Pattern is frequently used in syntax highlighters which highlight certain selected text on a web page.
+                They need to scan the entire page to find and modify the selected text which may take a few seconds. You've probably seen these text highlights (usually yellow) as
+                some web pages highlights the words that the user searched for coming from a search engine.
+            </p>
+            <p>
+                Here is an example in which a div element continually changes size.
+                The first snippet is the HTML which has a start, a stop, and a reset button, as well as the actually div that changes size.
+            </p>
+            <pre class="prettyprint">
+&lt;div id="myDiv" style="width:10px;height:50px;background:#f00;"&gt;&lt;/div&gt;
+
+&lt;button class="btn btn-outline-green" onclick="start1();"&gt;Start&lt;/button&gt;
+&lt;button class="btn btn-outline-green" onclick="stop1();"&gt;Stop&lt;/button&gt; 
+&lt;button class="btn btn-outline-green" onclick="reset1();"&gt;Reset&lt;button&gt;
+</pre>
+            <p>
+                Next is the JavaScript code. Notice that in the function body of <span class="cd">func</span> we call <span class="cd">setTimeout(func, 0)</span> which calls itself without delay.
+                Once the size of the div has reached 600 pixels it stops.
+            </p>
+<pre class="prettyprint">
+var timeout;
+
+function start() {
+    var div = document.getElementById("myDiv");
+    var size = 10;
+            
+    var func = function () {
+        timeout = setTimeout(func, 0);
+        div.style.width = size + "px";
+        if (size++ == 600) stop();
+    }
+
+    func();  // starts the process
+}
+
+function stop() {
+    clearInterval(timeout);
+}
+
+function reset() {
+    var div = document.getElementById("myDiv");
+    div.style.width = "10px";
+}
+</pre>
+            <p>Test it here: </p>
+            <div id="myDiv" style="max-width:100%; width:10px;height:50px;background:#f00;"></div>
+            <br />
+            <button class="btn-outline-green" onclick="Dofactory.Local.Page.start1();">Start</button> &nbsp;
+            <button class="btn-outline-green" onclick="Dofactory.Local.Page.stop1();">Stop</button> &nbsp;&nbsp;&nbsp;
+            <button class="btn-outline-green" onclick="Dofactory.Local.Page.reset1();">Reset</button> &nbsp;
+
+
+            <br /><br />
+            <p>
+                Although we state 0 delay there will be a slightly longer delay because during these delays the browser is catching up with the pending size changes in the DOM.
+                Also, the function <span class="cd">clearInterval</span>, as used in <span class="cd">stop</span> removes the pending event identified by the <span class="cd">timeout</span> id from the queue.
+            </p>
+            <p>
+                Next, we'll run it as a simple loop without <span class="cd">setTimeout</span>.
+                We are making very small increments to slow the loop down a bit.  Notice that the loop does
+                not allow the browser to update the DOM, therefore, you'll most likely see the div jump from 10px to 600px following a small delay.
+            </p>
+
+<pre class="prettyprint">
+var size;  
+
+function start() {
+    var div = document.getElementById("myDiv1");
+    size = 10;
+
+    while (size < 600) {
+        div.style.width = Math.round(size) + "px";
+        size += 0.002;
+    }
+    stop();
+        
+}
+
+function stop() {
+    size = 600;  
+}
+
+function reset() {
+    var div = document.getElementById("myDiv1");
+    div.style.width = "10px";
+}
+</pre>
+            <p>Test it here: </p>
+            <div id="myDiv1" style="width:10px;height:50px;background:#00f;"></div>
+            <br />
+            <button class="btn btn-outline-green" onclick="Dofactory.Local.Page.start2();">Start</button> &nbsp;
+            <button class="btn btn-outline-green" onclick="Dofactory.Local.Page.stop2();">Stop</button> &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-outline-green" onclick="Dofactory.Local.Page.reset2();">Reset</button> &nbsp;
+
+
+            <br /><br />
+            <p>
+                We have discussed asynchronous callbacks that get placed on the event queue.
+                In fact, all events placed on the event queue are asynchronous because there is a delay between when the event occurs and when the event gets handled by the event loop.
+            </p>
+            <p>
+                We mention this because there are also <i>synchronous</i> (not <b>a</b>synchronous) browser events.
+                These are events that are so critical that they need to be executed immediately, even when JavaScript is in the middle of running some code.
+            </p>
+            <p>
+                An example of such an event is mouse move.  Indeed, mouse move events get entered into the event queue, but the actual mouse pointer (the arrow or hand) that hovers over the
+                page updates immediately.  If this were not the case, users would see jerky and erratic mouse pointers -- all the time.
+            </p>
+            <p>
+                Another example is DOM manipulation. Suppose your JavaScript program has a click handler that changes the background color of the element that was clicked.
+                The browser will treat this as a synchronous event and processes it instantly. Another example is when JavaScript executes <span class="cd nobr">focus()</span> on a screen element.
+                This will place focus immediately to that element.  We should mention that there are some slight differences between browsers as far as which DOM mutations are processed synchronously.
+            </p>
+            <p>
+                All this clearly demonstrates that internally the browser is multithreaded but the event-loop, which is what we as JavaScript developers interact with, runs as a single thread.
+            </p>
+            <p>
+                <b class="open-sans font-18">Ajax calls</b><br />
+                Thinking about Ajax and the event loop, you may be wondering what happens between when an Ajax call is made and when a (delayed) response comes back;
+                how does the JavaScript engine know when to start executing the callback?  You probably guessed it: our trusted event queue is involved.
+            </p>
+            <p>
+                Following an Ajax call, the browser detects when the network call comes back. The details of how this works do not matter because
+                this is native code and each browser has its own implementation of the XMLHttpRequest object. The bottom line is it just knows when the network call has come back.
+            </p>
+            <p>
+                When this occurs an event gets added to the event queue. This event is an execute request for the callback including a reference to any return values.
+                Any pending events on the queue will be processed first, but once the event reaches the front of the queue the event loop will fetch it and start
+                executing the callback and provide it the result values from the server call.
+            </p>
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/essentials/unobtrusive'>Unobtrusive JavaScript<</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/essentials/prototypes'>Prototypes in JavaScript</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+             var run1 = function() {
+                function mathematics(x, y, callback) {
+                    return callback(x, y);
+                }
+
+                function add(x, y) { alert(x + y); }
+                function multiply(x, y) { alert(x * y); }
+
+                mathematics(3, 5, add);          // => 8
+                mathematics(3, 5, multiply);     // => 15
+            }
+
+            var run2 = function() {
+
+                var arr = [23, 4, 99, 15];
+                arr.sort();
+                alert(arr);                 // => [15, 23, 4, 99] – not good
+
+                function compare(x, y) {     // callback
+                    return x - y;
+                }
+
+                arr.sort(compare);
+                alert(arr);                 // => [4, 15, 23, 99]
+
+                // or inline
+                arr.sort(function (x, y) {
+                    return x - y;
+                });
+
+                alert(arr);                 // => [4, 15, 23, 99]
+            }
+
+            var run3 = function () {
+                function say() {
+                    alert("Hello");
+                }
+
+                setTimeout(say, 2000);                  //=> after 2 seconds: Hello
+
+                console.log("I am here");               //=> immediately: I am here
+            }
+
+
+            var timeout;
+
+            function start1() {
+                var div = document.getElementById("myDiv");
+                var size = 10;
+
+                var func = function () {
+                    timeout = setTimeout(func, 0);
+                    div.style.width = size + "px";
+                    if (size++ == 600) stop();
+                }
+
+                func();  // starts the process
+            }
+
+            function stop1() {
+                clearInterval(timeout);
+            }
+
+            function reset1() {
+                var div = document.getElementById("myDiv");
+                div.style.width = "10px";
+            }
+
+            var size;
+
+            function start2() {
+                var div = document.getElementById("myDiv1");
+                size = 10;
+
+                while (size < 600) {
+                    div.style.width = Math.round(size) + "px";
+                    size += 0.002;
+                }
+                stop1();
+
+            }
+
+            function stop2() {
+                size = 600;
+            }
+
+            function reset2() {
+                var div = document.getElementById("myDiv1");
+                div.style.width = "10px";
+            }
+
+            function clickHandler(e) {
+                alert('hello');                        // => hello
+                alert(e.screenX + ", " + e.screenY);   // => 126, 233
+                alert(e.shiftKey + ", " + e.altKey);   // => false, false
+                alert(this.id);                        // => link
+                return false;
+            }
+
+
+            var start = function() {
+                var element = document.getElementById("link");
+                element.addEventListener("click", clickHandler);
+            }
+
+            return {
+                start: start,
+                run1: run1, run2: run2, run3: run3,
+                start1: start1, stop1: stop1, reset1: reset1,
+                start2: start2, stop2: stop2, reset2: reset2
+            };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

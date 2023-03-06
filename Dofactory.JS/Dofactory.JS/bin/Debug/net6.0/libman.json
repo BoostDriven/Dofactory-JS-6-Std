@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@5.2.2",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "css/bootstrap.css",
+        "css/bootstrap.min.css",
+        "css/bootstrap.css.map",
+        "js/bootstrap.js",
+        "js/bootstrap.bundle.js",
+        "js/bootstrap.bundle.js.map"
+      ]
+    },
+    {
+      "library": "jquery@3.6.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.js"
+      ]
+    },
+    {
+      "library": "simple-line-icons@2.5.5",
+      "destination": "wwwroot/lib/simple-line-icons/"
+    },
+    {
+      "library": "jasmine@4.5.0",
+      "destination": "wwwroot/lib/jasmine/"
+    },
+    {
+      "library": "flot@4.2.3",
+      "destination": "wwwroot/lib/flot/",
+      "files": [
+        "jquery.flot.min.js",
+        "jquery.flot.js",
+        "jquery.flot.pie.js",
+        "jquery.flot.pie.min.js"
+      ]
+    },
+    {
+      "library": "backbone.js@1.4.1",
+      "destination": "wwwroot/lib/backbone.js/"
+    },
+    {
+      "library": "underscore.js@1.13.6",
+      "destination": "wwwroot/lib/underscore.js/"
+    },
+    {
+      "library": "knockout@3.5.1",
+      "destination": "wwwroot/lib/knockout/"
+    }
+  ]
+}

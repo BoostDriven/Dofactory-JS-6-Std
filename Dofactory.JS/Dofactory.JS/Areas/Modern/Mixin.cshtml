@@ -1,0 +1,555 @@
+﻿@{
+    ViewBag.Title = "Mixin";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/mixin">Mixin</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Mixin</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A way to dynamically add functionality to an object.
+            </p>
+
+            <partial name="_UsageMediumHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+            <p>
+                The Mixin pattern allows adding functionality to an object.
+                Before getting into mixins lets review which JavaScript patterns exist to extend functionality to objects.  They are: 1) Prototypal Inheritance, 2) the Extend Pattern, and 3) the Mixin Pattern.
+                We will discuss each of these.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Prototypal Inheritance</b><br />
+                Prototypal inheritance is JavaScript's out-of-the-box inheritance model.
+                If you are coming from a language such as C++, C#, Java, or PHP, you are familiar with class-based inheritance in which classes derive functionality from ancestor classes.
+                As you know, JavaScript does not support classes, but it does offer an object-based inheritance model called prototypal inheritance.
+            </p>
+            <p>
+                As discussed in the Essentials section, a prototype is an object from which other objects inherit functionality.
+                Each object has a prototype. Prototypes themselves have prototypes, leading to prototype chains.
+                Each object has a built-in internal property, called __proto__ (or [[Prototype]]), which references its prototype object.
+            </p>
+            <p>
+                In Prototypal inheritance objects inherit from other objects. Suppose you have an object with some properties and methods, and you wish to reuse this functionality.
+                At runtime, you can do this by setting the derived object's prototype property to an instance of the first object, like so:
+            </p>
+<pre class="prettyprint">
+// helper function
+
+function inherit(source) {
+    function F() {};
+    F.prototype = source;
+    return new F();
+}
+
+var person = { 
+    color: "brown",
+    say: function () {
+        alert("Hi, I have " + this.color + " eyes");
+    }
+};
+
+var employee = inherit(person);
+employee.salary = "$35,000";
+
+employee.say();            // => Hi, I have brown eyes
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run1() {
+                    // helper function
+
+                    function inherit(source) {
+                        function F() { };
+                        F.prototype = source;
+                        return new F();
+                    }
+
+                    var person = {
+                        color: "brown",
+                        say: function () {
+                            alert("Hi, I have " + this.color + " eyes");
+                        }
+                    };
+
+                    var employee = inherit(person);
+                    employee.salary = "$35,000";
+
+                    employee.say();            // => Hi, I have brown eyes
+                }
+            </script>
+            <br /><br />
+            <p>
+                For now, ignore the <span class="cd">inherit</span> function which will be discussed shortly.
+                First, a person with brown eyes is created. Then a new employee object is created that inherits from person.
+                This employee has a salary of $35,000.  The last line confirms that <span class="cd">employee</span>
+                indeed inherited both the <span class="cd">color</span> and <span class="cd">say</span> members from the <span class="cd">person</span> object.
+            </p>
+            <p>
+                The <span class="cd">inherit</span> function is a helper that creates a new object with its prototype property pointing to the incoming source, or ancestor, object.
+                It creates a new object that is derived from the incoming ancestor object.  This function may seem a bit odd, but when you go line by line you will see it is not overly complex.
+                First, an empty constructor function <span class="cd">F</span> is created (it is capitalized, as all construction functions should be).  Its prototype property is assigned the ancestor object.
+                Finally, we return a <span class="cd">new</span> instance of <span class="cd">F</span>, which is empty but with its prototype pointing to the ancestor object.
+                By the way, the <span class="cd">inherit</span> function is something you may encounter in other libraries where it may have names like <span class="cd">beget</span> or <span class="cd">object</span>.
+            </p>
+            <p>
+                We should mention that this kind of ad hoc prototypal inheritance is unusual because prototypal inheritance relationships are mostly established by constructor
+                functions and their prototype settings. We will see examples of this in this program.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Extend Pattern</b><br />
+                The second pattern we examine is the Extend Pattern.
+                This pattern is widely used and is available in many JavaScript frameworks and libraries.
+                It inherits functionality by copying properties from one object into another.  Here is how it's done:
+            </p>
+<pre class="prettyprint">
+function extend(source, destination) {
+    for (var s in source) {
+        if (source.hasOwnProperty(s)) {
+            destination[s] = source[s];
+        }
+    }
+}
+
+var person = { 
+    color: "blue",
+    say: function () {
+        alert("Hi, I have " + this.color + " eyes");
+    }
+};
+
+var employee = { salary: "$35,000" };
+
+extend(person, employee);   // the extend pattern
+
+employee.say();             // => Hi, I have blue eyes
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run2() {
+                    function extend(source, destination) {
+                        for (var s in source) {
+                            if (source.hasOwnProperty(s)) {
+                                destination[s] = source[s];
+                            }
+                        }
+                    }
+
+                    var person = {
+                        color: "blue",
+                        say: function () {
+                            alert("Hi, I have " + this.color + " eyes");
+                        }
+                    };
+
+                    var employee = { salary: "$35,000" };
+
+                    extend(person, employee);   // the extend pattern
+
+                    employee.say();             // => Hi, I have blue eyes
+                }
+            </script>
+            <br /><br />
+            <p>
+                Skip the <span class="cd">extend</span> method for now. It is discussed in the next paragraph.
+                A <span class="cd">person</span> object is created with the <span class="cd">color</span> blue and a <span class="cd">say</span> method.
+                Next we create an <span class="cd">employee</span> object with a <span class="cd">salary</span> property.
+                The <span class="cd">extend</span> function copies the members from a source object to a destination object, in this case from a <span class="cd">person</span> to an <span class="cd">employee</span>.
+                At the end we confirm that <span class="cd">employee</span> indeed has all members (properties and methods) copied from the <span class="cd">person</span> object.
+            </p>
+            <p>
+                The <span class="cd">extend</span> method gets passed a source object and a destination object.
+                Using a for-in loop it iterates over all properties on the source and copies these over to the destination.
+                Using the built-in <span class="cd">hasOwnProperty</span> method we check whether the property is on the object itself or on its prototype.
+                Only properties on the object are copied over.
+            </p>
+            <p>
+                This version of <span class="cd">extend</span> performs what is called a <i>shallow copy</i>. It does not copy properties that are objects or arrays themselves.
+                Instead, it copies their references and that is usually not what you want.
+            </p>
+            <p>
+                To make true copies of properties that are objects and arrays we need to recursively call extend for each object and array property.
+                This process is called <i>deep copy</i>. Here is the code that will do just that:
+            </p>
+<pre class="prettyprint">
+function deepExtend(source, destination) {
+    for (var s in source) {
+        if (source.hasOwnProperty(s)) {
+            if (typeof source[s] === "object") {
+                destination[s] = isArray ? [] : {};
+                deepExtend(source[s],destination[s]); 
+            } else {
+               destination[s] = source[s];
+            }
+        }
+    }
+    function isArray(o) {
+        return (typeof o === "[object Array]");
+    }
+}
+
+var person = {
+    name: "Karen",
+    address: {
+       street: "1 Main St",
+       city: "Baltimore"
+    },
+    scores: [212, 310, 89],
+    say: function () {
+         alert(this.name + ", " + this.address.street + ", " +
+               this.address.city + ", " + this.scores );
+    }
+};
+var employee = { salary: "$45,000" };
+deepExtend(person, employee);
+
+employee.say();  // => Karen, 1 Main St, Baltimore, 212, 310, 89
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run3();return false">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+            <script type="text/javascript">
+                function run3() {
+                    function deepExtend(source, destination) {
+                        for (var s in source) {
+                            if (source.hasOwnProperty(s)) {
+                                if (typeof source[s] === "object") {
+                                    destination[s] = isArray ? [] : {};
+                                    deepExtend(source[s], destination[s]);
+                                } else {
+                                    destination[s] = source[s];
+                                }
+                            }
+                        }
+                        function isArray(o) {
+                            return (typeof o === "[object Array]");
+                        }
+                    }
+
+                    var person = {
+                        name: "Karen",
+                        address: {
+                            street: "1 Main St",
+                            city: "Baltimore"
+                        },
+                        scores: [212, 310, 89],
+                        say: function () {
+                            alert(this.name + ", " + this.address.street + ", " +
+                                this.address.city + ", " + this.scores);
+                        }
+                    };
+                    var employee = { salary: "$45,000" };
+                    deepExtend(person, employee);
+
+                    employee.say();  // => Karen, 1 Main St, Baltimore, 212, 310, 89
+                }
+            </script>
+            <br /><br />
+            <p>
+                Like <span class="cd">extend</span>, the function <span class="cd">deepExtend</span> iterates over the properties of the source object.
+                However, <span class="cd">deepExtend</span> includes a property type check for type object.
+                If true, we have an object or an array. The <span class="cd">isArray</span> helper method tells us if this is an array or not.
+                If it is an empty array property gets added to destination,
+                otherwise an empty object.  The <span class="cd">deepExtend</span> is then recursively called which will copy the object or array.
+                Note that function objects are still copied by reference which is preferable because it saves memory.
+            </p>
+            <p>
+                The <span class="cd">person</span> object is a complex object with multiple member types: a primitive property, an object property, an array property and a function object property (i.e. method).
+                The function <span class="cd">deepExtend</span> successfully copies all these from <span class="cd">person</span> to <span class="cd">employee</span> (source to destination).
+                We confirm this by invoking the <span class="cd">say</span> method which displays all <span class="cd">person</span> properties.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Mixin Pattern</b><br />
+                The Mixin pattern goes one step further in that it copies properties from one or more source objects.
+                All properties get 'mixed' together in this new object.  Here is an example of an array of employees.
+                The mixin function copies properties from two objects into the array object: <span class="cd">sortable</span> and <span class="cd">enumerable</span>,
+                which add sorting and enumeration functionality to the array.
+            </p>
+<pre class="prettyprint">
+function mixin(sources, destination) {
+    for (var i = 0, len = sources.length; i < len; i++) {
+        var source = sources[i];
+        for (var s in source) {
+            if (source.hasOwnProperty(s)) {
+                destination[s] = source[s];
+            }
+        }
+    }
+}
+
+var Employee = function (name, gender, age) {
+    this.name = name; 
+    this.age = age; 
+    this.gender = gender;
+}
+
+var employees = [];
+
+employees.push(new Employee("John", "Male", 33));
+employees.push(new Employee("Peter", "Male", 45));
+employees.push(new Employee("Ann", "Female", 32));
+employees.push(new Employee("Tiffany", "Female", 19));
+
+var sortable = {
+    sortAge: function () {
+        this.sort(function (a, b) {
+            return a.age - b.age;
+        });
+    }
+};
+
+var enumerable = {
+    each: function (callback) {
+        for (var i = 0, len = this.length; i < len; i++) {
+            callback(this[i]);
+        }
+    }
+};
+
+mixin([sortable, enumerable], employees);
+
+employees.sortAge();
+employees.each(function (item) {
+    alert(item.name + " " + item.age);   // => Tiffany 19, Ann 32, 
+                                         //    John 33, Peter 45   
+});
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run4();return false">Run</a>&nbsp;&nbsp; <i>Displays 4 alert boxes.</i>
+            <script type="text/javascript">
+                function run4() {
+
+                    function mixin(sources, destination) {
+                        for (var i = 0, len = sources.length; i < len; i++) {
+                            var source = sources[i];
+                            for (var s in source) {
+                                if (source.hasOwnProperty(s)) {
+                                    destination[s] = source[s];
+                                }
+                            }
+                        }
+                    }
+
+                    var Employee = function (name, gender, age) {
+                        this.name = name;
+                        this.age = age;
+                        this.gender = gender;
+                    }
+
+                    var employees = [];
+
+                    employees.push(new Employee("John", "Male", 33));
+                    employees.push(new Employee("Peter", "Male", 45));
+                    employees.push(new Employee("Ann", "Female", 32));
+                    employees.push(new Employee("Tiffany", "Female", 19));
+
+                    var sortable = {
+                        sortAge: function () {
+                            this.sort(function (a, b) {
+                                return a.age - b.age;
+                            });
+                        }
+                    };
+
+                    var enumerable = {
+                        each: function (callback) {
+                            for (var i = 0, len = this.length; i < len; i++) {
+                                callback(this[i]);
+                            }
+                        }
+                    };
+
+                    mixin([sortable, enumerable], employees);
+
+                    employees.sortAge();
+                    employees.each(function (item) {
+                        alert(item.name + " " + item.age);   // => Tiffany 19, Ann 32,
+                        //    John 33, Peter 45
+                    });
+                }
+            </script>
+            <br /><br />
+            <p>
+                This example is very interesting.  First off, the mixin function copies properties from multiple sources into a destination object (rather than a single source which was the case in the Extend pattern).
+                The source objects are passed in as the first parameter which is an array of objects.
+            </p>
+            <p>
+                Our destination object is an array with 4 employees. The sources are named <span class="cd">sortable</span> and <span class="cd">enumerable</span> each of which has just a single method.
+                The <span class="cd">mixin</span> function takes in these sources and copies their methods into the array of employees.
+                By the way, if the source object names sound like interface names, then you are correct; this is by design because we are adding a <span class="cd">sortable</span> method and an <span class="cd">enumeration</span> method to the employees.
+            </p>
+            <p>
+                Following the mixin action we have an array that can sort its employees by age.
+                The array also has an <span class="cd">each</span> method that iterates over the employees and invokes a custom callback function that displays each employee's name and age.
+            </p>
+            <p>
+                A possible variation of the above <span class="cd">mixin</span> function is <span class="cd">deepMixin</span>, which just like the earlier <span class="cd">deepExtend</span> performs
+                deep copies of properties of all source objects provided.
+                If you need a <span class="cd">deepMixin</span> in your own project, then you can easily create this based on the two prior code snippets.
+            </p>
+            <p>
+                <b  class="open-sans font-18">Functional Mixin Pattern </b><br />
+                The Functional Mixin pattern is the logical next step for Mixin.
+                The idea is to group related methods together in terms of functional categories.
+                Then use these functional groups and apply these to the receiver's prototype.
+                In this example our group is called <span class="cd">sortable</span> and has just one method, but others could have been added.
+            </p>
+<pre class="prettyprint">
+var Employee = function (name, gender, age) {
+    this.name = name;
+    this.age = age;
+    this.gender = gender;
+}
+
+var Employees = function () { };
+Employees.prototype = [];
+
+var sortable = function () {
+    this.sortAge = function () {
+        this.sort(function (a, b) {
+            return a.age - b.age;
+        });
+    };
+    return this;
+};
+
+var enumerable = function () {
+    this.each = function (callback) {
+        for (var i = 0, len = this.length; i < len; i++) {
+            callback(this[i]);
+        }
+    };
+    return this;
+};
+
+
+sortable.call(Employees.prototype);
+enumerable.call(Employees.prototype);
+
+var employees = new Employees();
+
+employees.push(new Employee("John", "Male", 33));
+employees.push(new Employee("Peter", "Male", 45));
+employees.push(new Employee("Ann", "Female", 32));
+employees.push(new Employee("Tiffany", "Female", 19));
+
+employees.sortAge();        
+
+employees.each(function (item) {
+    alert(item.name + " " + item.age);   // => Tiffany 19, Ann 32, 
+                                         //    John 33, Peter 45   
+});
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run5();return false">Run</a>&nbsp;&nbsp; <i>Displays 4 alert boxes.</i>
+            <script type="text/javascript">
+                function run5() {
+                    var Employee = function (name, gender, age) {
+                        this.name = name;
+                        this.age = age;
+                        this.gender = gender;
+                    }
+
+                    var Employees = function () { };
+                    Employees.prototype = [];
+
+                    var sortable = function () {
+                        this.sortAge = function () {
+                            this.sort(function (a, b) {
+                                return a.age - b.age;
+                            });
+                        };
+                        return this;
+                    };
+
+                    var enumerable = function () {
+                        this.each = function (callback) {
+                            for (var i = 0, len = this.length; i < len; i++) {
+                                callback(this[i]);
+                            }
+                        };
+                        return this;
+                    };
+
+
+                    sortable.call(Employees.prototype);
+                    enumerable.call(Employees.prototype);
+
+                    var employees = new Employees();
+
+                    employees.push(new Employee("John", "Male", 33));
+                    employees.push(new Employee("Peter", "Male", 45));
+                    employees.push(new Employee("Ann", "Female", 32));
+                    employees.push(new Employee("Tiffany", "Female", 19));
+
+                    employees.sortAge();
+
+                    employees.each(function (item) {
+                        alert(item.name + " " + item.age);   // => Tiffany 19, Ann 32,
+                        //    John 33, Peter 45
+                    });
+
+                }
+            </script>
+            <br /><br />
+            <p>
+                In this example there is no <span class="cd">mixin</span> method. Instead, we are using a <span class="cd">call</span> method to add a group of methods to the Employee's prototype.
+                This will add all methods to the object's prototype. Note that the <span class="cd">sortable</span> and <span class="cd">enumerable</span> objects return <span class="cd">this</span>, which is important.
+                Notice also that the employee array now derives from Array, rather than being an array instance.  This was done to facilitate setting the employee array's prototype.
+            </p>
+            <p>
+                We've come full circle because the functional mixin pattern involves prototypal inheritance.
+                The functional mixin is an interesting idea because it allows us to change the prototype of a constructor function just before creating a new instance.
+                This facilitates the creation of custom objects that have a certain built-in behavior.
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/invocation'>Invocation</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/monkeypatch'>Monkeypatch</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+}
+
+
+<style type='text/css'>
+    .knockout { padding: 15px; background-color: beige; }
+</style>
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modelview">Model View</a></li>
+    <li class="breadcrumb-item"><a href="/modelview/introduction">Introduction</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Introduction</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Introduction to Model View Patterns.<br /><br />
+                Model View Patterns allow JavaScript developers to organize their
+                applications in logical components to bring clarity and structure into their programs.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+
+            <p>
+                Suppose you are in charge of a small team that starts development on a new web application.
+                Your initial thoughts are that on the client side all you need is a DOM manipulation library,
+                such as jQuery, and perhaps a couple utility-type plugins and UI controls. With that you start crafting your app.
+            </p>
+            <p>
+                However, a few weeks into the project you realize that many pages in the app are becoming rather unwieldy and unstructured
+                with dozens of event handlers and long reams of DOM manipulating JavaScript.
+                You feel that you could use some extra help in getting your programs better organized.
+                This is exactly what a Model-View (MV) Framework can do: to bring additional structure to your project.
+            </p>
+            <p>
+                What exactly is an MV Framework?  An MV Framework is a JavaScript library that allows developers to organize their
+                application in logical components to bring clarity and structure into their programs. These components represent 3 areas
+                of concern which are called: Model, View and Controller. Together they make up the MVC design pattern.
+            </p>
+            <p>
+                The MVC pattern one of a family of three related patterns which collectively are referred to as Model View (MV*) Patterns. The other two are refinements of MVC; they are MVP (Model View Presenter) and MVVM (Model View ViewModel).  We will first review MVC, followed by MVP and MVVM. Finally, we provide a review of some popular open source MV Frameworks.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modelview'>Back to List</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modelview/mvc'>MVC</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,368 @@
+﻿@{
+    ViewBag.Title = "Prototype";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/prototype">Prototype</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Prototype</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Specify the kind of objects to create using a prototypical instance, and create new objects by copying this prototype.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Prototype Pattern creates new objects, but rather than creating non-initialized objects it returns objects that
+            are initialized with values it copied from a prototype - or sample - object.
+            The Prototype pattern is also referred to as the Properties pattern.
+        </p>
+        <p class="ptext">
+            An example of where the Prototype pattern is useful is the initialization of business objects with values that match the default values in the database.
+            The prototype object holds the default values that are copied over into a newly created business object.
+        </p>
+        <p class="ptext">
+            Classical languages rarely use the Prototype pattern, but JavaScript being a prototypal language uses this pattern in the construction of new objects and their prototypes.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-prototype.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Client</b> -- In sample code: the run() function.
+                    <ul>
+                        <li>creates a new object by asking a prototype to clone itself</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Prototype</b> -- In sample code: <b style="color:#088;">CustomerPrototype</b>
+                    <ul>
+                        <li>creates an interfaces to clone itself</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Clones</b> -- In sample code: <b style="color:#088;">Customer</b>
+                    <ul>
+                        <li>the cloned objects that are being created</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            In the sample code we have a <span class="cd">CustomerPrototype</span> object that clones objects given a prototype object.
+            Its constructor function accepts a prototype of type <span class="cd">Customer</span>.
+            Calling the <span class="cd">clone</span> method will generate a new <span class="cd">Customer</span> object with its property values initialized with the prototype values.
+        </p>
+        <p class="ptext">
+            This is the classical implementation of the Prototype pattern, but
+            JavaScript can do this far more effectively using its built-in prototype facility. We will explore this in the JavaScript optimized code.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+function CustomerPrototype(proto) {
+    this.proto = proto;
+
+    this.clone = function () {
+        var customer = new Customer();
+
+        customer.first = proto.first;
+        customer.last = proto.last;
+        customer.status = proto.status;
+
+        return customer;
+    };
+}
+
+function Customer(first, last, status) {
+
+    this.first = first;
+    this.last = last;
+    this.status = status;
+
+    this.say = function () {
+        alert("name: " + this.first + " " + this.last +
+              ", status: " + this.status);
+    };
+}
+
+
+function run() {
+
+    var proto = new Customer("n/a", "n/a", "pending");
+    var prototype = new CustomerPrototype(proto);
+
+    var customer = prototype.clone();
+    customer.say();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+
+            function CustomerPrototype(proto) {
+                this.proto = proto;
+
+                this.clone = function () {
+                    var customer = new Customer();
+
+                    customer.first = proto.first;
+                    customer.last = proto.last;
+                    customer.status = proto.status;
+
+                    return customer;
+                };
+            }
+
+            function Customer(first, last, status) {
+
+                this.first = first;
+                this.last = last;
+                this.status = status;
+
+                this.say = function () {
+                    alert("name: " + this.first + " " + this.last +
+                        ", status: " + this.status);
+                };
+            }
+
+
+            function run() {
+
+                var proto = new Customer("n/a", "n/a", "pending");
+                var prototype = new CustomerPrototype(proto);
+
+                var customer = prototype.clone();
+                customer.say();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Prototype</span> encapsulates all of Prototype's functions.
+            It exposes the <span class="cd">Customer</span> constructor function and by association its prototype.
+        </p>
+        <p class="ptext">
+            In the <span class="cd">run</span> function, first a default customer is created in which all properties have default values.
+            Then a second customer is created by providing two property values: Kevin and Summer as first and last name respectively.
+        </p>
+        <p class="ptext">
+            Notice that when overriding the defaults, we are <i>not</i> changing the prototype values. Instead, two new properties are added to the
+            Customer object itself: first and last.  These new property values <i>hide</i> the prototype values.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+
+Patterns.namespace("Classic").Prototype = (function () {
+
+    function Customer(first, last, status) {
+
+        if (first) this.first = first;
+        if (last) this.last = last;
+        if (status) this.status = status;
+    }
+
+    Customer.prototype = {
+        say: function () {
+            log.add("name: " + this.first + " " + this.last +
+                    ", status: " + this.status);
+        },
+        first: "n/a",
+        last: "n/a",
+        status: "pending"
+    };
+
+    return { Customer: Customer };
+
+})();
+
+// log helper
+var log = (function () {
+    var log = "";
+    return {
+        add: function (msg) { log += msg + "\n"; },
+        show: function () { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+    var proto = Patterns.Classic.Prototype;
+
+    var customer = new proto.Customer();
+    customer.say();
+
+    var kevin = new proto.Customer("Kevin", "Summer");
+    kevin.say();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+
+            Patterns.namespace("Classic").Prototype = (function () {
+
+                function Customer(first, last, status) {
+
+                    if (first) this.first = first;
+                    if (last) this.last = last;
+                    if (status) this.status = status;
+                }
+
+                Customer.prototype = {
+                    say: function () {
+                        log.add("name: " + this.first + " " + this.last +
+                            ", status: " + this.status);
+                    },
+                    first: "n/a",
+                    last: "n/a",
+                    status: "pending"
+                };
+
+                return { Customer: Customer };
+
+            })();
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+
+            function run1() {
+                var proto = Patterns.Classic.Prototype;
+
+                var customer = new proto.Customer();
+                customer.say();
+
+                var kevin = new proto.Customer("Kevin", "Summer");
+                kevin.say();
+
+                log.show();
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/factorymethod'>Factory Method</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/singleton'>Singleton</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+
+    </div>
+</div>
+
+
+

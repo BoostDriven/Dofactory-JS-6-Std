@@ -1,0 +1,438 @@
+﻿@{
+    ViewBag.Title = "jQuery Plugins";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/plugin">Plugins</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>jQuery Plugins</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                An effective way to extend or enhance jQuery.<br /><br />
+                Here we examine different jQuery Plugin Patterns and Best Practices, including
+                the 'Mother of all Plugins'.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The jQuery library is an open system that from the beginning has promoted extensibility and reuse.
+            </p>
+            <p>
+                A common misconception is that jQuery plugins are only for open source projects to be shared with the community at large.
+                If your motivation is to contribute your plugins or widgets to the open-source community then that is commendable, but don't forget that plugins can be very beneficial
+                to your own projects as well.
+            </p>
+            <p>
+                Once you get the hang of constructing plugins you will realize that writing these is not much more difficult than writing regular JavaScript or jQuery code.
+                The advantage you're getting is that they seamlessly integrate with jQuery: it is as if your enhancements shipped with the core library itself.
+                A good example of this integration is chaining. Your custom methods can be chained together with any existing jQuery commands.
+            </p>
+            <p>
+                The flexibility of JavaScript allows you to overwrite, inherit, modify, and extend the jQuery library.
+                However, jQuery provides an extension point, which is the <span class="cd">jQuery.fn</span> object where you are expected to add your plugin.
+                By the way: <span class="cd">jQuery.fn</span> (or <span class="cd">$.fn</span>) is just an alias to <span class="cd">jQuery.prototype</span>, so at the end your plugin
+                gets added as a method to jQuery's prototype object.
+            </p>
+            <p>
+                <b class="font-18 open-sans">Common Plugin patterns</b><br />
+                There are three commonly used patterns to structure a plugin, they are:
+            </p>
+            <ol>
+                <li>Function Plugin</li>
+                <li>Extend Plugin</li>
+                <li>Constructor Plugin</li>
+            </ol>
+            <p>
+                <b class="font-18 open-sans">Function Plugin</b>: The simplest (and most popular) way is to directly add a function to <span class="cd">$.fn</span>. Here is the code:
+            </p>
+<pre class="prettyprint">
+$.fn.myPlugin = function() {                   
+    alert("My first plugin!");   
+};
+
+$.myPlugin();          // => My first plugin!
+</pre>
+            <p>
+                Here is an example plugin you can use in the real-world:
+            </p>
+<pre class="prettyprint">
+$.fn.signal = function() {
+    this.slideDown(300).delay(1000).slideUp(300);   
+};
+
+</pre>
+            <p>
+                And this is how you use it:
+            </p>
+<pre class="prettyprint">
+&lt;div id="flash"&gt;&lt;/div&gt;    &lt;!-- hidden red div --&gt;
+$("#flash").signal();
+</pre>
+            <p>
+                Click on the button to get the signal() started.
+            </p>
+
+            <button class="btn btn-green" onclick="run1();return false">Run</button><br /><br />
+            <div id="flash" style="height:50px;width:600px;background:red;display:none;"></div>
+            <script type="text/javascript">
+                function run1() {
+                    $.fn.signal = function () {
+                        this.slideDown(300).delay(1000).slideUp(300);
+                    };
+
+                    $("#flash").signal();
+                }
+            </script>
+            <br /><br />
+            <p>
+                This works great. It demonstrates how a simple plugin can make your jQuery life a whole lot easier.
+                There is no point in sharing the above plugin as an open source project, but for your own purposes it is very useful.
+            </p>
+            <p>
+                A weakness of the above example is that it relies on $ being an alias for jQuery which may not always be the case.
+                To protect against this you can wrap the plugin in an anonymous immediate function.
+            </p>
+<pre class="prettyprint">
+(function ($) {
+    $.fn.myPlugin = function () {             
+        alert("My first plugin!");   
+    };
+})(jQuery);
+
+$.myPlugin();          // => My first plugin!
+</pre>
+            <p>
+                Much better: we can now be sure that within the closure the $ always refers to jQuery.
+            </p>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Extend Plugin</b>: As an alternative you can use the jQuery's extend method:
+            </p>
+<pre class="prettyprint">
+(function ($) {
+    $.extend($.fn, {                         // Extend
+        myPlugin: function () {
+            alert("My first plugin!");   
+        }
+    });
+})(jQuery);
+
+$.myPlugin();          // => My first plugin!
+
+</pre>
+            <p>
+                The <span class="cd">extend</span> method extends <span class="cd">$.fn</span> with the properties in the object literal that is provided.
+                Using <span class="cd">extend</span> allows you to assign multiple properties and methods in a single statement.
+            </p>
+            <p>
+                We should caution against adding multiple names to the <span class="cd">$.fn</span> namespace as this can lead to name collisions with jQuery itself or other plugins.
+                You should consider wrapping your code base in its own namespace with a name that is unlikely to conflict with other names that may exist.
+                You could use your project's name, company name, or domain name.
+            </p>
+<pre class="prettyprint">
+(function ($) {
+    $.fn.MyCompany = {};
+    $.extend($.fn MyCompany, {
+        start: function () { alert("start "); },   
+        stop: function () { alert("stop "); },   
+        enable: function () { alert("enable "); },   
+        disable: function () { alert("disable "); },   
+    });
+})(jQuery);
+
+$.MyCompany.start();        // => start
+$.MyCompany.enable();       // => enable
+
+</pre>
+            <p>
+                Here we created a namespace called MyCompany. It is the only name we're adding to <span class="cd">$.fn</span>.
+                All our methods and properties are inside the MyCompany namespace and our impact on jQuery's <span class="cd">fn</span> namespace is now minimal.
+            </p>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Constructor Plugin</b>:  A third alternative is to use a private constructor function.  Here is an example:
+            </p>
+<pre class="prettyprint">
+(function ($) {
+    var Plugin = function (element) {        // Constructor
+        this.element = element;
+        this.$element = $(element);
+
+        this.doSomething = function() {
+            // ...
+        }
+    }
+
+    $.fn.myPlugin = function () {
+        return this.each(function() {
+            if (!$.data(this, "myPlugin")) {
+                $.data(this, "myPlugin", new Plugin(this)); 
+            }
+        };
+    }
+})(jQuery);
+
+</pre>
+            <p>
+                This pattern does more than just assigning a plugin object to <span class="cd">$.fn</span>.
+                It also associates an object (a Plugin instance) with each element in jQuery's result set.
+            </p>
+            <p>
+                <span class="cd">Plugin</span> is a constructor function that accepts a DOM element as its argument.
+                The function's name is <span class="cd">Plugin</span> but could be anything because it is never exposed to the outside world.
+                The real plugin name is the one you assign to <span class="cd">$.fn</span> (<span class="cd">myPlugin</span> in our example).
+                In <span class="cd">Plugin</span> we declare and initialize all necessary properties and methods.
+            </p>
+            <p>
+                The actual plugin function is added to <span class="cd">$.fn</span>.
+                The context of the function is jQuery's result set which is returned to allow chaining with other jQuery methods.
+                Just before returning this it iterates over each element in the result set using jQuery's built-in <span class="cd">each</span> method.
+                The callback function that is passed into <span class="cd">each</span> checks if the element already has an attached <span class="cd">Plugin</span> instance;
+                if not it creates one and stores it with the element. The <span class="cd">data</span> method in jQuery is a utility feature that stores arbitrary data with a specified element.
+                Please note that within the callback function the value of <span class="cd">this</span> is bound to an element and <i>not</i> the result set.
+            </p>
+            <p>
+                By associating a <span class="cd">Plugin</span> instance to each element, we have the ability to maintain plugin state for each element.
+                The state is nicely packaged in a single object, rather than a set of name/value pairs.  It also makes the plugin easily reachable for each element, like so:
+            </p>
+<pre class="prettyprint">
+$("selector").data("myPlugin").doSomething();
+
+</pre>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Constructor Plugin Template </b><br />
+                Following the three jQuery plugin patterns we'll now review a more comprehensive plugin that is based on the Constructor Plugin and that you can
+                use as a template for your more advanced plugin projects. This template has evolved as a best-practice model and it is based on experiences from
+                numerous members in the jQuery community. You'll recognize several other patterns and practices in this code.
+            </p>
+            <p>
+                Here's what the Plugin Template looks like:
+            </p>
+<pre class="prettyprint">
+;(function ($, win, undefined) {
+    var name = "myPlugin",
+        defaults = {
+            option1: "value1", 
+            option2: "value2" 
+        };
+        
+    var Plugin = function (element, options) {
+        this.element = element;
+        this.$element = $(element);
+
+        // handle different argument options
+        if (typeof options === "object")
+            this.settings = $.extend({}, defaults, options || {});
+        } else if (typeof options === "string") {
+            // any special string value processing ...
+        }
+        this._name = name;
+        this._defaults = defaults;
+
+        this.init();
+    }
+
+    Plugin.prototype.init = function () {
+        // initialization code
+    }
+    
+    $.fn[name] = function (options) {
+        return this.each(function() {
+            if (!$.data(this, name)) {
+                $.data(this, name, new Plugin(this, options)); 
+            }
+        };
+    }
+
+})(jQuery, window);
+
+</pre>
+            <p>
+                The first thing you notice is the leading semicolon.  The Leading Semicolon idiom prevents improperly closed code from interfering with our module.
+            </p>
+            <p>
+                The list of parameters in the immediate function (the Module Pattern) has increased to three.
+                The $ parameter ensures that $ is an alias for jQuery within the module.
+                The window parameter is the global object and is available as a local argument which reduces the scope traversing of the JavaScript runtime.
+                Finally, the undefined parameter ensures that undefined really means undefined and not something else (in case some hacker decided to reassign its value).
+            </p>
+            <p>
+                Next, we have the Single var pattern in which two variables are declared and initialized: <span class="cd">name</span>, which is the name of the plugin and <span class="cd">defaults</span> which
+                holds name/value pairs with default values for all options.  The <span class="cd">defaults</span> variable is part of the Options Hash idiom we discussed in the Essentials section.
+                Note that the Single var is not 'pure' because there is another var for the Plugin function.
+            </p>
+            <p>
+                The <span class="cd">Plugin</span> function is a constructor function. It accepts a DOM element and a set of options.  The function's name is Plugin but it can be anything else because its name is
+                not exposed to the outside world.  Remember, the real plugin name is stored in the name variable.
+            </p>
+            <p>
+                In Plugin we declare and initialize all necessary properties: <span class="cd">element</span> and <span class="cd">$element</span> (we save element as both a normal
+                reference and a jQuery reference to speed up processing);
+                the <span class="cd">settings</span> (built using the Options Hash idiom), and two private properties <span class="cd">_name</span> and <span class="cd">_defaults</span>
+                which store the plugin name and default values locally.
+                Finally, the <span class="cd">init</span> method is invoked which will initialize the plugin further now that all properties are properly set.
+            </p>
+            <p>
+                To conserve memory all Plugin methods are associated with its prototype rather than with the instance itself.
+                This ensures that all methods are shared. Here we only have an <span class="cd">init</span> method but you can add additional methods if necessary.
+            </p>
+            <p>
+                At the end of the template we are adding the plugin function to jQuery's <span class="cd">$.fn</span>.
+                This function has a single parameter named <span class="cd">options</span>. There is no need for an element parameter because the context
+                (<span class="cd">this</span> in the function) refers to the result set which has all relevant elements.  @*We will see an example of how this is used shortly.*@
+            </p>
+            <p>
+                The remainder of the plugin function is similar to the earlier Constructor Plugin Pattern. The only difference is that here we are passing an extra <span class="cd">options</span>
+                argument into the new Plugin constructor call.
+            </p>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Mother of all Plugins </b><br />
+                After you have written several plugins using the above boilerplate templates you may find that the process becomes rather repetitive.
+                You are wondering if there is not a more generic solution to writing plugins: something along the lines of a base class (or prototype in JavaScript) which has
+                all the boilerplate code and you just fill in the details. It turns out there is indeed a more generic solution which has been referred to as the DOM-to-Object Bridge Pattern.
+                This sounds awkward so we will refer to it as the Mother of all Plugins pattern.
+            </p>
+            <p>
+                Actually, if you understand the prior template we discussed, then this pattern is fairly straightforward.
+                You wrap the actual registration with $.fn in a new function called plugin. It accepts the object name which contains the plugin functionality and
+                the rest is quite similar to the template discussed before.
+            </p>
+            <p>
+                Here is the skeleton code:
+            </p>
+<pre class="prettyprint">
+;(function ($, win, undefined) {
+
+    $.fn.plugin = function (name, object) {
+        $.fn[name] = function (options) {
+            return this.each(function() {
+                if (!$.data(this, name)) {
+                    $.data(this, name, create(object).init(this, options)); 
+                }
+            };
+        },
+    }
+    function create (obj) { // in newer browsers replace with Object.create
+        function F() {};
+        F.prototype = obj;
+        return new F();
+    }
+
+})(jQuery, window);
+
+
+</pre>
+            <p>
+                Your plugin object (which does not have to deal with plugin plumbing) is an object literal that has the following structure (again similar to the Constructor Function plugin patterns):
+            </p>
+<pre class="prettyprint">
+var myPlugin = {
+    init: function (element, options) {
+        this.element = element;
+        this.$element = $(element);
+        this.settings = $.extend({}, this.defaults, options || {} );
+        
+        _init();
+    },
+    defaults: {
+       color: "Yellow",
+       speed: 100;
+    },
+    _init() {
+        // internal initialization
+    },
+    sayColor() {               // public method
+        alert(settings.color);
+    }
+};
+
+</pre>
+            <p>
+                Finally, here is an example of how this is used:
+            </p>
+<pre class="prettyprint">
+$('selection').plugin("myPlug", myPlugin); // register with plugin plumbing
+
+$('selection').myPlug( {color: "Green" });
+$('selection').myPlug.sayColor();          // => Green
+
+</pre>
+            <br />
+            <p>
+                <b class="font-18 open-sans">Plugin File names</b>
+                Plugins reside in their own JavaScript files and it is important that you follow generally accepted naming conventions.
+                Here are examples of the source and the minified versions:
+            </p>
+<pre class="prettyprint">
+jquery.pluginname.js
+jquery.pluginname.min.js
+
+</pre>
+            <p>
+                The names are always in lowercase.
+            </p>
+            <p>
+                If shared with the open source community, include a version number:
+            </p>
+<pre class="prettyprint">
+jquery.pluginname-2.1.js
+jquery.pluginname-2.1.min.js
+
+</pre>
+            <p>
+                If your project team builds multiple plugins, include another namespace which will keep them together:
+            </p>
+<pre class="prettyprint">
+jquery.projectname.pluginname1.js
+jquery.projectname.pluginname2.js
+
+</pre>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/adapter'>Adapter</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture'>Next Section</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

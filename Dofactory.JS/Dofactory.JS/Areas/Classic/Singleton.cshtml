@@ -1,0 +1,331 @@
+﻿@{
+    ViewBag.Title = "Singleton";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/singleton">Singleton</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Singleton</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Ensure a class has only one instance and provide a global point of access to it.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Singleton Pattern limits the number of instances of a particular object to just one.  This single instance is called the singleton.
+        </p>
+        <p class="ptext">
+            Singletons are useful in situations where system-wide actions need to be coordinated from a single central place.
+            An example is a database connection pool.
+            The pool manages the creation, destruction, and lifetime of all database connections for the entire application ensuring that no connections are 'lost'.
+        </p>
+        <p class="ptext">
+            Singletons reduce the need for global variables which is particularly important in JavaScript because it limits namespace
+            pollution and associated risk of name collisions.
+            The Module pattern (described in the Modern Patterns section) is JavaScript's manifestation of the Singleton pattern.
+        </p>
+        <p class="ptext">
+            Several other patterns, such as, Factory, Prototype, and Façade are frequently implemented as Singletons when only one instance is needed.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-singleton.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Singleton</b> -- In sample code: <b style="color:#088;">Singleton</b>
+                    <ul>
+                        <li>defines getInstance() which returns the unique instance.</li>
+                        <li>responsible for creating and managing the instance object.</li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            The <span class="cd">Singleton</span> object is implemented as an <i>immediate anonymous function</i>.
+            The function executes immediately by wrapping it in brackets followed by two additional brackets.
+            It is called anonymous because it doesn't have a name.
+        </p>
+        <p class="ptext">
+            The <span class="cd">getInstance</span> method is Singleton's gatekeeper. It returns the one and only instance of the object
+            while maintaining a private reference to it which is not accessible to the outside world.
+        </p>
+        <p class="ptext">
+            The <span class="cd">getInstance</span> method demonstates another design pattern called Lazy Load.
+            Lazy Load checks if an instance has already been created; if not, it creates one and
+            stores it for future reference. All subsequent calls will receive the stored instance.
+            Lazy loading is a CPU and memory saving technique by creating objects only when absolutely necessary.
+        </p>
+        <p class="ptext">
+            Singleton is a manifestation of a common JavaScript pattern: the Module pattern.
+            Module is the basis to all popular JavaScript libraries and frameworks (jQuery, Backbone, Ember, etc.).
+            The Module and Lazy Load patterns are discussed in the Modern Patterns section.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Singleton = (function () {
+
+    var instance;
+
+    function createInstance() {
+        var object = new Object("I am the instance");
+        return object;
+    }
+
+    return {
+        getInstance: function () {
+            if (!instance) {
+                instance = createInstance();
+            }
+
+            return instance;
+        }
+    };
+})();
+
+
+function run() {
+
+    var instance1 = Singleton.getInstance();
+    var instance2 = Singleton.getInstance();
+
+    alert("Same instance? " + (instance1 === instance2));  
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+
+            var Singleton = (function () {
+
+                var instance;
+
+                function createInstance() {
+                    var object = new Object("I am the instance");
+                    return object;
+                }
+
+                return {
+                    getInstance: function () {
+                        if (!instance) {
+                            instance = createInstance();
+                        }
+
+                        return instance;
+                    }
+                };
+            })();
+
+
+            function run() {
+
+                var instance1 = Singleton.getInstance();
+                var instance2 = Singleton.getInstance();
+
+                alert("Same instance? " + (instance1 === instance2));
+            }
+
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Singleton</span> encapsulates all of Singleton's functions and variables.
+            It exposes just one method named <span class="cd">getInstance</span>. This method will return the one and only instance if it already exists; if not
+            it will create a new instance and save it off in a private local variable for all subsequent calls.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Singleton = (function () {
+
+    var instance;
+
+    var createInstance = function () {
+        return {
+            say: function () {
+                alert("I am the greatest");
+            }
+        };
+    }
+        
+    var getInstance = function () {
+        return instance = instance || createInstance();
+    }
+
+    return {
+        getInstance: getInstance
+    };
+
+})();
+
+
+function run() {
+
+    var singleton = Patterns.Classic.Singleton;
+
+    var instance1 = singleton.getInstance();
+    var instance2 = singleton.getInstance();
+
+    instance1.say();                        // => I am the greatest!
+
+    alert("Same instance? " + (instance1 === instance2)); // => true
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxen.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Singleton = (function () {
+
+                var instance;
+
+                var createInstance = function () {
+                    return {
+                        say: function () {
+                            alert("I am the greatest!");
+                        }
+                    };
+                }
+
+                var getInstance = function () {
+                    return instance = instance || createInstance();
+                }
+
+                return {
+                    getInstance: getInstance
+                };
+
+            })();
+
+
+            function run1() {
+
+                var singleton = Patterns.Classic.Singleton;
+
+                var instance1 = singleton.getInstance();
+                var instance2 = singleton.getInstance();
+
+                instance1.say();   // => I am the greatest!
+
+                alert("Same instance? " + (instance1 === instance2)); // => true
+            }
+
+        </script>
+
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/prototype'>Prototype</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/adapter'>Adapter</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+

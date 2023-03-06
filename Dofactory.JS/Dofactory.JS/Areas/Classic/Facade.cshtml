@@ -1,0 +1,429 @@
+﻿@{
+    ViewBag.Title = "Facade";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/facade">Façade</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Façade</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Provide a unified interface to a set of interfaces in a subsystem. Façade defines a higher-level interface that makes the subsystem easier to use.
+            </p>
+
+            <partial name="_UsageHigh" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Façade pattern provides an interface which shields clients from complex functionality in one or more subsystems.
+            It is a simple pattern that may seem trivial but it is powerful and extremely useful.
+            It is often present in systems that are built around a multi-layer architecture.
+        </p>
+        <p class="ptext">
+            The intent of the Façade is to provide a high-level interface (properties and methods) that makes a subsystem or toolkit easy to use for the client.
+        </p>
+        <p class="ptext">
+            On the server, in a multi-layer web application you frequently have a presentation layer which is a client to a service layer.
+            Communication between these two layers takes place via a well-defined API.
+            This API, or façade, hides the complexities of the business objects and their interactions from the presentation layer.
+        </p>
+        <p class="ptext">
+            Another area where Façades are used is in refactoring. Suppose you have a confusing or messy set of legacy objects that the client should not be concerned about.
+            You can hide this code behind a Façade. The Façade exposes only what is necessary and presents a cleaner and easy-to-use interface.
+        </p>
+        <p class="ptext">
+            Façades are frequently combined with other design patterns.  Facades themselves are often implemented as singleton factories.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-facade.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+                <li>
+                    <b>Facade</b> -- In sample code: <b style="color:#088;">Mortgage</b>
+                    <ul>
+                        <li>knows which subsystems are responsible for a request</li>
+                        <li>delegates client requests to appropriate subsystem objects</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>Sub Systems</b> -- In sample code: <b style="color:#088;">Bank, Credit, Background</b>
+                    <ul>
+                        <li>implements and performs specialized subsystem functionality</li>
+                        <li>have no knowledge of or reference to the facade</li>
+                    </ul>
+                </li>
+
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            The  <span class="cd">Mortgage</span> object is the Facade in the sample code.
+            It presents a simple interface to the client with only a single method: <span class="cd">applyFor</span>.
+            Eut underneath this simple API lies considerable complexity.
+        </p>
+        <p class="ptext">
+            The applicant's name is passed into the <span class="cd">Mortgage</span> constructor function.
+            Then the <span class="cd">applyFor</span> method is called with the requested loan amount.
+            Internally, this method uses services from 3 separate subsystems that are complex and possibly take some time to process; they are
+            <span class="cd">Bank</span>,  <span class="cd">Credit</span>, and  <span class="cd">Background</span>.
+        </p>
+        <p class="ptext">
+            Based on several criteria (bank statements, credit reports, and criminal background) the applicant is either accepted or denied for the
+            requested loan.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Mortgage = function(name) {
+    this.name = name;
+}
+
+Mortgage.prototype = {
+    applyFor: function(amount) {
+
+        // access multiple subsystems...
+
+        var result = "approved";
+        if (!new Bank().verify(this.name, amount)) {
+            result = "denied";
+        } else if (!new Credit().get(this.name)) {
+            result = "denied";
+        } else if (!new Background().check(this.name)) {
+            result = "denied";
+        }
+
+        return this.name + " has been " + result +
+               " for a " + amount + " mortgage";
+    }
+}
+
+var Bank = function() {
+    this.verify = function(name, amount) {
+        // complex logic ...
+        return true;
+    }
+}
+var Credit = function() {
+    this.get = function(name) {
+        // complex logic ...
+        return true;
+    }
+}
+var Background = function() {
+    this.check = function(name) {
+        // complex logic ...
+        return true;
+    }
+}
+
+
+function run() {
+
+    var mortgage = new Mortgage("Joan Templeton");
+    var result = mortgage.applyFor("$100,000");
+
+    alert(result);
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Mortgage = function (name) {
+                this.name = name;
+            }
+
+            Mortgage.prototype = {
+                applyFor: function (amount) {
+
+                    // access multiple subsystems...
+
+                    var result = "approved";
+                    if (!new Bank().verify(this.name, amount)) {
+                        result = "denied";
+                    } else if (!new Credit().get(this.name)) {
+                        result = "denied";
+                    } else if (!new Background().check(this.name)) {
+                        result = "denied";
+                    }
+
+                    return this.name + " has been " + result +
+                        " for a " + amount + " mortgage";
+                }
+            }
+
+            var Bank = function () {
+                this.verify = function (name, amount) {
+                    // complex logic ...
+                    return true;
+                }
+            }
+            var Credit = function () {
+                this.get = function (name) {
+                    // complex logic ...
+                    return true;
+                }
+            }
+            var Background = function () {
+                this.check = function (name) {
+                    // complex logic ...
+                    return true;
+                }
+            }
+
+
+            function run() {
+
+                var mortgage = new Mortgage("Joan Templeton");
+                var result = mortgage.applyFor("$100,000");
+
+                alert(result);
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Facade</span> returns (i.e. reveals) only a single item: the Mortgage constructor function and by associations its prototype.
+            All other sub-systems which include <span class="cd">Bank</span>, <span class="cd">Credit</span>, and <span class="cd">Background</span>
+            are maintained in the module's closure and hidden from view and access.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Facade = (function () {
+
+    var Bank = function () {
+        this.verify = function (name, amount) {
+            // complex logic ...
+            return true;
+        }
+    }
+    var Credit = function () {
+        this.get = function (name) {
+            // complex logic ...
+            return true;
+        }
+    }
+    var Background = function () {
+        this.check = function (name) {
+            // complex logic ...
+            return true;
+        }
+    }
+    var Mortgage = function (name) {
+        this.name = name;
+    }
+
+    Mortgage.prototype = {
+        applyFor: function (amount) {
+
+            // access multiple subsystems...
+
+            var result = "approved";
+            if (!new Bank().verify(this.name, amount)) {
+                result = "denied";
+            } else if (!new Credit().get(this.name)) {
+                result = "denied";
+            } else if (!new Background().check(this.name)) {
+                result = "denied";
+            }
+
+            return this.name + " has been " + result +
+                    " for a " + amount + " mortgage";
+        }
+    }
+
+    return {
+        Mortgage: Mortgage
+    };
+
+})();
+
+
+function run() {
+
+    var facade = Patterns.Classic.Facade;
+
+    var mortgage = new facade.Mortgage("Joan Templeton");
+    var result = mortgage.applyFor("$100,000");
+
+    alert(result);
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Facade = (function () {
+
+                var Bank = function () {
+                    this.verify = function (name, amount) {
+                        // complex logic ...
+                        return true;
+                    }
+                }
+                var Credit = function () {
+                    this.get = function (name) {
+                        // complex logic ...
+                        return true;
+                    }
+                }
+                var Background = function () {
+                    this.check = function (name) {
+                        // complex logic ...
+                        return true;
+                    }
+                }
+                var Mortgage = function (name) {
+                    this.name = name;
+                }
+
+                Mortgage.prototype = {
+                    applyFor: function (amount) {
+
+                        // access multiple subsystems...
+
+                        var result = "approved";
+                        if (!new Bank().verify(this.name, amount)) {
+                            result = "denied";
+                        } else if (!new Credit().get(this.name)) {
+                            result = "denied";
+                        } else if (!new Background().check(this.name)) {
+                            result = "denied";
+                        }
+
+                        return this.name + " has been " + result +
+                            " for a " + amount + " mortgage";
+                    }
+                }
+
+                return {
+                    Mortgage: Mortgage
+                };
+
+            })();
+
+
+            function run1() {
+
+                var facade = Patterns.Classic.Facade;
+
+                var mortgage = new facade.Mortgage("Joan Templeton");
+                var result = mortgage.applyFor("$100,000");
+
+                alert(result);
+            }
+
+        </script>
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/decorator'>Decorator</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/flyweight'>Flyweight</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+

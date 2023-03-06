@@ -1,0 +1,89 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Jasmine test page</title>
+    <link href="../lib/jasmine/jasmine.css" rel="stylesheet" />
+    <script src="../lib/jasmine/jasmine.js" type="text/javascript"></script>
+    <script src="../lib/jasmine/jasmine-html.js" type="text/javascript"></script>
+
+
+    <!-- Your code and specs go here -->
+    <script type="text/javascript">
+        function Calculator() {
+
+            var total = 0;
+
+            this.add = function (x) { total += x; return this; };
+            this.sub = function (x) { total -= x; return this; };
+            this.mul = function (x) { total *= x; return this; };
+            this.div = function (x) { total /= x; return this; };
+
+            this.get = function () { return total; };
+            this.reset = function () { total = 0; };
+        }
+        describe("Calculator", function () {
+            describe("Simple method calls", function () {
+
+                var calculator = new Calculator();
+                it("adds a number", function () {
+                    expect(calculator.add(13).get()).toBe(13);
+                });
+                it("substracts a number", function () {
+                    expect(calculator.sub(5).get()).toBe(8);
+                });
+                it("multiplies a number", function () {
+                    expect(calculator.mul(4).get()).toBe(32);
+                });
+                it("divides a number", function () {
+                    expect(calculator.div(2).get()).toBe(16);
+                });
+            });
+
+            describe("Chained method calls", function () {
+                var calculator = new Calculator();
+
+                beforeEach(function () {
+                    calculator.reset();
+                });
+
+                it("adds, substracts a number", function () {
+                    expect(calculator.add(13).sub(8).get()).toBe(3);
+                });
+                it("adds, subtracts, multiplies, divides a number", function () {
+                    expect(calculator.add(6).sub(1).mul(4).div(2).get()).toBe(8);
+                });
+            });
+        });
+
+
+    </script>
+    <script type="text/javascript">
+        (function () {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
+
+            var htmlReporter = new jasmine.HtmlReporter();
+            jasmineEnv.addReporter(htmlReporter);
+
+            jasmineEnv.specFilter = function (spec) {
+                return htmlReporter.specFilter(spec);
+            };
+
+            var currentWindowOnload = window.onload;
+
+            window.onload = function () {
+                if (currentWindowOnload) {
+                    currentWindowOnload();
+                }
+                execJasmine();
+            };
+
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
+        })();
+    </script>
+</head>
+<body>
+</body>
+</html>

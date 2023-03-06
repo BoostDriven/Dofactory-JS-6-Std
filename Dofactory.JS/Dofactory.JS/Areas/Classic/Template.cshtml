@@ -1,0 +1,417 @@
+﻿@{
+    ViewBag.Title = "Template Method";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/classic">Classic</a></li>
+    <li class="breadcrumb-item"><a href="/classic/template">Template Method</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Template Method</h2>
+        <div class="py-30 pl-md-40 pl-0">
+
+            <p>
+                Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+            </p>
+
+            <partial name="_UsageMediumLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Summary</h3>
+        <br />
+        <p class="ptext">
+            The Template Method pattern provides an outline of a series of steps for an algorithm. Objects that implement these steps retain the original
+            structure of the algorithm but have the option to redefine or adjust certain steps.
+            This pattern is designed to offer extensibility to the client developer.
+        </p>
+        <p class="ptext">
+            Template Methods are frequently used in general purpose frameworks or libraries that will be used by other developer
+            An example is an object that fires a sequence of events in response to an action, for example a process request. The object generates a 'preprocess' event, a 'process' event and a 'postprocess' event.
+            The developer has the option to adjust the response to immediately before the processing, during the processing and immediately after the processing.
+        </p>
+        <p class="ptext">
+            An easy way to think of Template Method is that of an algorithm with holes (see diagram below). It is up to the developer to fill these holes with appropriate functionality for each step.
+        </p>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- Diagram -->
+<div class="row">
+    <div class="col-8">
+        <h3>Diagram</h3>
+        <div style="padding: 14px 0 0 120px;">
+            <img src="/img/diagrams/javascript-template-method.jpg" alt="" />
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<br />
+<!-- Participants -->
+<div class="row">
+    <div class="col-8">
+        <h3>Participants</h3>
+        <br />
+        <div class="ptext">
+            The objects participating in this pattern are: <br /><br />
+
+            <ul>
+
+                <li>
+                    <b>AbstractClass</b> -- In sample code: <b style="color:#088;">datastore</b>
+                    <ul>
+                        <li>offers an interface for clients to invoke the templateMethod</li>
+                        <li>implements template method which defines the primitive Steps for an algorithm</li>
+                        <li>provides the hooks (through method overriding) for a client developer to implement the Steps</li>
+                    </ul>
+                </li>
+                <li>
+                    <b>ConcreteClass</b> -- In sample code: <b style="color:#088;">mySql</b>
+                    <ul>
+                        <li>implements the primitive Steps as defined in AbstractClass</li>
+                    </ul>
+                </li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="col-3 offset1"></div>
+</div>
+<br />
+<!-- JavaScript code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Code</h3>
+        <br />
+        <p class="ptext">
+            This is an example where we use JavaScript's <i>prototypal inheritance</i>.
+            The <span class="cd">inherit</span> function helps us establish the inheritance relationship by assigning a base object to the prototype of a newly created <i>descendant</i> object.
+        </p>
+        <p class="ptext">
+            The <span class="cd">datastore</span> function represents the AbstractClass and <span class="cd">mySql</span> represents the ConcreteClass.
+            <span class="cd">mySql</span> overrides the 3 template methods: <span class="cd">connect</span>, <span class="cd">select</span>, and <span class="cd">disconnect</span>
+            with datastore-specific implementations.
+        </p>
+        <p class="ptext">
+            The template methods allow the client to change datastore (SQL Server, Oracle, etc.) by adjusting (filling in the blanks) only the template methods.
+            The rest, such as, the order of the steps, stays the same for any datastore.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+        <pre class="prettyprint">
+var datastore = {
+    process: function() {
+        this.connect();
+        this.select();
+        this.disconnect();
+        return true;
+    }
+};
+
+function inherit(proto) {
+    var F = function() { };
+    F.prototype = proto;
+    return new F();
+}
+
+// log helper
+var log = (function() {
+    var log = "";
+    return {
+        add: function(msg) { log += msg + "\n"; },
+        show: function() { alert(log); log = ""; }
+    }
+})();
+
+
+function run() {
+
+    var mySql = inherit(datastore);
+
+    // implement template steps
+
+    mySql.connect = function() {
+        log.add("MySQL: connect step");
+    };
+    mySql.select = function() {
+        log.add("MySQL: select step");
+    };
+    mySql.disconnect = function() {
+        log.add("MySQL: disconnect step");
+    };
+
+    mySql.process();
+
+    log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var datastore = {
+                process: function () {
+                    this.connect();
+                    this.select();
+                    this.disconnect();
+                    return true;
+                }
+            };
+
+            function inherit(proto) {
+                var F = function () { };
+                F.prototype = proto;
+                return new F();
+            }
+
+            // log helper
+            var log = (function () {
+                var log = "";
+                return {
+                    add: function (msg) { log += msg + "\n"; },
+                    show: function () { alert(log); log = ""; }
+                }
+            })();
+
+            function run() {
+
+                var mySql = inherit(datastore);
+
+                // implement template steps
+
+                mySql.connect = function () {
+                    log.add("MySQL: connect step");
+                };
+                mySql.select = function () {
+                    log.add("MySQL: select step");
+                };
+                mySql.disconnect = function () {
+                    log.add("MySQL: disconnect step");
+                };
+
+                mySql.process();
+
+                log.show();
+            }
+        </script>
+
+
+
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<!-- JavaScript Optimated Code -->
+<div class="row">
+    <div class="col-8">
+        <h3>JavaScript Optimized Code</h3>
+        <br />
+        <p class="ptext">
+            The Namespace pattern is applied to keep the code out of the global namespace. Our namespace is named <span class="cd">Patterns.Classic</span>.
+            A Revealing Module named <span class="cd">Template</span> returns (i.e. reveals) a single item: the <span class="cd">datastore</span> object.
+            <br /><br />
+            A second namespace is created named <span class="cd">Patterns.Utils</span> which holds utility-type functions.
+            A <i>Revealing Module</i> named <span class="cd">Common</span> returns (i.e. reveals) two items: <span class="cd">inherit</span> and our trusted <span class="cd">log</span> utility.
+            With this we have limited our footprint on the global namespace to a single item, i.e. the <span class="cd">Patterns</span> root of our namespace.
+        </p>
+        <p class="ptext">
+            The <span class="cd">Patterns</span> object contains the <span class="cd">namespace</span> function which constructs namespaces non-destructively,
+            that is, if a name already exists it won't overwrite it.
+        </p>
+        <p class="ptext">
+            The <span class="cd">log</span> function is a helper which collects and displays results.
+        </p>
+
+        <br />
+<pre class="prettyprint">
+var Patterns = {
+    namespace: function (name) {
+        var parts = name.split(".");
+        var ns = this;
+
+        for (var i = 0, len = parts.length; i < len; i++) {
+            ns[parts[i]] = ns[parts[i]] || {};
+            ns = ns[parts[i]];
+        }
+
+        return ns;
+    }
+};
+
+Patterns.namespace("Classic").Template = (function () {
+    var datastore = {
+        process: function () {
+            this.connect();
+            this.select();
+            this.disconnect();
+            return true;
+        }
+    };
+
+    return { datastore: datastore };
+
+})();
+
+Patterns.namespace("Utils").Common = (function () {
+
+    var inherit = function (proto) {
+        var F = function () { };
+        F.prototype = proto;
+        return new F();
+    };
+
+    // log helper
+    var log = (function () {
+        var log = "";
+        return {
+            add: function (msg) { log += msg + "\n"; },
+            show: function () { alert(log); log = ""; }
+        }
+    })();
+
+    return {
+        inherit: inherit,
+        log: log
+    };
+
+})();
+
+function run() {
+
+    var utils = Patterns.Utils.Common;
+
+    var store = Patterns.Classic.Template.datastore;
+    var mySql = utils.inherit(store);
+
+    // implement template steps
+
+    mySql.connect = function () {
+        utils.log.add("MySQL: connect step");
+    };
+    mySql.select = function () {
+        utils.log.add("MySQL: select step");
+    };
+    mySql.disconnect = function () {
+        utils.log.add("MySQL: disconnect step");
+    };
+
+    mySql.process();
+
+    utils.log.show();
+}
+</pre>
+        <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false;">Run</a>&nbsp;&nbsp; <i>Displays 1 alert box.</i>
+
+        <script type="text/javascript">
+            var Patterns = {
+                namespace: function (name) {
+                    var parts = name.split(".");
+                    var ns = this;
+
+                    for (var i = 0, len = parts.length; i < len; i++) {
+                        ns[parts[i]] = ns[parts[i]] || {};
+                        ns = ns[parts[i]];
+                    }
+
+                    return ns;
+                }
+            };
+
+            Patterns.namespace("Classic").Template = (function () {
+                var datastore = {
+                    process: function () {
+                        this.connect();
+                        this.select();
+                        this.disconnect();
+                        return true;
+                    }
+                };
+
+                return { datastore: datastore };
+
+            })();
+
+            Patterns.namespace("Utils").Common = (function () {
+
+                var inherit = function (proto) {
+                    var F = function () { };
+                    F.prototype = proto;
+                    return new F();
+                };
+
+                // log helper
+                var log = (function () {
+                    var log = "";
+                    return {
+                        add: function (msg) { log += msg + "\n"; },
+                        show: function () { alert(log); log = ""; }
+                    }
+                })();
+
+                return {
+                    inherit: inherit,
+                    log: log
+                };
+
+            })();
+
+            function run1() {
+
+                var utils = Patterns.Utils.Common;
+
+                var store = Patterns.Classic.Template.datastore;
+                var mySql = utils.inherit(store);
+
+                // implement template steps
+
+                mySql.connect = function () {
+                    utils.log.add("MySQL: connect step");
+                };
+                mySql.select = function () {
+                    utils.log.add("MySQL: select step");
+                };
+                mySql.disconnect = function () {
+                    utils.log.add("MySQL: disconnect step");
+                };
+
+                mySql.process();
+
+                utils.log.show();
+            }
+
+        </script>
+
+
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/classic/strategy'>Strategy</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/classic/visitor'>Visitor</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+

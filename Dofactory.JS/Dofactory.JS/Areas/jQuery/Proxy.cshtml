@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "Proxy";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/proxy">Proxy</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Proxy</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                An object representing another object.<br /><br />
+                jQuery makes limited use of the Proxy pattern.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Proxy Pattern is an object that stands-in or represents another object.
+                Searching for the keyword proxy in jQuery source file leads to a proxy method.
+                This method takes a function and returns a new one which will always have a particular context (i.e., the <span class="cd">this</span> value in the function).
+                The returned function is the proxy function object.
+            </p>
+            <p>
+                This is helpful in event handlers where there is a delay between calling and executing the event handler
+                (and you don't want the overhead of building a closure).  Consider the example below:
+            </p>
+<pre class="prettyprint">
+&lt;div id="area" class="red"&gt;&lt;/div&gt;
+
+$("#area").on("click", function (e) {
+    $(this).toggleClass("yellow");
+});
+</pre>
+            <style>
+                #area, #area1 { width: 50px; height: 50px; cursor: hand; cursor: pointer; }
+                .red { background: red; }
+                .yellow { background: yellow; }
+            </style>
+            <p>
+                Click repeatedly on the area to see the effect.
+            </p>
+            <div id="area" class="red"></div>
+
+            <p>
+                Clicking the div element will toggle the area between red and yellow.
+                The <span class="cd">$(this)</span> element refers to the element that was just clicked.
+                Now, we wish to automate the toggling by using <span class="cd">setInterval</span>. Unfortunately this attempt fails:
+            </p>
+<pre class="prettyprint">
+&lt;div id="area" class="red"&gt;&lt;/div&gt;
+
+$("#area").on("click", function (e) {
+    setInterval(function() {
+        $(this).toggleClass("yellow");       
+    }, 1000); 
+});
+
+</pre>
+            <p>
+                Because of the delay, the function's context has changed and the <span class="cd">$(this)</span> value refers to the global window object.
+                This is where the proxy method comes in. We create a proxy function that remembers (using its closure) the original <span class="cd">$(this)</span> context when it was first called.
+                Now <span class="cd">setInterval</span> will call the proxy rather than the original function.  Here is what this looks like:
+            </p>
+<pre class="prettyprint">
+&lt;div id="area" class="red"&gt;&lt;/div&gt;
+
+$("#area").on("click", function (e) {
+    setInterval($.proxy(function () {
+        $(this).toggleClass("yellow");
+    }, this), 1000);
+});
+
+</pre>
+            <p>
+                Click on the area to start the process.
+            </p>
+            <div id="area1" class="red"></div>
+
+            <p>
+                After the first click, the area toggles between red and yellow indefinitely (we did not build in a stop).
+            </p>
+            <p>
+                Note that you could have also solved the above problem by maintaining the original this value in a closure, like so:
+            </p>
+<pre class="prettyprint">
+&lt;div id="area" class="red"&gt;&lt;/div&gt;
+
+$("#area").on("click", function (e) {
+    var that = this;
+    setInterval(function () {
+        that.toggleClass("yellow");
+    }, 1000);
+});
+
+</pre>
+            <p>
+                Fortunately, this feature has been standardized in ES5 (EcmaScript 5) in the form of the <span class="cd">bind</span> method (which was borrowed from the Prototype framework).
+                It's an elegant way to assign and memorize a context to a function. Most modern browsers support it.  Here is how it is used:
+            </p>
+<pre class="prettyprint">
+&lt;div id="area" class="red"&gt;&lt;/div&gt;
+
+$("#area").on("click", function (e) {
+    setInterval(function () {
+        $(this).toggleClass("yellow");    
+    }.bind(this), 1000);
+});
+</pre>
+            <p>
+                The <span class="cd">bind</span> function creates a new function that, when called, has its <span class="cd">this</span> keyword set to the provided value.
+                This is the proxy function that stands-in for the original function.
+            </p>
+
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/observer'>Observer</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/facade'>Façade</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+                $("#area").on("click", function (e) {
+                    $(this).toggleClass("yellow");
+                });
+
+                var count = 0;
+                $("#area1").on("click", function (e) {
+                    if (count++ > 0) return;  // prevent multiple clicks
+                    $(this).addClass("yellow"); // immediate feedback
+
+                    setInterval($.proxy(function () {
+                        $(this).toggleClass("yellow");
+                    }, this), 1000);
+                });
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

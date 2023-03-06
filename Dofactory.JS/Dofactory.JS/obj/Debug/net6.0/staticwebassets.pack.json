@@ -1,0 +1,989 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\css\\apputils.css",
+      "PackagePath": "staticwebassets\\css\\apputils.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\details.gif",
+      "PackagePath": "staticwebassets\\img\\details.gif"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-abstract-factory.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-abstract-factory.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-adapter.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-adapter.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-amd.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-amd.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-bridge.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-bridge.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-builder.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-builder.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-cc-page.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-cc-page.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-chain-of-responsibility.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-chain-of-responsibility.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-command.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-command.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-composite.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-composite.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-coupling-cohesion.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-coupling-cohesion.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-decorator.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-decorator.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-errors.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-errors.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-eventloop.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-eventloop.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-excel.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-excel.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-facade.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-facade.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-factory-method.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-factory-method.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-flyweight.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-flyweight.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-github.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-github.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-interpreter.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-interpreter.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-intro.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-intro.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-iterator.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-iterator.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-jasmine1.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-jasmine1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-jasmine2.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-jasmine2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-jasmine3.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-jasmine3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-jasmine4.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-jasmine4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-jasmine5.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-jasmine5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mediator.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mediator.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-memento.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-memento.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvc-screen.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvc-screen.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvc-vs-mvp.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvc-vs-mvp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvc.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvc.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvp-screen.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvp-screen.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvp.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvp.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvvm-screen.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvvm-screen.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-mvvm.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-mvvm.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-observer.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-observer.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-patternsandjavascript.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-patternsandjavascript.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototype.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototype.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototypes.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototypes.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototypes1.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototypes1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototypes2.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototypes2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototypes3.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototypes3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-prototypes4.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-prototypes4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-proxy.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-proxy.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-qunit1.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-qunit1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-qunit2.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-qunit2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-qunit3.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-qunit3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-qunit4.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-qunit4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-qunit5.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-qunit5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-singleton.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-singleton.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-state.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-state.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-strategy.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-strategy.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-template-method.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-template-method.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-class1.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-class1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-class2.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-class2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-class3.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-class3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-class4.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-class4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-class5.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-class5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-playground.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-playground.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-typescript-types.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-typescript-types.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-unobtrusive.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-unobtrusive.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-visitor.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-visitor.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\diagrams\\javascript-word.jpg",
+      "PackagePath": "staticwebassets\\img\\diagrams\\javascript-word.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\dotred.jpg",
+      "PackagePath": "staticwebassets\\img\\dotred.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\jshome-large.png",
+      "PackagePath": "staticwebassets\\img\\jshome-large.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\jshome-large1.png",
+      "PackagePath": "staticwebassets\\img\\jshome-large1.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\jshome.png",
+      "PackagePath": "staticwebassets\\img\\jshome.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\10a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\10a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\11a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\11a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\12a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\12a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\13a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\13a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\14a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\14a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\15a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\15a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\16a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\16a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\17a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\17a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\18a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\18a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\19a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\19a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\1a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\1a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\20a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\20a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\21a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\21a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\22a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\22a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\23a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\23a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\24a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\24a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\25a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\25a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\2a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\2a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\3a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\3a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\4a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\4a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\5a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\5a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\6a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\6a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\7a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\7a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\8a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\8a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\9a.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\9a.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\careers.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\careers.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\pictures\\investors.jpg",
+      "PackagePath": "staticwebassets\\img\\pictures\\investors.jpg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic.png",
+      "PackagePath": "staticwebassets\\img\\topic.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic1.png",
+      "PackagePath": "staticwebassets\\img\\topic1.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic2.png",
+      "PackagePath": "staticwebassets\\img\\topic2.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic3.png",
+      "PackagePath": "staticwebassets\\img\\topic3.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic4.png",
+      "PackagePath": "staticwebassets\\img\\topic4.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic5.png",
+      "PackagePath": "staticwebassets\\img\\topic5.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic6.png",
+      "PackagePath": "staticwebassets\\img\\topic6.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic7.png",
+      "PackagePath": "staticwebassets\\img\\topic7.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic8.png",
+      "PackagePath": "staticwebassets\\img\\topic8.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\img\\topic9.png",
+      "PackagePath": "staticwebassets\\img\\topic9.png"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\js\\app.js",
+      "PackagePath": "staticwebassets\\js\\app.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone-min.js",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone-min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone-min.map",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone-min.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone-min.min.js",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone-min.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone.faux.server.js",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone.faux.server.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone.js",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\backbone.js\\backbone.min.js",
+      "PackagePath": "staticwebassets\\lib\\backbone.js\\backbone.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\bootstrap\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\js\\bootstrap.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\flot\\jquery.flot.js",
+      "PackagePath": "staticwebassets\\lib\\flot\\jquery.flot.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\flot\\jquery.flot.min.js",
+      "PackagePath": "staticwebassets\\lib\\flot\\jquery.flot.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\flot\\jquery.flot.pie.js",
+      "PackagePath": "staticwebassets\\lib\\flot\\jquery.flot.pie.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\flot\\jquery.flot.pie.min.js",
+      "PackagePath": "staticwebassets\\lib\\flot\\jquery.flot.pie.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\google-code-prettify\\prettify.css",
+      "PackagePath": "staticwebassets\\lib\\google-code-prettify\\prettify.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\google-code-prettify\\prettify.js",
+      "PackagePath": "staticwebassets\\lib\\google-code-prettify\\prettify.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\boot0.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\boot0.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\boot0.min.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\boot0.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\boot1.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\boot1.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\boot1.min.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\boot1.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine-html.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine-html.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine-html.min.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine-html.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine.css",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine.min.css",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jasmine\\jasmine.min.js",
+      "PackagePath": "staticwebassets\\lib\\jasmine\\jasmine.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\jquery\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\jquery.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.debug.js",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.debug.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.debug.min.js",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.debug.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.debug.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.debug.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.js",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.min.js",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\knockout\\knockout-latest.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\knockout\\knockout-latest.min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\css\\simple-line-icons.css",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\css\\simple-line-icons.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\css\\simple-line-icons.min.css",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\css\\simple-line-icons.min.css"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.eot",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.eot"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.svg",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.svg"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.ttf",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.ttf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.woff",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.woff"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.woff2",
+      "PackagePath": "staticwebassets\\lib\\simple-line-icons\\fonts\\Simple-Line-Icons.woff2"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm-min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm-min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm-min.js.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm-min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm-min.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm-min.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-esm.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-esm.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-min.js.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-min.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-min.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-node-f.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-node-f.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-node.cjs.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-node.cjs.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-node.mjs",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-node.mjs"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-node.mjs.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-node.mjs.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd-min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd-min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd-min.js.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd-min.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd-min.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd-min.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd.js.map",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd.js.map"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore-umd.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore-umd.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\lib\\underscore.js\\underscore.min.js",
+      "PackagePath": "staticwebassets\\lib\\underscore.js\\underscore.min.js"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\1. Getting Started.pdf",
+      "PackagePath": "staticwebassets\\pdf\\1. Getting Started.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\2. Pattern Essentials.pdf",
+      "PackagePath": "staticwebassets\\pdf\\2. Pattern Essentials.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\3. Modern Patterns.pdf",
+      "PackagePath": "staticwebassets\\pdf\\3. Modern Patterns.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\4. Classic Patterns.pdf",
+      "PackagePath": "staticwebassets\\pdf\\4. Classic Patterns.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\5. Model View Patterns.pdf",
+      "PackagePath": "staticwebassets\\pdf\\5. Model View Patterns.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\6. jQuery Patterns.pdf",
+      "PackagePath": "staticwebassets\\pdf\\6. jQuery Patterns.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\7. Architecture Patterns.pdf",
+      "PackagePath": "staticwebassets\\pdf\\7. Architecture Patterns.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\8. Patterns in Action.pdf",
+      "PackagePath": "staticwebassets\\pdf\\8. Patterns in Action.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\pdf\\9. JavaScript Rockstar.pdf",
+      "PackagePath": "staticwebassets\\pdf\\9. JavaScript Rockstar.pdf"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\tests\\jasmine1.htm",
+      "PackagePath": "staticwebassets\\tests\\jasmine1.htm"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\tests\\jasmine2.htm",
+      "PackagePath": "staticwebassets\\tests\\jasmine2.htm"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\tests\\jasmine4.htm",
+      "PackagePath": "staticwebassets\\tests\\jasmine4.htm"
+    },
+    {
+      "Id": "C:\\Users\\troyt\\Downloads\\Dofactory JS 6 Std\\Dofactory.JS\\Dofactory.JS\\wwwroot\\tests\\jasmine5.htm",
+      "PackagePath": "staticwebassets\\tests\\jasmine5.htm"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Dofactory.JS.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.build.Dofactory.JS.props",
+      "PackagePath": "build\\Dofactory.JS.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildMultiTargeting.Dofactory.JS.props",
+      "PackagePath": "buildMultiTargeting\\Dofactory.JS.props"
+    },
+    {
+      "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.buildTransitive.Dofactory.JS.props",
+      "PackagePath": "buildTransitive\\Dofactory.JS.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

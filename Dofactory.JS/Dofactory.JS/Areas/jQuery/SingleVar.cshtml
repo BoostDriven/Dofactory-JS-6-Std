@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Single var";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/singlevar">Single var</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Single var</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Declares and initializes all function variables with a single var.<br /><br />
+                The jQuery authors follow the Single var Pattern religiously.  There are no exceptions.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The first line within the module's function body is single var followed by about 2 dozen variable declarations and initializations.  This is the Single var Pattern.
+            </p>
+<pre class="prettyprint">
+(function (window, undefined) {
+var
+    rootjQuery,
+    readyList,
+
+    document = window.document,
+    location = window.location,
+    navigator = window.navigator,
+
+    _jQuery = window.jQuery,
+    _$ = window.$,
+
+    core_push = Array.prototype.push,
+    core_slice = Array.prototype.slice,
+    core_indexOf = Array.prototype.indexOf,
+    core_toString = Object.prototype.toString,
+    core_hasOwn = Object.prototype.hasOwnProperty,
+    core_trim = String.prototype.trim,
+
+    // more ...
+
+})( window );
+
+</pre>
+            <p>
+                As you know variables get hoisted to the top, which can lead to unexpected results.
+                The Single var pattern states that all variables in a function should be declared, and possibly initialized, by a single var at the beginning of the function body.
+                The jQuery authors strictly adhere to this rule with only one var in each function.
+            </p>
+            <p>
+                Unfortunately, strictly enforcing the Single var pattern can sometimes lead to code that seems contrived and unnatural; take a look at jQuery's grep method:
+            </p>
+<pre class="prettyprint">
+grep: function( elems, callback, inv ) {
+    var retVal,
+        ret = [],
+        i = 0,
+        length = elems.length;
+
+        inv = !!inv;
+        // Go through the array, only saving the items
+        // that pass the validator function
+        for ( ; i < length; i++ ) {
+            retVal = !!callback( elems[ i ], i );
+            if ( inv !== retVal ) {
+                 ret.push( elems[ i ] );
+            }
+        }
+
+        return ret;
+}
+</pre>
+            <p>
+                Here we have a single var with four variables, three of which are initialized.
+                In the middle of this function is a for loop that seems incomplete because the variables <span class="cd">i</span> and <span class="cd">length</span>
+                are already defined and initialized at the top.  You see these kinds of for loops throughout the library.
+            </p>
+            <p>
+                We prefer to have the looping variables declared and initialized where they are used (right in your face, so to speak) without having to guess whether
+                <span class="cd">i</span> or <span class="cd">length</span> exist and/or have been initialized. Doing it this way would change the code to this:
+            </p>
+
+<pre class="prettyprint">
+grep: function( elems, callback, inv ) {
+    var retVal,
+        ret = []; 
+
+        inv = !!inv;
+        // Go through the array, only saving the items
+        // that pass the validator function
+        for (var i = 0, length = elems.length; i < length; i++ ) {
+            retVal = !!callback( elems[ i ], i );
+            if ( inv !== retVal ) {
+                 ret.push( elems[ i ] );
+            }
+        }
+
+        return ret;
+}
+</pre>
+            <p>
+                We think this code makes its intentions more clear (i.e. more in your face).
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/module'>Module</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/doubleexclamation'>Double Exclamation</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

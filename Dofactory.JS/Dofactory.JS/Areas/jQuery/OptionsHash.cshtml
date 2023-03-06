@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Options Hash";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/optionshash">Options Hash</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Options Hash</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Reduces multiple function arguments to a single argument.<br /><br />
+                jQuery greatly simplifies its API by using Options Hash arguments.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Options Hash reduces the number of parameters in a function by grouping several into a single parameter object with a set of name/value pairs.
+                The general usage pattern is like this:
+            </p>
+<pre class="prettyprint">
+var thing = new Thing(parm1, parm2, {
+                       option1: "val1", 
+                       option2, "val2", 
+                       option3, "val3" }); 
+
+</pre>
+            <p>
+                The last argument is an object with 3 name/value pairs. Perhaps this last argument accepts, say, 10 different name/value pairs, but when not provided the
+                Thing constructor function will assign default values for the 7 that are missing.
+            </p>
+            <p>
+                A great example of the Options Hash in jQuery is the Ajax method. Here is the method's description from the jQuery website:
+            </p>
+            <p style="font-family:'Courier New'; background:beige; font-size:16px;">
+                jQuery.Ajax(url, [settings]);<br />
+                ----------------------------------------------------------------------<br />
+                url:      A string containing the url to which the request is sent.<br />
+                settings: A set of key/value pairs that configure the Ajax request. All settings are optional. <br />
+
+            </p>
+            <p>
+                The optional setting parameter is exactly the Options Hash idiom as we know it: it is used as a configuration parameter and all items are optional
+                (there are about a dozen or so possible items in jQuery's settings object).
+            </p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/shortwalk'>Short Walk</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/chaining'>Chaining</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

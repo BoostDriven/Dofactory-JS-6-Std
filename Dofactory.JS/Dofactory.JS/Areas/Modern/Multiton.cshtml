@@ -1,0 +1,242 @@
+﻿@{
+    ViewBag.Title = "Multiton";
+}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/modern">Modern</a></li>
+    <li class="breadcrumb-item"><a href="/modern/multiton">Multiton</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Multiton</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Limits the number of object instances that can be created.
+            </p>
+
+            <partial name="_UsageLow" />
+
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-7">
+        <h3>Fundamentals</h3>
+        <br />
+        <div class="pl-md-40">
+
+            <p>
+                The Multiton pattern is from the same lineage as the Singleton pattern. Singleton limits the number of object instances to one and Multiton limits it to any given number.
+                To get a better appreciation for Multiton you may want to review the Singleton pattern which is listed in the Classic Patterns section.
+            </p>
+            <p>
+                Two varieties of Multiton exist. The first one is similar to Singleton, but instead of limiting the number of concurrent instances to 1 it limits it to n, where n is a number you specify.
+                We will call this <i>N-ton</i>. The second variety of Multiton is a map (or dictionary) of Singletons, where each can be retrieved by a key.
+                Essentially these are name/value pairs where named instances of Singletons are stored.  This last construct is sometimes referred to as a <i>Registry of Singletons</i>.
+                We will look at each one.
+            </p>
+            <p>
+                The N-ton model is helpful when, for whatever reason, you need to limit the number of instances.
+                This is usually related to some limited resource (such as a server or a database) that you are trying to manage. Here is the code for the N-ton model:
+            </p>
+<pre class="prettyprint">
+var Multiton = function (limit) {
+    var limit = limit;
+    var instances = [];
+
+    var Instance = function () {
+        // instance code here
+        this.say = function () {
+             alert("I am an instance" );
+        };
+    };
+
+    return {
+        getInstance: function () {
+            if (instances.length === 0) {
+                for (var i = 0; i < limit; i++) {
+                    instances.push(new Instance());
+                }
+            }
+            var random = Math.floor(Math.random() * limit);
+            return instances[random];
+        }
+    };
+};
+
+var multiton = new Multiton(6);
+
+var m1 = multiton.getInstance();
+var m2 = multiton.getInstance();
+var m3 = multiton.getInstance();
+var m4 = multiton.getInstance();
+
+m1.say();       // => I am an instance
+m2.say();       // => I am an instance
+
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run1();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run1() {
+                    var Multiton = function (limit) {
+                        var limit = limit;
+                        var instances = [];
+
+                        var Instance = function () {
+                            // instance code here
+                            this.say = function () {
+                                alert("I am an instance");
+                            };
+                        };
+
+                        return {
+                            getInstance: function () {
+                                if (instances.length === 0) {
+                                    for (var i = 0; i < limit; i++) {
+                                        instances.push(new Instance());
+                                    }
+                                }
+                                var random = Math.floor(Math.random() * limit);
+                                return instances[random];
+                            }
+                        };
+                    };
+
+                    var multiton = new Multiton(6);
+
+                    var m1 = multiton.getInstance();
+                    var m2 = multiton.getInstance();
+                    var m3 = multiton.getInstance();
+                    var m4 = multiton.getInstance();
+
+                    m1.say();       // => I am an instance
+                    m2.say();       // => I am an instance
+                }
+            </script>
+            <br /><br />
+            <p>
+                In this example the Multiton manages a maximum of 6 instances. When an instance is requested with <span class="cd">getInstance</span> a randomly selected instance is returned.
+                Notice that the constructor function named <span class="cd">Instance</span> is privately scoped within Multiton and can only be called from within Multiton.
+                The <span class="cd">Instance</span> constructor is where you specify instance specific properties and methods.
+            </p>
+            <p>
+                An example of the Registry of Singletons variety of the Multiton pattern is demonstrated next.
+            </p>
+<pre class="prettyprint">
+var Multiton = function () {
+    var instances = {};
+
+    var Instance = function (id) {
+        // instance code here
+        this.id = id;
+        this.say = function () {
+             alert("Instance for Server " + this.id );
+        };
+    };
+
+    return {
+        getInstance: function (id) {
+            if (Object.keys(instances).length === 0) {
+                for (var i = 1; i < 5; i++) {
+                    instances[i] = new Instance(i);
+                }
+            }
+            return instances[id];
+        }
+    };
+};
+
+var multiton = new Multiton();
+
+var server1 = multiton.getInstance(1);
+var server2 = multiton.getInstance(2);
+var server3 = multiton.getInstance(3);
+var server4 = multiton.getInstance(4);
+
+server1.say();       // => Instance for Server 1
+server3.say();       // => Instance for Server 3
+</pre>
+            <a class="btn btn-green" href="javascript:void(0);" onclick="run2();return false">Run</a>&nbsp;&nbsp; <i>Displays 2 alert boxes.</i>
+            <script type="text/javascript">
+                function run2() {
+                    var Multiton = function () {
+                        var instances = {};
+
+                        var Instance = function (id) {
+                            // instance code here
+                            this.id = id;
+                            this.say = function () {
+                                alert("Instance for Server " + this.id);
+                            };
+                        };
+
+                        return {
+                            getInstance: function (id) {
+                                if (Object.keys(instances).length === 0) {
+                                    for (var i = 1; i < 5; i++) {
+                                        instances[i] = new Instance(i);
+                                    }
+                                }
+                                return instances[id];
+                            }
+                        };
+                    };
+
+                    var multiton = new Multiton();
+
+                    var server1 = multiton.getInstance(1);
+                    var server2 = multiton.getInstance(2);
+                    var server3 = multiton.getInstance(3);
+                    var server4 = multiton.getInstance(4);
+
+                    server1.say();       // => Instance for Server 1
+                    server3.say();       // => Instance for Server 3
+                }
+            </script>
+            <br /><br />
+            <p>
+                This code is quite similar to the previous variety only that we ask for specific instances that are keyed by a unique id (hardcoded from 1 to 4). \
+                Each singleton represents a server.  The <span class="cd">instances</span> private object maintains the name/value pairs
+                (in the N-ton implementation this was an array).
+            </p>
+
+        </div>
+
+
+        <div class="d-flex py-30 pl-md-40">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/modern/lazyload'>Lazy Load</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/modern/partial'>Partial</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}

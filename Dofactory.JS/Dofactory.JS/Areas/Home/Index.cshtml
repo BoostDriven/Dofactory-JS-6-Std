@@ -1,0 +1,170 @@
+﻿@{
+    ViewBag.Title = "JavaScript JS";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-2 pt-60 pl-35">
+        <img src="/img/jshome.png" /><br />
+    </div>
+    <div class="col-7 col-md-6">
+        <h2>Welcome</h2>
+        <div class="pt-20 pr-20">
+            Welcome to Dofactory JS, a JavaScript Design Pattern Framework for web developers.
+            These pages discuss and showcase <i>live versions</i> of the JavaScript Patterns, jQuery Patterns,
+            and numerous other code samples.
+            <br /><br />
+
+            The same information is also available in a set of PDF-formatted Pattern Guides.
+            Shortcuts to all Pattern Guides are listed to the right. Click the links to open them.
+            <br /><br />
+
+            Below is a list of sections in this course.
+            It is recommended that you go through the sections in sequential order. Click on the title or <i>Let's go</i> button to enter a section.
+
+        </div>
+    </div>
+    <div class="col-3 col-md-4">
+        <div class="p-3 pt-50">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('GettingStarted', true);">Getting Started Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('PatternEssentials', true);">Pattern Essentials Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('ModernPatterns', true);">Modern Patterns Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('ClassicPatterns', true);">Classic Patterns Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('ModelViewPatterns', true);">Model View Patterns Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('jQueryPatterns', true);">jQuery Patterns Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('ArchitecturePatterns', true);">Architecture Patterns Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('PatternsInAction', true);">Patterns in Action Guide</a>
+        </div>
+        <div class="p-3">
+            <a class='js' href="javascript:void(0);" onclick="return openPdf('Rockstar', true);">JavaScript Rockstar Guide</a>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+
+<style>
+table th {}
+</style>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tr>
+                <th colspan="2" style="border-top:0px solid white;border-bottom:2px solid #F45D48;height:40px;"></th>
+            </tr>
+            <tr>
+                <td class="w-80 pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/essentials'>JavaScript & Pattern Essentials</a>
+
+                    <div class="pl-30 pt-10">
+                        This section presents an introduction to Design Patterns as well as essential JavaScript topics
+                        which will provide a solid foundation before we embark on our journey to JavaScript + jQuery Design Patterns.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/essentials'>Let's go</a></td>
+            </tr>
+
+            <tr>
+                <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/modern'>Modern JavaScript Design Patterns</a>
+                    <div class="pl-30 pt-10">
+                        In recent years, numerous Modern Design Patterns have evolved allowing JavaScript developers to build more effective and maintainable web apps.
+                        This section reviews these Modern Design Patterns that are used by expert JavaScript developers.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/modern'>Let's go</a></td>
+            </tr>
+
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/classic'>Classic JavaScript Design Patterns</a>
+
+                    <div class="pl-30 pt-10">
+                        The original 23 Design Patterns were published in 1995 by the Gang of Four (GoF).
+                        Many of these are highly relevant to JavaScript, whereas others are less so.
+                        This section reviews each of the Classic Patterns and for each one its 'frequency-of-use' is indicated.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/classic'>Let's go</a></td>
+            </tr>
+
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/modelview'>Model-View JavaScript Design Patterns</a>
+                    <div class="pl-30 pt-10">
+                        The first ever documented pattern was MVC (Model View Controller).
+                        Two more recent Model View patterns are MVP (Model View Presenter) and MVVM (Model View ViewModel).  Here we
+                        review these important patterns and their use in modern JavaScript development.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/modelview'>Let's go</a></td>
+            </tr>
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/jquery'>jQuery Design Patterns</a>
+                    <div class="pl-30 pt-10">
+                        jQuery is still the most popular JavaScript library. jQuery makes it easy to
+                        traverse HTML documents, handle events, build animations, and perform Ajax interactions.
+                        In this section we review how jQuery uses both Modern and Classic Patterns as well as how to extend jQuery through plugins.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/jquery'>Let's go</a></td>
+            </tr>
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/architecture'>JavaScript Architecture Patterns</a>
+                    <div class="pl-30 pt-10">
+                        JavaScript was not designed for large scale application development.  In this section we present
+                        JavaScript Architecture patterns which will make your life as a JavaScript developer building large apps a bit easier
+                        and your projects more successful.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/architecture'>Let's go</a></td>
+            </tr>
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/inaction'>JavaScript Patterns in Action</a>
+
+                    <div class="pl-30 pt-10">
+                        Nothing beats learning from comprehensive, real-world JavaScript application code. In this section we showcase 6 sample apps
+                        that use design patterns, idioms, and libraries/frameworks mentioned throughout this program.
+                        Explore this code and learn how to build real-world, advanced JavaScript web applications.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/inaction'>Let's go</a></td>
+            </tr>
+            <tr>
+               <td class="pt-20">
+                    <img src="/img/details.gif" alt="" /> &nbsp;&nbsp;<a class="link" href='/rockstar'>37 Ways to become a Rockstar JavaScript developer</a>
+                    <div class="pl-30 pt-10">
+                        The JavaScript community is moving fast and it takes considerable effort to keep up with the latest developments in this area.
+                        This bonus section offers 37 ideas that will support your journey to JavaScript Rock Stardom.
+                    </div>
+                </td>
+                <td class="w-20 pt-45 text-center"><a class="btn btn-green" href='/rockstar'>Let's go</a></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,319 @@
+﻿@{
+    ViewBag.Title = "AMD & Require.js";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/architecture">Architecture</a></li>
+    <li class="breadcrumb-item"><a href="/architecture/amdrequire">AMD &amp; Require</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>AMD & Require.js</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A standard approach to making large projects easier to manage.<br /><br />
+                AMD (a protocol) and Require.js (a library) can make it easier to manage large web applications.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+
+
+            <p>
+                AMD is a protocol and Require.js is the implementation of this protocol. Its goal is to make large web projects easier to manage.
+                Projects that involve many JavaScript files are hard to maintain because of the dependencies that exist between these files.
+                These dependencies force developers to carefully consider the order in which JavaScript files are referenced in each page.
+                The complexity grows exponentially when more pages and files are added and this can become a real stumbling block. Let's look at an example:
+            </p>
+            <p>
+                Say your project has 10 JavaScript files.
+            </p>
+<pre class="prettyprint">
+├── file1.js
+├── file2.js  <- depends on?
+                 ├── file3.js
+                 ├── file4.js
+                 ├── file5.js
+                 ├── file6.js  <- utilities
+├── file7.js  <- helpers
+├── file8.js  <- support
+├── file9.js
+├── file10.js
+</pre>
+            <p>
+                You can probably already guess what is happening. Suppose file3 uses utility functions that are available in file6.
+                File6 in turn depends on file7 because it has some handy helper functions.  File9 requires File8 which contains essential support.
+                And, file10 depends on file2 and file5 because they have the necessary base classes. In turn, the two latter ones also depend on File6 utilities. You get the idea.
+            </p>
+            <p>
+                We only have 10 files and already it has gotten very complex. For each page that you build you have to ensure that the correct script files are included and are placed in the right order.
+                It is easy to see that managing a large project with dozens of files/modules by hand is difficult, error prone, and not very scalable.  This is where AMD comes in.
+            </p>
+            <p>
+                The AMD module format is a specification that allows you to define modules and their dependencies which are then loaded asynchronously.
+                AMD has been adopted by several popular JavaScript tools and libraries, including jQuery, Dojo, Mootools, and Firebug.
+            </p>
+            <p>
+                AMD offers a great deal of flexibility, first by being asynchronous, but also by introducing string IDs for dependencies and allowing these to be mapped to
+                a different path which is great for creating mocks in unit testing.  Furthermore, the module definitions in AMD are encapsulated in their own namespace which
+                avoids polluting the global object's namespace.
+            </p>
+            <p>
+                We will look at Require.js which implements the AMD module API format. It is the most popular script loader and dependency manager available today.
+            </p>
+            <p>
+                Require.js is one of those tools that initially you may not quite understand what it does and why you need it.
+                Then after a while, something clicks in your brain, and once that happens you wonder how you ever did without it.
+            </p>
+            <p>
+                Let's look at a simple example.  Say we have the following project directory:
+            </p>
+<pre class="prettyprint">
+├── index.html
+├── scripts/
+│   ├── main.js
+│   ├── require.js
+│   ├── jquery.js
+│   ├── modules/
+│       ├── module1.js
+│       ├── module2.js
+│       ├── module3.js
+
+</pre>
+            <p>
+                The project has a single web page, <span class="cd">index.html</span>, and a <span class="cd">/scripts</span> directory with JavaScript files.
+                The file <span class="cd">main.js</span> is our 'main' file discussed shortly.
+                Two 3rd party libraries are used: <span class="cd">require.js</span> and <span class="cd">jquery.js</span>.
+                Finally, in subdirectory <span class="cd">/modules</span> we have 3 modules that contain custom JavaScript code we wrote.
+            </p>
+            <p>
+                Here is what's in index.html.
+            </p>
+<pre class="prettyprint">
+&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Title&lt;/title&gt;
+        &lt;script src="scripts/require.js" data-main="scripts/main"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body style="background:linen;"&gt;
+        &lt;h2&gt;AMD and Require.js&lt;/h2&gt;
+        &lt;button id="clicker" &gt;Click here&lt;/button&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+            <p>
+                Notice that is has only a single script tag in the entire file which is require.js.
+                This tag includes a special <span class="cd">data-main</span> attribute that references the 'main' JavaScript file which will be loaded when require.js itself is done loading.
+                As far as Require.js is concerned, any .js file extensions is optional. So <span class="cd">main</span> refers to <span class="cd">main.js</span>,
+                <span class="cd">jquery</span> refers to <span class="cd">jquery.js</span>, and so on.
+                Let's open main.js which has configuration information and startup code.
+            </p>
+<pre class="prettyprint">
+require.config({
+    paths: {
+        jquery: "jquery",
+        module1: "modules/module1",
+        module2: "modules/module2",
+        module3: "modules/module3",
+    }
+});
+
+require(["jquery", "module1"], function ($, mod1) {
+    
+    // hook button up with click event
+    $("#clicker").on('click', function () {
+        mod1.go();
+    });
+});
+
+</pre>
+            <p>
+                The top half is the configuration section. Require.js offers dozens of configuration options but the one that is almost always used is <span class="cd">paths</span>.
+                The <span class="cd">paths</span> property is a hash that maps shorthand names (i.e. script IDs) to JavaScript file paths.
+                This greatly simplifies using Require.js as these names are referenced throughout your files.
+            </p>
+            <p>
+                In our example the name <span class="cd">jquery</span> maps to jquery (which is jquery.js: remember that .js is optional).
+                There's no directory mentioned which implies that jquery.js resides in the same directory as main.js.
+                Next are our modules: <span class="cd">module1</span> maps to modules/module1.js, <span class="cd">module2</span> to modules/module2.js, and <span class="cd">module3</span> to modules/module3.js.
+                By the way, we could have used any name for these modules, for example: <span class="cd">modA</span>, <span class="cd">modB</span>, and <span class="cd">modC</span>; they are just
+                handles that are referenced throughout the app.
+            </p>
+            <p>
+                As an alternative you can import jQuery from a CDN. The configuration section would look like this:
+            </p>
+<pre class="prettyprint" style="width:640px;">
+require.config({
+    paths: {
+        jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min",
+        module1: "modules/module1",
+        module2: "modules/module2",
+        module3: "modules/module3",
+    }
+});
+
+</pre>
+            <p>
+                Before using the paths, let's review how Require.js loads in dependencies. It does this through the <span class="cd">require</span> function.
+                To load up a script file you would write something like this:
+            </p>
+<pre class="prettyprint">
+require(["jsfile"], function (jsfile) {
+    jsfile.doSomething();    
+});
+
+</pre>
+
+            <p>
+                The first argument is an array of dependencies. Here we have just one: <span class="cd">jsfile</span>.
+                If <span class="cd">jsfile</span> is not a mapped name (using paths in the configuration section), then it refers to jsfile.js in the same directory as main.js.
+            </p>
+            <p>
+                The second argument is called the <i>factory function</i>.  Its parameters typically match the dependency array. Here we just have one.
+                Require.js has loaded jsfile and passes it as an argument to the factory function. Within the function you can be sure that jsfile is loaded and ready to go.
+                By the way: the name factory function is a reference to the Factory pattern as many of these functions return modules that are <i>manufactured</i> by the function.
+            </p>
+            <p>
+                With Require.js, the script files being loaded can be traditional script files, but more often they are modules defined by the Require.js <span class="cd">define</span> function
+                (note: the Module pattern is discussed in the Modern Patterns section).  Modules are defined like this:
+            </p>
+<pre class="prettyprint">
+define("moduleName", ["jquery", "myapp"], function ($, myapp) {
+    // define your module... 
+});
+
+</pre>
+            <p>
+                The optional <span class="cd">moduleName</span> is the name of the module. Usually it is not provided because Require.js will then automatically convert the file name to the module name.
+                The second argument is an array of dependencies. The last argument is the factory function which returns a newly created module.
+                The parameters in this function typically match the dependencies: here there are two: <span class="cd">jquery</span> and <span class="cd">myapp</span>.
+            </p>
+            <p>
+                In summary, the two core functions in Require.js are <span class="cd">require</span> and <span class="cd">define</span>;
+                <span class="cd">require</span> loads dependencies and <span class="cd">define</span> defines modules. Both are used in our example project.
+                Indeed, it's time to go back to our example and complete the second half of the main.js file.
+                We had looked at the configuration and now we will examine the second half which contains the startup code:
+            </p>
+<pre class="prettyprint">
+require(["jquery", "module1"], function ($, mod1) {
+    
+    // hook button up with click event
+    $("#clicker").on("click", function () {
+        mod1.go();
+    });
+});
+
+</pre>
+            <p>
+                With <span class="cd">require</span> we indicate there are two dependencies: <span class="cd">jquery</span> and <span class="cd">module1</span>.
+                The factory function receives references to these, <span class="cd">$</span> and <span class="cd">mod1</span>, which are then used inside the body.
+                The jQuery library is used to traverse the DOM, find the button, and attach a click handler.
+                Inside the click handler the <span class="cd">go</span> function on <span class="cd">module1</span> is called.
+            </p>
+            <p>
+                Let's open the module definition of module1.js.
+            </p>
+<pre class="prettyprint">
+define(["module2"], function (mod2) {
+
+    var go = function () {
+        alert("- I am in Module1 \n" + mod2.go());
+    };
+
+    return { go: go };
+});
+
+</pre>
+            <p>
+                The <span class="cd">define</span> method has no module name and therefore defaults to the filename which is <span class="cd">module1</span>.
+                The dependencies array indicates that module1 has a dependency on a single module: module2.
+                The second argument is the factory function that returns the module (this is the Revealing Module pattern).
+                Inside the <span class="cd">go</span> function there is a nested <span class="cd">go</span> call but this time on <span class="cd">mod2</span>.  Well, let's open module2:
+            </p>
+<pre class="prettyprint">
+define(["module3"], function (mod3) {
+
+    var go = function () {
+        return "-- I am in Module2 \n" + mod3.go();
+    };
+
+    return { go: go };
+});
+
+</pre>
+            <p>
+                It's déjà vu all over again. This file is almost the same as module1. Module2 is dependent on Module3.
+                The incoming <span class="cd">mod3</span> argument is referenced inside the <span class="cd">go</span> function with another call
+                to a <span class="cd">go</span> function on <span class="cd">mod3</span>.
+                Finally, let's see module3:
+            </p>
+<pre class="prettyprint">
+define(function () {
+    var go = function () {
+        return "--- I am in Module3";
+    };
+
+    return { go: go };
+});
+
+</pre>
+            <p>
+                This is the last module in our dependency chain which is without any external dependencies.
+                The <span class="cd">define</span> method creates a Require.js module that has <span class="cd">module3</span> as its name.
+            </p>
+            <p>
+                To summarize: require.config in main.js establishes the configuration settings for Require.js.
+                The <span class="cd">require</span> function call in the same file establishes the first dependencies by setting up the button event handler.
+                When the button is clicked, module 1 is loaded to execute the handler. But module1 depends on module2, which is then loaded.
+                Similarly module2 depends on module3 which is then loaded.
+            </p>
+            <p>
+                All these dependencies and the loading of these dependencies are automatically handled by Require.js in a highly efficient and effective manner.
+                Remember also that Require.js does not pollute the global namespace with any of these modules.
+                Quite remarkable if you consider that only a single &lt;script&gt; reference is included in the index.html page.
+            </p>
+            <p>
+                You could test the dependencies in a small test application like the one below. 
+            </p>
+            <div style="padding:30px 0 30px 20px;">
+                <img src="/img/diagrams/javascript-amd.jpg" alt="" />
+            </div>
+            <br />
+            <p>
+                Initially only the title and button would be visible. Clicking the button displays the alert box with 3 messages, 
+                each coming from a different module. This confirms that Require.js has loaded all necessary dependencies.
+            </p>
+            <p>
+                As indicated earlier, AMD and Require.js are a stopgap measure. Today with the availability of 
+                ES6 (EcmaScript 6) you won't have to.
+                ES6 introduced the <span class="cd">module</span>, <span class="cd">import</span>, 
+                and <span class="cd">export</span> keywords to support the asynchronous
+                loading of dependent modules. 
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/architecture/modularity'>Modularity</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture/transpilers'>JavaScript Transpilers</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

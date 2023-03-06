@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Introduction";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/architecture">Architecture</a></li>
+    <li class="breadcrumb-item"><a href="/architecture/introduction">Introduction</a></li>
+</ol>
+
+
+<div class="row">
+    <div class="col-7">
+        <h2>Introduction</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                Introduction to Architecture Patterns.<br /><br />
+                Architectural Patterns are software design solutions to problems that
+                exist at a higher, architectural level and affect the project as a whole.
+
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                In prior sections we have seen <i>idioms</i> which are like mini patterns that offer small and succinct solutions to specific language-related problems.
+                Next are <i>design patterns</i> which work at the object level. They offer solutions to recurring problems that are related to objects and their interdependencies.
+                Finally, <i>architecture patterns</i> are solutions to recurring software problems related to the higher-level structure and design of projects as a whole, i.e.
+                the architecture of applications. Architecture patterns is the topic of this section.
+            </p>
+            <p>
+                Although not discussed in their own section, MV* Patterns also fall under the category of architecture patterns.
+                They were designed to bring organization and structure to large scale applications. MV* is a large subject area, which is why they ended up in their own section,
+                but, again, they are true architectural patterns.
+            </p>
+            <p>
+                JavaScript was not designed to build large-scale applications. Language features and facilities that are available to most modern languages are lacking.
+                These include: namespaces, typing, classes, interfaces, modules, importing, exporting, and others.
+                Fortunately, JavaScript is a very flexible language and today many solutions and support tools are available to build JavaScript apps that
+                are standing on a sound architectural footing.
+            </p>
+            <p>
+                In this section we will touch on a variety of topics; these include script loading, modularity, AMD & require.js, JavaScript transpilers, error handling, and JavaScript testing.
+                Most of these are relevant to all but the most trivial applications.
+            </p>
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/architecture'>Back to List</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/architecture/scriptloading'>Script Loading</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>

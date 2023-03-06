@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Observer";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/jquery">jQuery</a></li>
+    <li class="breadcrumb-item"><a href="/jquery/observer">Observer</a></li>
+</ol>
+
+<div class="row">
+    <div class="col-7">
+        <h2>Observer</h2>
+        <div class="py-30 pl-md-40 pl-0">
+            <p>
+                A way of notify changes to a number of objects.<br /><br />
+                The Observer patterns is ubiquitous in jQuery: anywhere jQuery deals with events.
+            </p>
+        </div>
+    </div>
+    <div class="col-5 text-center pt-30">
+        <partial name="_Image" />
+    </div>
+</div>
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="row">
+    <div class="col-8">
+        <h3>Overview</h3>
+        <br />
+        <div class="ptext">
+            <p>
+                The Observer pattern allows functions to register themselves for notification when a particular event occurs.
+                These functions are called event handlers. This pattern is at the core of all event-driven programming, including JavaScript.
+                Not surprisingly then, the Observer pattern is a big part of jQuery: it has many dozens of objects, properties, and methods that are involved with events.
+            </p>
+            <p>
+                The newer <span class="cd">on</span> and <span class="cd">off</span> methods in jQuery are used to make it easy to attach and detach handlers to any event you specify.
+                Here are some examples.
+            </p>
+            <p>
+                Attach a handler to the click event:
+            </p>
+<pre class="prettyprint">
+$("#menu").on("click", function (e) {
+    alert("menu was clicked");
+});
+
+</pre>
+            <p>
+                Remove all click handlers:
+            </p>
+<pre class="prettyprint">
+$("#menu").off("click");    
+</pre>
+            <p>
+                The <span class="cd">trigger</span> method fires an event programmatically. All registered event handlers will execute.
+            </p>
+<pre class="prettyprint">
+$("#menu").trigger("click"); 
+</pre>
+            <p>
+
+
+        </div>
+        <div class="d-flex py-30">
+            <div><i class="icon-arrow-left pr-10 font-13"></i><a class="font-16 open-sans" href='/jquery/iterator'>Iterator</a></div>
+            <div class="ms-auto"><a class="font-16 open-sans" href='/jquery/proxy'>Proxy</a><i class="icon-arrow-right font-13 pl-10"></i></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        Dofactory.namespace("Local").Page = (function () {
+
+            var start = function () {
+
+            };
+
+            return { start: start };
+
+        })();
+        $(function () {
+            Dofactory.Local.Page.start();
+        });
+    </script>
+}
